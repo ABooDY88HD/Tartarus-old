@@ -1,0 +1,11 @@
+[Header]
+[Time] : UInt32
+[Handle] : Int32
+[Layer] : Byte // [Pyrok]
+[MoveSpeed] : Byte // [Pyrok] : 11
+[Count] : Short // [Pyrok]
+Moves[count]
+{
+[ToX] : float
+[ToY] : float
+}

@@ -1,0 +1,4 @@
+[Header]
+[EquipPos] : Byte
+[ItemHandle] : UInt32
+00 00 00 00

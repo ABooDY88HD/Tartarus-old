@@ -1,0 +1,36 @@
+// The key to connect to auth-server
+acceptor_key: 1234
+
+// Reduce console output by omitting some types
+// of messages. You can sum values to disable more
+// than one. (Default: 0)
+//1: Info
+//2: Status
+//4: Notice
+//8: Warning
+//16: Error
+//32: Debug
+//64: SQL
+//128: FatalError
+console_silent: 0
+
+// Maximum concurrent connections
+max_connections: 1000
+
+// Listen Port
+listen_port: 6900
+
+// Auth-server ip
+auth_ip: 127.0.0.1
+
+// Auth Server Game-server listener port
+auth_port: 4444
+
+// Server Name
+server_index: 1
+
+// Server Index
+server_name: Tartarus
+
+// Server Notice
+notice_url: http://127.0.0.1/notice.htm

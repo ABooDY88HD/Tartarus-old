@@ -1,0 +1,8 @@
+// Sends a list of URL
+
+[Header]
+/* 0 */ Int16 StringLength
+/* 2 */ String UrlList
+
+The UrlList is a string that follows the format:
+<url name>|<url>|<url name>|<url>...

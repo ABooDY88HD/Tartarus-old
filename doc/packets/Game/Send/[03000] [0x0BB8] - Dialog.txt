@@ -1,0 +1,37 @@
+[Header]
+00 00 00 00
+[Handle] : Int32
+09 00 09 00 76 00
+[Dialog Title] : String // @StringID
+[Dialog Text ] : String  // @StringID
+[Menu Item - Quest] // see structure at the end of the file
+[Menu Item - Message] // see structure at the end of the file
+=========================
+[[[ Menu Item - Quest ]]]
+09
+
+QUEST
+|
+[Quest Name String ID] : String
+|
+0 : String // Quest status?
+
+09
+
+quest_info( [QuestID], [MessageID] ) // Without @
+	~> MessageID stands to QuestLinkResource
+	   text_id_*
+
+09
+=========================
+=========================
+[[[ Menu Item - Message ]]]
+09
+
+[Menu Text] : String // ID with @
+09
+[Function] : String // e.g.: Quest_Link_2_Id()
+	~> For goodbye use a space (0x20)
+
+09
+=========================

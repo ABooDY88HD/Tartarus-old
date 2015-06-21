@@ -1,0 +1,38 @@
+// MySQL Settings
+// Global Settings (If nothing is specified for a connection, this is used)
+sql.db_hostname: 127.0.0.1
+sql.db_port: 3306
+sql.db_username: rappelz
+sql.db_password: rappelz
+sql.db_database: rappelz
+sql.codepage:
+
+// MySQL Auth SQL server
+sql.auth_hostname: 127.0.0.1
+sql.auth_port: 3306
+sql.auth_username: rappelz
+sql.auth_password: rappelz
+sql.auth_database: rappelz_auth
+
+// MySQL Static SQL server
+sql.static_hostname: 127.0.0.1
+sql.static_port: 3306
+sql.static_username: rappelz
+sql.static_password: rappelz
+sql.static_database: rappelz_game
+
+// MySQL User SQL Server
+sql.user_hostname: 127.0.0.1
+sql.user_port: 3306
+sql.user_username: rappelz
+sql.user_password: rappelz
+sql.user_database: rappelz_user
+
+// MySQL Log SQL Database
+sql.log_db_ip: 127.0.0.1
+sql.log_db_port: 3306
+sql.log_db_id: rappelz
+sql.log_db_pw: rappelz
+sql.log_db_db: rappelz_logs
+sql.log_codepage:
+sql.log_auth_db: loginlog

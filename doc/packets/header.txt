@@ -1,0 +1,4 @@
+int	packet_size
+
+short	packet_id
+byte	unknown // checksum (?)

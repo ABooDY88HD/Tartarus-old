@@ -1,0 +1,15 @@
+[Header]
+/* 0 */ Int32 local_id
+/* 4 */ Int16 Weather
+
+enum Weather
+{
+  WEATHER_CLEAR = 0x0,
+  WEATHER_LIGHT_RAINY = 0x1,
+  WEATHER_RAINY = 0x2,
+  WEATHER_HEAVY_RAINY = 0x3,
+  WEATHER_LIGHT_SNOWY = 0x4,
+  WEATHER_SNOWY = 0x5,
+  WEATHER_HEAVY_SNOWY = 0x6,
+  WEATHER_MAX = 0x7,
+}

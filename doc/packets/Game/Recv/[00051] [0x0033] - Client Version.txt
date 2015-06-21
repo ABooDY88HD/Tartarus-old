@@ -1,0 +1,7 @@
+// This seems to has no effect in Epic 8.1 Game Server
+
+Size: 27
+
+[Header]
+[ClientVer : String(10)] // Maybe 20
+00

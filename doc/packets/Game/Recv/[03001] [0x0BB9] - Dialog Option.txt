@@ -1,0 +1,5 @@
+// Sent when a menu option is clicked
+[Header]
+[CallSize] : Byte
+00
+[CallFunction] : String(CallSize)

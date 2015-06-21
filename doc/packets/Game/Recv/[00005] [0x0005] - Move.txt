@@ -1,0 +1,12 @@
+[Header]
+[UnknownID] : Int32
+[FromX] : float
+[FromY] : float
+[MoveTime] : UInt32
+[SpeedSync] : Byte (always 1?)
+[Count] : Short
+Moves[count]
+{
+	[ToX] : float
+	[ToY] : float
+}

@@ -1,0 +1,6 @@
+[Header]
+/* 0 */ Int32 start_time*
+/* 4 */ Int64 unix_timestamp
+
+* start_time = miliseconds since server started / 10
+[Pyrok] return (uint) Environment.TickCount / 10;

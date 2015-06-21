@@ -1,0 +1,6 @@
+// Called whenever you character levels up
+// this is not called when job levels up.
+[Header]
+/* 0 */ UInt32 handle
+/* 4 */ Int32 new_level
+/* 8 */ Int32 job_level

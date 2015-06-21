@@ -1,0 +1,25 @@
+// Note: This packet defines user's handle.
+
+[Header]
+/* 0 */ Int16 result // 0 = OK
+/* 2 */ UInt32 handle
+/* 6 */ float x
+/* 10 */ float y
+/* 14 */ float z
+/* 18 */ Byte layer
+/* 19 */ float face // ?
+/* 23 */ Int32 region_size // 0x00, 0x00, 0x00, 0x5E,
+/* 27 */ Int32 hp
+/* 31 */ Int32 mp
+/* 35 */ Int32 max_hp
+/* 39 */ Int32 max_mp
+/* 43 */ Int32 havoc
+/* 47 */ Int32 max_havoc
+/* 51 */ Int32 sex
+/* 55 */ Int32 race
+/* 59 */ Int32 skin_color
+/* 63 */ Int32 face_id
+/* 67 */ Int32 hair_id
+/* 71 */ string(19) char_name
+/* 90 */ Int32 cell_size // 6
+/* 94 */ Int32 guild_id

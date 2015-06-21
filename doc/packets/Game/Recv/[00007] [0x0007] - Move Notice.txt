@@ -1,0 +1,11 @@
+// Seems to be called when character
+// is moving from a point to another
+// something like keeping the server
+// updated of the movement
+
+[Header]
+[UpdateTime] : Int32
+[CurrentX] : float
+[CurrentY] : float
+[CurrentZ] : Float
+[Stop] : bool

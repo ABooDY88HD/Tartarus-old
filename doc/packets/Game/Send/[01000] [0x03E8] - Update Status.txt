@@ -1,0 +1,46 @@
+[Header]
+[Handle] : UInt32
+[Unknown] : Int16
+[Strenght] : Int16
+[Vitality] : Int16
+[Dexterity] : Int16
+[Agility] : Int16
+[Int] : Int16
+[Wisdom] : Int16
+[Luck] : Int16
+[Crit Rate] : Int16
+[CritPower] : Int16
+[PAtk] : Int16
+[PAtk /] : Int16
+[PDef] : Int16
+[Block Def] : Int16
+[MAtk] : Int16
+[MDef] : Int16
+[Accuracy] : Int16
+[Accuracy /] : Int16
+[M Accuracy] : Int16
+[Evasion] : Int16
+[M Res] : Int16
+[Block Per] : Int16
+[Mov Spd] : Int16
+[AtkSpd] : Int16
+[Unknown] : Int16 // 60
+[Unknown] : Int16 // 9119
+[Unknown] : Int16 // 0
+[CastSpd] : Int16
+[ReCastSpd] : Int16
+[Unknown] : Int16 // 2
+[HP Regen] : Int16
+[HP Recov] : Int16
+[MP Regen] : Int16
+[MP Recov] : Int16
+[Perf Block] : Int16
+[M Ignore] : Int16
+[M Ignore %] : Int16
+[P Ignore] : Int16
+[P Ignore %] : Int16
+[M Pierce] : Int16
+[M Pierce %] : Int16
+[P Pierce] : Int16
+[P Pierce %] : Int16
+[IsTemporary] : Bool

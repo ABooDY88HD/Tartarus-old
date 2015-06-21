@@ -1,0 +1,6 @@
+Size: 129
+
+[Header]
+string(60)	username
+string(8)	password (DES Hashed -> Key: MERONG)
+[Unknown]

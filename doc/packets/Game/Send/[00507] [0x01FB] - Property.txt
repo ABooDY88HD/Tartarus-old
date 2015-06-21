@@ -1,0 +1,44 @@
+[Header]
+/* 0 */ UInt32 handle
+/* 4 */ Byte unknown //0x01
+/* 5 */ String(16) property_name
+~~~ If Value is an Int ~~~
+	/* 21 */ Int32 value
+~~~ Else ~~~~
+	/* 21 */ Int32 0
+~~ ~~~~~~~~~~
+/* 25 */ Int32 0
+~~~ If value is a String ~~~
+	/* 28 */ String(length) value + 0x00
+
+Known Porperties:
+alias
+ap
+channel
+chaos
+dk_count
+ethereal_stone
+huntaholic_ent
+huntaholic_point
+immoral
+jlv_0
+jlv_1
+jlv_2
+job
+job_0
+job_1
+job_2
+job_level
+layer
+max_chaos
+max_havoc
+max_stamina
+pk_count
+playtime
+playtime_limit1
+playtime_limit2
+stamina
+stamina_regen
+tp
+x
+y

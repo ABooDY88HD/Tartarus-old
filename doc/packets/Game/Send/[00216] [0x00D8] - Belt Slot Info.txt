@@ -1,0 +1,9 @@
+// From pyrok's emulator
+// [untested]
+[Header]
+/* 0 */ UInt32 slot0_handle
+/* 4 */ UInt32 slot1_handle
+/* 8 */ UInt32 slot2_handle
+/* 12 */ UInt32 slot3_handle
+/* 16 */ UInt32 slot4_handle
+/* 20 */ UInt32 slot5_handle

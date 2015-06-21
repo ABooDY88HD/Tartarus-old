@@ -1,0 +1,10 @@
+// This packet is used on the first
+// login, it sends a Token to be
+// validated by the game-server
+
+Size: 76
+
+[Header]
+[Username : String(60)]
+00
+[Token : 8] // Same as the sent with Packet 0x2728 from Auth

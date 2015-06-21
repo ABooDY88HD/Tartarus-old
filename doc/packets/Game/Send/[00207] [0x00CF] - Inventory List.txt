@@ -1,0 +1,16 @@
+[Header]
+/* 0 */ Int16 item_count
+~~ For each Item ~~
+/* 2 */ UInt32 item_handle
+/* 6 */ Int32 item_id
+/* 10 */ Int64 item_uid
+/* 14 */ Int64 count
+/* 18 */ unknown // 0x00 0x00 0x00 0x00
+/* 22 */ unknown // 0x00 0x00 0x00 0x00
+/* 26 */ Byte enhance
+/* 27 */ Byte level
+81 Bytes 00
+/* 108 */ Int32 wear_info
+/* 112 */ Int16 unknown // 0
+/* 114 */ Int32 idx
+~~~~~~~~~~~~~~~~~~~

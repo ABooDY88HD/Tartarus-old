@@ -1,0 +1,26 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Express 2012 for Windows Desktop
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "auth", "vsproj-11\Auth\auth.csproj", "{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "game", "vsproj-11\Game\game.csproj", "{AE4CFE96-7DB3-4AEB-BF38-86E2CE30D413}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AE4CFE96-7DB3-4AEB-BF38-86E2CE30D413}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AE4CFE96-7DB3-4AEB-BF38-86E2CE30D413}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AE4CFE96-7DB3-4AEB-BF38-86E2CE30D413}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AE4CFE96-7DB3-4AEB-BF38-86E2CE30D413}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

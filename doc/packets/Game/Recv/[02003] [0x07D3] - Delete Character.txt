@@ -1,0 +1,5 @@
+// Sends a request to delete
+// a character
+
+[Header]
+[CharacterName] : String(19)

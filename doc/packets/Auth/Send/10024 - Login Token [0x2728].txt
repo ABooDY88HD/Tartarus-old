@@ -1,0 +1,5 @@
+[Header]
+00 00
+string(8)	key // Client sends this with Packet 2005 to Game Server
+0A (?)
+00 00 00

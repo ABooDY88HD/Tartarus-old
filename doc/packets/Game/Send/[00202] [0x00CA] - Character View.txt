@@ -1,0 +1,27 @@
+[Header]
+/* 0 */ Int32 player_handle
+/* 4 */ Int32 weapon_id
+/* 8 */ Int32 shield_id
+/* 12 */ Int32 armor_id
+/* 16 */ Int32 cap_id
+/* 20 */ Int32 hand_id // If a glove is equipped, glove id, hand id otherwise
+/* 24 */ Int32 feet_id // If a boot is equipped, boot id, feet id otherwise
+/* 28 */ Int32 belt_id
+/* 32 */ Int32 cape_id
+/* 36 */ Int32 necklace_id
+/* 40 */ Int32 ring1
+/* 44 */ Int32 ring2
+/* 48 */ Int32 earring
+/* 52 */ Int32 mask_id
+/* 56 */ Int32 unknown
+/* 60 */ Int32 unknown
+/* 64 */ Int32 deco_shield_id
+/* 68 */ Int32 deco_costume_id
+/* 72 */ Int32 deco_head_id
+/* 76 */ Int32 deco_gloves_id
+/* 80 */ Int32 deco_shoes_id
+/* 84 */ Int32 deco_cloak_id
+/* 88 */ Int32 deco_bag_id
+/* 92 */ Int32 mount_id
+/* 96 */ Int32 bag_id
+312x unknown

@@ -1,0 +1,5 @@
+// It receives a 00 packet as response
+// Client sends it in the moment that
+// "Character Selection" button is
+// pressed
+[Header]

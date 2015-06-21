@@ -1,0 +1,12 @@
+// Structure:
+// id, type, min_level, max_level, min_jlevel, max_jlevel, limit_race, 
+// limit_jobs, repeatable, exp, jp, holic_point, gold, drop_group,
+// { objective1, objective2, ..., objectiveN },
+// { main_reward_id, main_reward_amount },
+// { opt_reward_id1, opt_reward_count1, ..., opt_reward_id6, opt_reward_count6 }
+// deva
+1005, 101, 1, 0, 0, 0, 0, 0, 0, 5, 0, 2, 300, 0, { 1003, 3, 2003, 0, 3004 }, {}, {}
+// asura
+1008, 101, 1, 0, 0, 0, 0, 0, 0, 5, 0, 2, 300, 0, { 1004, 3, 2004, 0, 3005 }, {}, {}
+// gaia
+1010, 101, 1, 0, 0, 0, 0, 0, 0, 5, 0, 2, 300, 0, { 1002, 3, 2002, 0, 3003 }, {}, {}

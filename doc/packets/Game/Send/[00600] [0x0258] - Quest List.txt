@@ -1,0 +1,15 @@
+[Header]
+/* 0 */ Int32 count
+/* 4 */ struct Quest[count] {
+	/* 0 */ Int32 quest_id
+	/* 4 */ Int32 status1
+	/* 8 */ Int32 status2
+	/* 12 */ Int32 status3
+	/* 16 */ Int32 status4
+	/* 20 */ Int32 status5
+	/* 24 */ Int32 status6
+
+	// 23 Unknown (0's)
+	/* 56 */ Byte progress // 1 = In Progress | 2 = Complete
+	/* 57 */ Int32 unknown
+}

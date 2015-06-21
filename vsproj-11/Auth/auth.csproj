@@ -1,0 +1,155 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')" />
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProjectGuid>{5E1DFA89-E464-4DF0-8CB7-C6B9233071F6}</ProjectGuid>
+    <OutputType>Exe</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>auth</RootNamespace>
+    <AssemblyName>Auth</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <PublishUrl>publish\</PublishUrl>
+    <Install>true</Install>
+    <InstallFrom>Disk</InstallFrom>
+    <UpdateEnabled>false</UpdateEnabled>
+    <UpdateMode>Foreground</UpdateMode>
+    <UpdateInterval>7</UpdateInterval>
+    <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+    <UpdatePeriodically>false</UpdatePeriodically>
+    <UpdateRequired>false</UpdateRequired>
+    <MapFileExtensions>true</MapFileExtensions>
+    <ApplicationRevision>0</ApplicationRevision>
+    <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
+    <IsWebBootstrapper>false</IsWebBootstrapper>
+    <UseApplicationTrust>false</UseApplicationTrust>
+    <BootstrapperEnabled>true</BootstrapperEnabled>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <PlatformTarget>AnyCPU</PlatformTarget>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="MySql.Data, Version=6.9.5.0, Culture=neutral, PublicKeyToken=c5687fc88969c44d, processorArchitecture=MSIL">
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="..\..\src\auth\Client.cs">
+      <Link>auth\Client.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\ClientManager.cs">
+      <Link>auth\ClientManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\ClientPacketHandler.cs">
+      <Link>auth\ClientPacketHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\GameServer.cs">
+      <Link>auth\GameServer.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\NetworkManager.cs">
+      <Link>auth\NetworkManager.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\Packets.cs">
+      <Link>auth\Packets.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\Program.cs">
+      <Link>auth\Program.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\Server.cs">
+      <Link>auth\Server.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\ServerPacketHandler.cs">
+      <Link>auth\ServerPacketHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\auth\Settings.cs">
+      <Link>auth\Settings.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Config.cs">
+      <Link>common\Config.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\ConsoleUtils.cs">
+      <Link>common\ConsoleUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Database.cs">
+      <Link>common\Database.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\DES\XDes.cs">
+      <Link>common\DES\XDes.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Globals.cs">
+      <Link>common\Globals.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\PacketStream.cs">
+      <Link>common\PacketStream.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\RC4\RC4Cipher.cs">
+      <Link>common\RC4\RC4Cipher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\RC4\XRC4Cipher.cs">
+      <Link>common\RC4\XRC4Cipher.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Utilities\ByteUtils.cs">
+      <Link>common\Utilities\ByteUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Utilities\HashUtils.cs">
+      <Link>common\Utilities\HashUtils.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\Utilities\TimeUtils.cs">
+      <Link>common\Utilities\TimeUtils.cs</Link>
+    </Compile>
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="App.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <BootstrapperPackage Include=".NETFramework,Version=v4.5">
+      <Visible>False</Visible>
+      <ProductName>Microsoft .NET Framework 4.5 %28x86 and x64%29</ProductName>
+      <Install>true</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Client.3.5">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1 Client Profile</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+    <BootstrapperPackage Include="Microsoft.Net.Framework.3.5.SP1">
+      <Visible>False</Visible>
+      <ProductName>.NET Framework 3.5 SP1</ProductName>
+      <Install>false</Install>
+    </BootstrapperPackage>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

@@ -1,0 +1,5 @@
+Informs that this character wants to
+connect to the game.
+
+[Header]
+[Character Name] : String(19)

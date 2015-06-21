@@ -1,0 +1,7 @@
+This is a status packet, It sends a "response" to certain
+packet IDs by using a Status code
+
+Size: 15
+[Header]
+[Packet ID] (Int16)
+[Status]

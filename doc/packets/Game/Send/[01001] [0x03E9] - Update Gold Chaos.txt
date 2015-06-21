@@ -1,0 +1,5 @@
+// Called on login and whenever player gets gold
+// (not sure why it doesn't trigger for Lak)
+[Header]
+/* 0 */ Int64 gold
+/* 8 */ Int32 chaos

@@ -1,0 +1,15 @@
+[Header]
+01 00 01 00 // Unknown
+foreach server
+{
+	byte		server_index
+	00
+	string(21)	server_name
+	00
+	string(255)	notice_url
+	00
+	string(15)	server_ip
+	00
+	short		server_port
+	00 00 00 00
+}

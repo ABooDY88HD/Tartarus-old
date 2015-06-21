@@ -1,0 +1,4 @@
+Server has a packet with the same id
+
+[Header]
+[UnknownID] : Int16

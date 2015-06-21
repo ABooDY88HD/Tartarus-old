@@ -1,0 +1,5 @@
+// Informs the client about
+// a region change
+[Header]
+/* 0 */ UInt32 region_x
+/* 1 */ UInt32 region_y

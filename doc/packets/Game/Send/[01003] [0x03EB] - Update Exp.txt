@@ -1,0 +1,4 @@
+[Header]
+/* 0 */ UInt32 handle
+/* 4 */ Int64 char_exp
+/* 12 */ Int64 job_points

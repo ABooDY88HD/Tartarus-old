@@ -197,7 +197,8 @@ namespace game
 			ClientManager.Instance.Send(player, data);
 		}
 
-		// [0x07D5] 2005 -> User Join Game Server
+		/// [0x07D5] 2005 -> (CG) Sent by the client to join the game server
+		/// <user id>.60S <00>.B <auth token>8B
 		internal static void parse_UserJoinServer(Player player, ref PacketStream stream, short[] pos)
 		{
 			string userId = stream.ReadString(pos[0], 60);
@@ -206,7 +207,8 @@ namespace game
 			Server.OnUserJoin(player, userId, key);
 		}
 
-		// [0x07D6] 2006 -> Character Name Check
+		/// [0x07D6] 2006 -> (CG) Checks if a name is available
+		/// <new name>.19S
 		internal static void parse_CharNameCheck(Player player, ref PacketStream stream, short[] pos)
 		{
 			string charName = stream.ReadString(pos[0], 19);
@@ -217,8 +219,11 @@ namespace game
 
 		#region PC Movement
 		
+		/// [0x0005] 5 - (CG) Requests to move from a position to another
+		/// <player handle>.L <from x>.L <from y>.L <dest x>.L <dest y>.L
 		internal static void parse_PCMoveRequest(Player player, ref PacketStream stream, short[] pos)
 		{
+			// TODO : Update
 			uint handle = stream.ReadUInt32(pos[0]);
 			float fromX = stream.ReadFloat(pos[1]);
 			float fromY = stream.ReadFloat(pos[2]);
@@ -227,6 +232,9 @@ namespace game
 
 		}
 
+		/// [0x0008] 8 - (GC) Sends data to make character move
+		/// <time>.L <player handle>.L <layer>.B <move speed>.B 
+		/// <point count>.W { <to x>.L <to y>.L }*count
 		internal static void send_PCMoveTo(Player player, uint handle, float toX, float toY)
 		{
 			PacketStream res = new PacketStream((short)0x0008);
@@ -250,6 +258,8 @@ namespace game
 			NetworkManager.Instance.SendPacket(sid, ref res);
 		}
 
+		/// [0x0007] 7 - (CG) Tells where the player currently is while moving
+		/// <player handle>.L <current x>.L <current y>.L <stop>.B
 		internal static void parse_PCMoveUpdate(Player player, ref PacketStream stream, short[] pos)
 		{
 			uint handle = stream.ReadUInt32(pos[0]);
@@ -262,12 +272,16 @@ namespace game
 
 		#endregion
 
+		/// [0x0001] 1 - (CG) Request to join the game with a character
+		/// <char name>.19S
 		internal static void parse_JoinGame(Player player, ref PacketStream stream, short[] pos)
 		{
 			string charName = stream.ReadString(pos[0], 19);
 			Server.OnUserJoinGame(player, charName);
 		}
 
+		/// [0x2329] 9001 - (GC) Send a list of URLs
+		/// <str length>.W <url list>.(str length)B
 		internal static void send_UrlList(Player player, string urlList)
 		{
 			PacketStream data = new PacketStream((short)0x2329);
@@ -278,6 +292,9 @@ namespace game
 			ClientManager.Instance.Send(player, data);
 		}
 
+		/// [0x01FB] 507 - (GC) Send the value of a property
+		/// <player handle>.L <0x01>.B <property name>.16S <value/0>.L <0>.L [str value].?S
+		/// For a properties list check the full doc at "docs/packets/Game/"
 		internal static void send_Property(Player player, string property, object value, bool asString = false)
 		{
 			PacketStream data = new PacketStream((short)0x01FB);

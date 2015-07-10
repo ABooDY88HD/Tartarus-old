@@ -1,0 +1,16 @@
+// Character requests to move from one position
+// to another one
+
+UInt32 player_handle;	/* 0 */
+Single from_x;			/* 4 */
+Single from_y;			/* 8 */
+UInt32 move_time;		/* 12 */
+Byte speed_sync;		/* 16 */
+Int16 move_count;		/* 17 */
+struct {
+	Single to_x;		/* 19 */
+	Single to_y;		/* 22 */
+} move_positions[move_count]
+
+// Notes
+speed_sync: always 1 (?)

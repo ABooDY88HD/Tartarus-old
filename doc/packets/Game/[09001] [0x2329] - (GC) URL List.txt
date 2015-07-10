@@ -1,0 +1,8 @@
+// Sends a list of URLs to the client
+
+Int16 string_length 			/* 0 */
+String(string_length) url_list;	/* 2 */
+
+// Notes:
+	The url_list is a string that follows the format:
+		<url name>|<url>|<url name>|<url>...

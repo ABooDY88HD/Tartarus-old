@@ -1,0 +1,48 @@
+// Send the value of a property
+
+UInt32 player_handle;		/* 0 */
+Byte unknown;				/* 4 */ //0x01
+String(16) property_name;	/* 5 */
+[ // If value is an int
+	Int32 value;			/* 21 */
+]
+[ // If value is a string
+	Int32 0;				/* 21 */
+]
+Int32 0;					/* 25 */
+[ // If value is a string
+	String(?S) value;		/* 28 */ 
+]
+
+// Notes:
+	- Known Porperties:
+		alias
+		ap
+		channel
+		chaos
+		dk_count
+		ethereal_stone
+		huntaholic_ent
+		huntaholic_point
+		immoral
+		jlv_0
+		jlv_1
+		jlv_2
+		job
+		job_0
+		job_1
+		job_2
+		job_level
+		layer
+		max_chaos
+		max_havoc
+		max_stamina
+		pk_count
+		playtime
+		playtime_limit1
+		playtime_limit2
+		stamina
+		stamina_regen
+		tp
+		x
+		y

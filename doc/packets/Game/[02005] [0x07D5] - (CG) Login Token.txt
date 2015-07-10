@@ -1,0 +1,9 @@
+// Sent by the client to join the game server
+// it contains a validation key
+String(60) username;	/* 0 */
+Byte 00;				/* 60 */
+Byte[8] auth_token;		/* 61 */
+
+// Notes:
+auth_token: Same as the one sent with Packet 0x2728 from Auth-Server
+			to the user client.

@@ -2,7 +2,7 @@
 // Characters Data
 00 00 00 00 00 00
 Int16 char_count;	/* 6 */
-{
+struct {
 	Int32 sex;				/* 8 */
 	Int32 race;				/* 12 */
 	Int32 model00;			/* 16 */
@@ -47,7 +47,7 @@ Int16 char_count;	/* 6 */
 	String(30) create_date;	/* 198 */
 	String(30) delete_date	/* 228 */
 	312 Unknown Bytes		/* 258 */
-}
+} char [char_count]
 
 //hand_id: If a glove is equipped, glove id, hand id otherwise; /* 20 */
 //feet_id: If a boot is equipped, boot id, feet id otherwise;

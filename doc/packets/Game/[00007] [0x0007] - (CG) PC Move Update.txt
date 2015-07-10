@@ -1,0 +1,12 @@
+// Called when character is moving from a 
+// point to another, to keep the server
+// synchronized with the movement
+
+Int32 update_time;	/* 0 */
+Single current_x;	/* 4 */
+Single current_y;	/* 8 */
+Single current_z;	/* 12 */
+Byte stop;			/* 16 */
+
+// Notes:
+	stop: 0 = false; 1 = true

@@ -1,0 +1,14 @@
+// Sends data to make character move
+
+UInt32 time;		/* 0 */
+UInt32 handle;		/* 4 */
+Byte layer;			/* 8 */
+Byte move_speed;	/* 9 */
+Int16 point_count;	/* 10 */
+struct {
+	Single to_x;	/* 12 */
+	Single to_y;	/* 16 */
+} move_positions[point_count];
+
+// Notes:
+	move_speed: 11

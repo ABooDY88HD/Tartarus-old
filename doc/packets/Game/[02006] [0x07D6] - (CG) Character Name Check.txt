@@ -1,0 +1,7 @@
+// Sends a request to check if this name is available
+// for character creation.
+String(19) char_name; /* 0 */
+
+// Packet Responses:
+	0 - Name available
+	1 - Name in use

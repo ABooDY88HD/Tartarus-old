@@ -43,10 +43,12 @@ enclosed in angle brackets ( <field name> ) followed by a dot and
 the data size type.
 Field names should be lower-case and without underscores. If other
 packets already have a field in common, use that name, rather than
-inventing your own (ex. "account id"). Repeated and
-optional fields are designated with curly and square brackets
-respectively, padded with a single space at each side.
-If the structur is too large (more than ~80 characters) it's broke
+inventing your own (ex. "account id").
+If a field has a default value in some cases, it should be put in
+its definition like <value/0>.L (0 being the default for some cases).
+Repeated and optional fields are designated with curly and square
+brackets respectively, padded with a single space at each side.
+If the structure is too large (more than ~80 characters) it's broke
 into more than one line.
 
 Further lines are optional and either include details about the
@@ -159,7 +161,7 @@ values.
 
 = Repetition of packet fields =
 
- {}[n] = repeated block n times
+ struct {} <name>[n] = repeated block n times
 
 = Packet origin and destination letters =
 

@@ -1,0 +1,15 @@
+# Auth Project Folders
+/vsproj-11/Auth/common
+/vsproj-11/Auth/obj
+/vsproj-11/Auth/auth
+/vsproj-11/Auth/bin
+
+# Game Project Folders
+/vsproj-11/Game/bin
+/vsproj-11/Game/common
+/vsproj-11/Game/game
+/vsproj-11/Game/obj
+
+# Temporary
+*.suo
+*.tmp

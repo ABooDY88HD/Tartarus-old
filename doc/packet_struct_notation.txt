@@ -1,0 +1,171 @@
+//==== Tartarus Documentation =============================
+// Packet Structure Notation
+//==== Current Version
+// 20150710
+//==== Description
+// Explains how packets are and should be documented
+//=========================================================
+// Based on Hercules' documentation
+//=========================================================
+This document specifies how packets are and should be documented, to
+keep packet structure comments consistent in the entire codebase. It
+also serves as a guide to those, who are unfamiliar with the general
+packet layout.
+
+All mentioned data types are assumed to be little-endian (least-
+significant byte first, least significant bit last) and of same size
+regardless of architecture.
+
+======= Source Code Documentation =======
+= Typical description of a packet =
+
+For PacketHandler classes:
+ /// [0x07D1] 2001 -> (CS) Requests the list of characters
+ /// <user id>.60S
+
+The first line contains the packet ID in Hexadecimal and Decimal
+formats, followed by its direction and brief description of what
+the packet does, or what it is good for.
+The packets directions are made by two letters, the first meaning
+its origin and the second its destination, CS means a packet that
+goes from the Client (C) to the Server (S). 
+Do not use S(end)/R(ecv) for this, as it is inaccurate and
+location dependent (if the description is copied to different server
+or other projects, it might change it's meaning).
+
+If there are multiple versions of the packet, a line is added before
+the packet structure with a PACKETVER expression, such as 
+(PACKETVER >= 20110530).
+
+Second line describes the packet's field structure, with the 
+individual fields and their types. Each field begins with it's name
+enclosed in angle brackets ( <field name> ) followed by a dot and 
+the data size type.
+Field names should be lower-case and without underscores. If other
+packets already have a field in common, use that name, rather than
+inventing your own (ex. "account id"). Repeated and
+optional fields are designated with curly and square brackets
+respectively, padded with a single space at each side.
+If the structur is too large (more than ~80 characters) it's broke
+into more than one line.
+
+Further lines are optional and either include details about the
+the packet's mechanics or further explanation on the packet fields'
+values.
+
+For Packet Classes:
+In these classes only the first line from the PacketHandler is used 
+(to keep the file clean and small) and instead of a description
+its name is used
+
+e.g:
+ /// [0x07D1] 2001 -> (CS) Request Character List
+
+= Packet field data size type =
+
+ B = 1 byte  (Byte)
+ W = 2 bytes (Word)
+ L = 4 bytes (Long)
+ Q = 8 bytes (Quad)
+
+ nB = n bytes
+ ?B = variable/unknown amount of bytes
+ nS = n bytes, zero-terminated
+ ?S = variable/unknown amount of bytes, zero-terminated
+
+= Repetition of packet fields =
+
+ {} = repeated block
+ {}* = variable/unknown amount of consecutive blocks
+ {}*n = n times repeated block
+ [] = optional fields
+
+= Packet origin and destination letters =
+
+ A = Auth Server
+ C = Client
+ G = Game Server
+
+= Examples =
+
+=========== Docs Documentation ===========
+= Typical File Name =
+[00003] [0x0003] - (GC) Entity Notice
+
+In the first bracket goes the decimal packet ID with 5 characters
+(left filled with zeros if needed), the second bracket has the 
+hexadecimal packet ID, then the packet direction and finally
+a brief name for the packet.
+
+= Typical packet structure =
+  // Notifies the client about an Entity
+  Byte main_type;	/* 0 */
+  Int32 unknown;	/* 4 */
+  Single x;			/* 8 */
+  Single y;			/* 12 */
+  Single z;			/* 16 */
+  Byte layer;		/* 17 */
+  Byte sub_type;	/* 18 */
+  
+  // Notes:
+  main_type : int
+  {
+	Player = 0,
+	NPC = 1,
+	StaticObject = 2,
+  }
+  
+  sub_type : int
+  {
+	Player = 0,
+	NPC = 1,
+	Item = 2,
+	Mob = 3,
+	Summon = 4,
+	SkillProp = 5,
+	FieldProp = 6,
+	Pet = 7,
+  }
+
+First the file contains a description of what the packet does,
+all of these lines starts with // for better readability.
+Then, it contains the structure, with one field per line,
+first the field type, then its name, lower-case and with 
+underscores.
+If other packets already have a field in common, use that name,
+rather than inventing your own (ex. "account_id")
+Repeated fields are designated with curly brackets.
+After the field info, there's a semicolon and then its start
+offset in the stream (without considering the packet header).
+
+If there are multiple versions of the packet, a line is added before
+the packet structure with a PACKETVER expression, such as 
+(PACKETVER >= 20110530).
+
+Further lines are optional and either include details about the
+the packet's mechanics or further explanation on the packet fields'
+values.
+
+= Packet field data size type =
+
+ Byte = 1 byte (byte)
+ Int16 = 2 bytes (numerical, short)
+ Int32 = 4 bytes (numerical, int)
+ Single = 4 bytes (numerical, float)
+ Int64 = 8 bytes (numerical, long)
+
+ <type>[n] - n of field type <type>
+ String(n) - String with n characters 0-terminated
+
+= Repetition of packet fields =
+
+ {}[n] = repeated block n times
+
+= Packet origin and destination letters =
+
+ A = Auth Server
+ C = Client
+ G = Game Server
+
+= Examples =
+

@@ -1,5 +1,3 @@
 // Sends a request to delete
 // a character
-
-[Header]
-[CharacterName] : String(19)
+String(19) char_name;	/* 0 */

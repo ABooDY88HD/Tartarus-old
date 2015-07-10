@@ -1,0 +1,22 @@
+// Sends the information to create a
+// new Character
+Int32 sex;			/*  0 */
+Int32 race;			/*  4 */
+Int32 hair_id;		/*  8 */
+Int32 face_id;		/* 12 */ 
+Int32 body_id;		/* 16 */
+Int32 hands_id;		/* 20 */
+Int32 feet_id;		/* 24 */
+Int32 hair_color;	/* 28 */
+
+Int32 face_detail;	/* 40 */
+
+Int32 clothes_id;	/* 52 */
+
+String(19) name;	/* 169 */
+Int32 skin_color;	/* 188 */
+
+Notes:
+	clothes_id: This is the model from DefaultModel
+	sex: 1 = Female | 2 = Male
+	race: 3 = Deva | 4 = Gaia | 5 = Asura

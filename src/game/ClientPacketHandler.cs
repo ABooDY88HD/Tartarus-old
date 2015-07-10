@@ -58,7 +58,8 @@ namespace game
 
 		#region General Uses
 
-		// [0x0000] 0000 -> Packet Response
+		/// [0x0000] 0000 -> (GC) Sends the result of a packet
+		/// <packet id>.W <result>.L <0>.W
 		internal static void send_PacketResponse(Player player, short packetId, int response = 0)
 		{
 			PacketStream data = new PacketStream((short)0x0000);
@@ -74,7 +75,8 @@ namespace game
 
 		#region Character Selection Screen
 
-		// [0x07D1] 2001 -> Character List Request
+		/// [0x07D1] 2001 -> Requests the list of characters
+		/// <user id>.60S
 		internal static void parse_CharListRequest(Player player, ref PacketStream stream, short[] pos)
 		{
 			string userId = stream.ReadString(pos[0], 60);
@@ -82,7 +84,10 @@ namespace game
 			player.SendCharacterList();
 		}
 
-		// [0x07D2] 2002 -> Create Character
+		/// [0x07D2] 2002 -> (CS) Requests the creation of a new character
+		/// <sex>.L <race>.L <hair id>.L <face id>.L <body id>.L <hands id>.L
+		/// <feet id>.L <hair color>.L <face detail>.L <clothes id>.L 
+		/// <char name>.19S <skin color>.L
 		internal static void parse_CreateCharacter(Player player, ref PacketStream stream, short[] pos)
 		{
 			int sex = stream.ReadInt32(pos[0]);
@@ -104,13 +109,25 @@ namespace game
 			player.CreateCharacter(name, sex, race, hairId, faceId, bodyId, handsId, feetId, hairColor, faceDetail, clothesId, skinColor);
 		}
 
-		// [0x07D3] 2003 -> Delete Character
+		/// [0x07D3] 2003 -> Requests the deletion of a character
+		/// <char name>.19S
 		internal static void parse_DeleteCharacter(Player player, ref PacketStream stream, short[] pos)
 		{
 			string charName = stream.ReadString(pos[0], 19);
 		}
 
-		// [0x07D4] 2004 -> Send Character List
+		/// [0x07D4] 2004 -> Sends the list of account characters
+		/// <00>.6B <char count>.W { <sex>.L <race>.L <hair id>.L <face id>.L
+		/// <body id>.L <hands id>.L <feet id>.L <hair color>.L <00>.Q 
+		/// <0x05, 0x00, 0x00, 0x00> <right hand>.L <>.L <armor id>.L
+		/// <4>.L <8>.L <12>.L <16>.L <20>.L <24>.L <28>.L <32>.L
+		/// <36>.L <40>.L <44>.L <48>.L <52>.L <56>.L <60>.L <64>.L
+		/// <68>.L <72>.L <76>.L <80>.L <bag id>.L <level>.L <job>.L
+		/// <job level>.L <0>.17B <char name>.19S <skin color>.L
+		/// <create date>.30S <delete date>.30S
+		/// <0x14>.B <0>7B <0x14>.B
+		/// <0>.87B <0x0A>.B <0>.7B <0x0A>.B <0>.7B
+		/// <0>.83B <0x01>.B <0>.123B
 		internal static void send_CharacterList(Player player, Character[] characters)
 		{
 			PacketStream data = new PacketStream(0x07D4);

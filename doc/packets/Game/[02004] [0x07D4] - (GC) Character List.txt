@@ -1,0 +1,53 @@
+// Sends account
+// Characters Data
+00 00 00 00 00 00
+Int16 char_count;	/* 6 */
+{
+	Int32 sex;				/* 8 */
+	Int32 race;				/* 12 */
+	Int32 model00;			/* 16 */
+	Int32 model01;			/* 20 */
+	Int32 model02;			/* 24 */
+	Int32 model03;			/* 28 */
+	Int32 model04;			/* 32 */
+	Int32 hair_color;		/* 36 */
+	00 00 00 00				/* 40 */
+	00 00 00 00				/* 44 */
+	05 00 00 00				/* 48 */
+	Int32 right_hand;		/* 52 */
+	Int32 shield_id;		/* 54 */ //(?)
+	Int32 armor_id;			/* 58 */
+	Int32 cap_id;			/* 62 */
+	Int32 hand_id; 			/* 66 */
+	Int32 feet_id;			/* 70 */
+	Int32 belt_id;			/* 74 */
+	Int32 cape_id;			/* 78 */
+	Int32 necklace_id;		/* 82 */
+	Int32 ring1;			/* 86 */
+	Int32 ring2;			/* 90 */
+	Int32 earring;			/* 94 */
+	Int32 mask_id;			/* 98 */
+	Int32 unknown;			/* 102 */
+	Int32 unknown;			/* 106 */
+	Int32 deco_shield_id;	/* 110 */
+	Int32 deco_costume_id;	/* 114 */
+	Int32 deco_head_id;		/* 118 */
+	Int32 deco_gloves_id;	/* 122 */
+	Int32 deco_shoes_id;	/* 126 */
+	Int32 deco_cloak_id;	/* 130 */
+	Int32 deco_bag_id;		/* 134 */
+	Int32 mount_id;			/* 138 */
+	Int32 bag_id;			/* 142 */
+	Int32 level;			/* 146 */
+	Int32 job;				/* 150 */
+	Int32 job_level;		/* 154 */
+	17 Unknown				/* 158 */
+	String(19) char_name;	/* 175 */
+	Int32 skin_color;		/* 194 */
+	String(30) create_date;	/* 198 */
+	String(30) delete_date	/* 228 */
+	312 Unknown Bytes		/* 258 */
+}
+
+//hand_id: If a glove is equipped, glove id, hand id otherwise; /* 20 */
+//feet_id: If a boot is equipped, boot id, feet id otherwise;

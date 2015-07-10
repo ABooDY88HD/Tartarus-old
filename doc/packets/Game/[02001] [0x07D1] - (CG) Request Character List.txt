@@ -1,0 +1,4 @@
+// Requests the list of characters
+// of a given account user id
+String(60) user_id;	/* 0 */
+Byte 00; 			/* 60 */

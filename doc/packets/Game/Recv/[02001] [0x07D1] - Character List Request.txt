@@ -1,5 +1,0 @@
-Size: 68
-
-[Header]
-[Username : String(60)]
-00

@@ -35,7 +35,7 @@ namespace game
 			//packets_db.Add(0x0001, new Packet() { func = ClientPacketHandler.parse_JoinGame, pos = new short[] { 0 });
 
 			// [0x0005] 0005 -> PC Move Request
-			packets_db.Add(0x0005, new Packet() { func = ClientPacketHandler.parse_PCMoveRequest, pos = new short[] { 0, 4, 8, 12, 19, 23 }});
+			packets_db.Add(0x0005, new Packet() { func = ClientPacketHandler.parse_PCMoveRequest, pos = new short[] { 0, 4, 8, 12, 16, 17, 19, 23 }});
 			// [0x0007] 0007 -> PC Move Update
 			packets_db.Add(0x0007, new Packet() { func = ClientPacketHandler.parse_PCMoveUpdate, pos = new short[] { 0, 4, 8, 12, 16 }});
 

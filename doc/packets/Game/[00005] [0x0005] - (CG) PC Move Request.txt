@@ -9,7 +9,7 @@ Byte speed_sync;		/* 16 */
 Int16 move_count;		/* 17 */
 struct {
 	Single to_x;		/* 19 */
-	Single to_y;		/* 22 */
+	Single to_y;		/* 23 */
 } move_positions[move_count]
 
 // Notes

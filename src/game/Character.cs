@@ -49,6 +49,7 @@ namespace game
 
 		public uint[] Equip { get; set; }
 
+		public Point Position { get; set; }
 		public Character()
 		{
 			Equip = new uint[(int)Item.WearType.WearType_Max];

@@ -281,6 +281,7 @@ namespace game
 			//int unknown = stream.ReadInt32(pos[3]);
 			bool stop = stream.ReadBool(pos[4]);
 
+			RegionMngr.UpdatePCPos(player, curX, curY, stop);
 		}
 
 		#endregion

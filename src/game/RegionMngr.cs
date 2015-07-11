@@ -48,5 +48,16 @@ namespace game
 		{
 			ClientPacketHandler.send_PCMoveTo(player, movePos);
 		}
+
+		internal static void UpdatePCPos(Player player, float curX, float curY, bool isLast)
+		{
+			player.Chara.Position.X = curX;
+			player.Chara.Position.Y = curY;
+
+			// TODO : Character should not be save when it stops walking
+			//		  but in certain time intervals, this is a workaround
+			if (isLast)
+				player.Chara.Save();
+		}
 	}
 }

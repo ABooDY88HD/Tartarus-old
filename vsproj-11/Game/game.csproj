@@ -56,6 +56,9 @@
     <Compile Include="..\..\src\common\DES\XDes.cs">
       <Link>common\DES\XDes.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\common\Geometry.cs">
+      <Link>common\Geometry.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\common\Globals.cs">
       <Link>common\Globals.cs</Link>
     </Compile>

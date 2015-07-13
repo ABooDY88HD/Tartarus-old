@@ -53,7 +53,7 @@ namespace game
 		public Character()
 		{
 			Equip = new uint[(int)Item.WearType.WearType_Max];
-			Position = new Point();
+			Position = new Point(0,0);
 
 			//TODO : Calculate
 			this.MaxHp = 100;

@@ -46,8 +46,12 @@ namespace game
 
 			Settings.Set(conf.Data);
 			Server sv = new Server();
-			
-			Console.ReadKey();
+
+			ConsoleCommands.LoadCommands(GetConsoleCmdList());
+			do
+			{
+				ConsoleCommands.OnInputReceived(Console.ReadLine());
+			} while (true);
 
 			/* Console Debug
 			ConsoleUtils.Write(ConsoleMsgType.None, "Msg0\n");
@@ -61,6 +65,16 @@ namespace game
 			ConsoleUtils.Write(ConsoleMsgType.FatalError, "Msg128\n");
 			ConsoleUtils.Write(ConsoleMsgType.PacketDebug, "Msg256\n");
 			*/
+		}
+
+		private static Dictionary<string, ConsoleCommands.Command> GetConsoleCmdList()
+		{
+			Dictionary<string, ConsoleCommands.Command> cmdList = new Dictionary<string, ConsoleCommands.Command>();
+
+			cmdList.Add("set_val", new ConsoleCommands.Command("i", ConsoleHelper.SetVal));
+			cmdList.Add("print_val", new ConsoleCommands.Command("", ConsoleHelper.PrintVal));
+
+			return cmdList;
 		}
 	}
 }

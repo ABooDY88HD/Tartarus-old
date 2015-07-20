@@ -49,9 +49,11 @@ namespace game
 
 		public uint[] Equip { get; set; }
 
+		public Point Position { get; set; }
 		public Character()
 		{
 			Equip = new uint[(int)Item.WearType.WearType_Max];
+			Position = new Point(0,0);
 
 			//TODO : Calculate
 			this.MaxHp = 100;
@@ -122,6 +124,21 @@ namespace game
 				};
 				this.QuestList.Add(q);
 			}
+		}
+
+		internal void Save()
+		{
+			Database db = new Database(Server.UserDbConString);
+			
+			db.WriteQuery(
+				"UPDATE `char` SET `x` = @x, `y` = @y WHERE `char_id` = @cid",
+				new string[] { 
+					"cid", "x", "y"
+				},
+				new object[] { 
+					this.CharId,  (int) this.Position.X, (int) this.Position.Y
+				}
+			);
 		}
 	}
 }

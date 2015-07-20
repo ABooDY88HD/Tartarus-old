@@ -34,3 +34,7 @@ server_name: Tartarus
 
 // Server Notice
 notice_url: http://127.0.0.1/notice.htm
+
+// Map Size
+map_length_x: 14
+map_length_y: 16

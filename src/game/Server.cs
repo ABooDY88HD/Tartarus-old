@@ -88,6 +88,8 @@ namespace game
 			ItemDb.Start();
 			QuestDb.Start();
 
+			RegionMngr.Start();
+
 			/* ************************* *
 			 * Start Network Manager
 			 * ************************* */

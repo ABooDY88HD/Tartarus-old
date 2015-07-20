@@ -39,6 +39,10 @@ namespace game
 		public static String UserSqlUsername;
 		public static String UserSqlPassword;
 
+		// Map Settings
+		public static Int32 MapLengthX;
+		public static Int32 MapLengthY;
+
 		/// <summary>
 		/// Types of Settings
 		/// </summary>
@@ -92,6 +96,10 @@ namespace game
 			UserSqlUsername = (String)ParseSetting(ref settings, DType.String, "sql.user_username", defaultSqlUser, true);
 			UserSqlPassword = (String)ParseSetting(ref settings, DType.String, "sql.user_password", defaultSqlPass, true);
 			UserSqlDatabase = (String)ParseSetting(ref settings, DType.String, "sql.user_database", defaultSqlDb, true);
+
+			// Map Settings
+			MapLengthX = (Int32)ParseSetting(ref settings, DType.Int32, "map_length_x", 0, false);
+			MapLengthY = (Int32)ParseSetting(ref settings, DType.Int32, "map_length_y", 0, false);
 		}
 
 		/// <summary>

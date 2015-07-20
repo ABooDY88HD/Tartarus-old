@@ -223,19 +223,28 @@ namespace game
 		/// <player handle>.L <from x>.L <from y>.L <dest x>.L <dest y>.L
 		internal static void parse_PCMoveRequest(Player player, ref PacketStream stream, short[] pos)
 		{
-			// TODO : Update
 			uint handle = stream.ReadUInt32(pos[0]);
 			float fromX = stream.ReadFloat(pos[1]);
 			float fromY = stream.ReadFloat(pos[2]);
-			float toX = stream.ReadFloat(pos[4]);
-			float toY = stream.ReadFloat(pos[5]);
+			uint time = stream.ReadUInt32(pos[3]);
+			byte speedSync = stream.ReadByte(pos[4]);
+			short moveCount = stream.ReadInt16(pos[5]);
 
+			Point[] movePos = new Point[moveCount];
+			for (int i = 0; i < moveCount; i++)
+			{
+				movePos[i] = new Point();
+				movePos[i].X = stream.ReadFloat(pos[6] + 8*i);
+				movePos[i].Y = stream.ReadFloat(pos[7] + 8*i);
+			}
+
+			RegionMngr.PcWalkCheck(player, fromX, fromY, movePos);
 		}
 
 		/// [0x0008] 8 - (GC) Sends data to make character move
 		/// <time>.L <player handle>.L <layer>.B <move speed>.B 
 		/// <point count>.W { <to x>.L <to y>.L }*count
-		internal static void send_PCMoveTo(Player player, uint handle, float toX, float toY)
+		internal static void send_PCMoveTo(Player player, Point[] movePoints)
 		{
 			PacketStream res = new PacketStream((short)0x0008);
 
@@ -245,17 +254,21 @@ namespace game
 			};
 			res.Write(b, 0, b.Length);
 
-			res.WriteUInt32(handle);
+			res.WriteUInt32(player.Handle);
 
 			b = new byte[] {
-				0x01, 0x11, 0x01, 0x00
+				0x01, 0x11
 			};
 			res.Write(b, 0, b.Length);
 
-			res.WriteFloat(toX);
-			res.WriteFloat(toY);
+			res.WriteInt16((short)movePoints.Length);
+			for (int i = 0; i < movePoints.Length; i++)
+			{
+				res.WriteFloat(movePoints[i].X);
+				res.WriteFloat(movePoints[i].Y);
+			}
 
-			NetworkManager.Instance.SendPacket(sid, ref res);
+			ClientManager.Instance.Send(player, res);
 		}
 
 		/// [0x0007] 7 - (CG) Tells where the player currently is while moving
@@ -268,6 +281,7 @@ namespace game
 			//int unknown = stream.ReadInt32(pos[3]);
 			bool stop = stream.ReadBool(pos[4]);
 
+			RegionMngr.UpdatePCPos(player, curX, curY, stop);
 		}
 
 		#endregion
@@ -330,7 +344,7 @@ namespace game
 			data.WriteFloat(0f); // Z
 			data.WriteByte((byte)player.Layer);
 			data.WriteFloat(180f);//player.Chara.Face);
-			data.WriteInt32(Globals.RegionSize);
+			data.WriteInt32(RegionMngr.RegionSize);
 			data.WriteInt32(player.Chara.Hp);
 			data.WriteInt32(player.Chara.Mp);
 			data.WriteInt32(player.Chara.MaxHp);

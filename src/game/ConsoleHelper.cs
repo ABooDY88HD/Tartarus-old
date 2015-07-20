@@ -25,5 +25,10 @@ namespace game
 		{
 			ConsoleUtils.Write(ConsoleMsgType.Debug, "Val1: {0}\n", TestVal1);
 		}
+
+		internal static void ConsolePrint(object[] args)
+		{
+			ConsoleUtils.Write(ConsoleMsgType.Debug, "{0}", args[0].ToString());
+		}
 	}
 }

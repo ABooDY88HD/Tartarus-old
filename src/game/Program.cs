@@ -73,6 +73,7 @@ namespace game
 
 			cmdList.Add("set_val", new ConsoleCommands.Command("i", ConsoleHelper.SetVal));
 			cmdList.Add("print_val", new ConsoleCommands.Command("", ConsoleHelper.PrintVal));
+			cmdList.Add("print", new ConsoleCommands.Command("s", ConsoleHelper.ConsolePrint));
 
 			return cmdList;
 		}

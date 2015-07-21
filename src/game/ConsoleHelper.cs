@@ -16,19 +16,28 @@ namespace game
 		public static int TestVal3 { get; set; }
 		public static int TestVal4 { get; set; }
 
-		public static void SetVal(object[] args)
+		public static bool SetVal(object[] args)
 		{
 			TestVal1 = Convert.ToInt32(args[0]);
+
+			return true;
 		}
 
-		internal static void PrintVal(object[] args)
+		internal static bool PrintVal(object[] args)
 		{
 			ConsoleUtils.Write(ConsoleMsgType.Debug, "Val1: {0}\n", TestVal1);
+			return true;
 		}
 
-		internal static void ConsolePrint(object[] args)
+		internal static bool ConsolePrint(object[] args)
 		{
 			ConsoleUtils.Write(ConsoleMsgType.Debug, "{0}", args[0].ToString());
+			return true;
+		}
+
+		internal static bool Exit(object[] args)
+		{
+			return false;
 		}
 	}
 }

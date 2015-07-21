@@ -50,8 +50,11 @@ namespace game
 			ConsoleCommands.LoadCommands(GetConsoleCmdList());
 			do
 			{
-				ConsoleCommands.OnInputReceived(Console.ReadLine());
+				if (!ConsoleCommands.OnInputReceived(Console.ReadLine()))
+					break;
 			} while (true);
+
+			ConsoleUtils.Write(ConsoleMsgType.Info, "Ending server execution...\n");
 
 			/* Console Debug
 			ConsoleUtils.Write(ConsoleMsgType.None, "Msg0\n");
@@ -74,6 +77,7 @@ namespace game
 			cmdList.Add("set_val", new ConsoleCommands.Command("i", ConsoleHelper.SetVal));
 			cmdList.Add("print_val", new ConsoleCommands.Command("", ConsoleHelper.PrintVal));
 			cmdList.Add("print", new ConsoleCommands.Command("s", ConsoleHelper.ConsolePrint));
+			cmdList.Add("exit", new ConsoleCommands.Command("", ConsoleHelper.Exit));
 
 			return cmdList;
 		}

@@ -11,7 +11,7 @@ namespace common
 {
 	public static class ConsoleCommands
 	{
-		public delegate void CommandAction(object[] args);
+		public delegate bool CommandAction(object[] args);
 
 		/// <summary>
 		/// Describes a Console Command
@@ -60,7 +60,7 @@ namespace common
 		/// Called when a input is received by the console
 		/// </summary>
 		/// <param name="input">the input string</param>
-		public static void OnInputReceived(string input)
+		public static bool OnInputReceived(string input)
 		{
 			string[] cmdData = input.Split(new char[] {' '}, 2);
 
@@ -68,7 +68,7 @@ namespace common
 			if (!Commands.ContainsKey(cmdData[0]))
 			{
 				ConsoleUtils.Write(ConsoleMsgType.Error, "Command {0} not found.\n", cmdData[0]);
-				return;
+				return true;
 			}
 
 			object[] parameters;
@@ -89,7 +89,7 @@ namespace common
 			}
 
 			// Do command
-			Commands[cmdData[0]].Action(parameters);
+			return Commands[cmdData[0]].Action(parameters);
 		}
 	}
 }

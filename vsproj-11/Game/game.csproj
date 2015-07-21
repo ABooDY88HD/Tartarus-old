@@ -47,6 +47,9 @@
     <Compile Include="..\..\src\common\Config.cs">
       <Link>common\Config.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\common\ConsoleComands.cs">
+      <Link>common\ConsoleComands.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\common\ConsoleUtils.cs">
       <Link>common\ConsoleUtils.cs</Link>
     </Compile>
@@ -94,6 +97,9 @@
     </Compile>
     <Compile Include="..\..\src\game\ClientPacketHandler.cs">
       <Link>game\ClientPacketHandler.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\game\ConsoleHelper.cs">
+      <Link>game\ConsoleHelper.cs</Link>
     </Compile>
     <Compile Include="..\..\src\game\Db.cs">
       <Link>game\Db.cs</Link>

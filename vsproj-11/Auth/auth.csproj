@@ -68,6 +68,9 @@
     <Compile Include="..\..\src\auth\ClientPacketHandler.cs">
       <Link>auth\ClientPacketHandler.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\auth\ConsoleHelper.cs">
+      <Link>auth\ConsoleHelper.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\auth\GameServer.cs">
       <Link>auth\GameServer.cs</Link>
     </Compile>
@@ -91,6 +94,9 @@
     </Compile>
     <Compile Include="..\..\src\common\Config.cs">
       <Link>common\Config.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\common\ConsoleComands.cs">
+      <Link>common\ConsoleComands.cs</Link>
     </Compile>
     <Compile Include="..\..\src\common\ConsoleUtils.cs">
       <Link>common\ConsoleUtils.cs</Link>

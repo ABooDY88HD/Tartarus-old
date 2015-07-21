@@ -46,8 +46,15 @@ namespace auth
 
 			Settings.Set(conf.Data);
 			Server sv = new Server();
-			
-			Console.ReadKey();
+
+			ConsoleCommands.LoadCommands(GetConsoleCmdList());
+			do
+			{
+				if (!ConsoleCommands.OnInputReceived(Console.ReadLine()))
+					break;
+			} while (true);
+
+			ConsoleUtils.Write(ConsoleMsgType.Info, "Ending server execution...\n");
 
 			/* Console Debug
 			ConsoleUtils.Write(ConsoleMsgType.None, "Msg0\n");
@@ -61,6 +68,18 @@ namespace auth
 			ConsoleUtils.Write(ConsoleMsgType.FatalError, "Msg128\n");
 			ConsoleUtils.Write(ConsoleMsgType.PacketDebug, "Msg256\n");
 			*/
+		}
+
+		private static Dictionary<string, ConsoleCommands.Command> GetConsoleCmdList()
+		{
+			Dictionary<string, ConsoleCommands.Command> cmdList = new Dictionary<string, ConsoleCommands.Command>();
+
+			cmdList.Add("set_val", new ConsoleCommands.Command("i", ConsoleHelper.SetVal));
+			cmdList.Add("print_val", new ConsoleCommands.Command("", ConsoleHelper.PrintVal));
+			cmdList.Add("print", new ConsoleCommands.Command("s", ConsoleHelper.ConsolePrint));
+			cmdList.Add("exit", new ConsoleCommands.Command("", ConsoleHelper.Exit));
+
+			return cmdList;
 		}
 	}
 }

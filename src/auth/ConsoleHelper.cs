@@ -16,9 +16,16 @@ namespace auth
 		public static int TestVal3 { get; set; }
 		public static int TestVal4 { get; set; }
 
-		public static bool SetVal(object[] args)
+		public static bool SetVal1(object[] args)
 		{
 			TestVal1 = Convert.ToInt32(args[0]);
+
+			return true;
+		}
+
+		public static bool SetVal2(object[] args)
+		{
+			TestVal2 = Convert.ToInt32(args[0]);
 
 			return true;
 		}

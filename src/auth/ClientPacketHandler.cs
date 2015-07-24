@@ -98,7 +98,8 @@ namespace auth
 		{
 			PacketStream data = new PacketStream((short)0x2726);
 			// TODO: Check these values
-			data.Write(new byte[] { 0x01, 0x00, 0x01, 0x00 }, 0, 4);
+			data.WriteInt16(1);
+			data.WriteInt16(1); //servers.Length);
 
 			foreach(GameServer sv in servers.Where(s => s != null))
 			{
@@ -112,7 +113,8 @@ namespace auth
 				data.WriteByte(0x00);
 				data.WriteInt16(sv.Port);
 
-				data.Write(new byte[4], 0, 4);
+				data.WriteInt16(0); // Server Status
+				data.WriteInt16(0);
 			}
 
 			ClientManager.Instance.Send(client, data);

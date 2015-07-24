@@ -1,0 +1,7 @@
+// Client sends it in the moment that
+// "Quit" button is
+// pressed
+// It receives a 00 packet as response
+
+Responses:
+	0 = OK

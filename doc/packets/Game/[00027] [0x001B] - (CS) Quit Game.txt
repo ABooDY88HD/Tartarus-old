@@ -1,0 +1,4 @@
+// Client sends it in the moment that
+// the "confirm" button is
+// pressed at Quit message
+// There is no response to this packet.

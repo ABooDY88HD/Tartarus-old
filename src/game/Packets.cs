@@ -39,6 +39,15 @@ namespace game
 			// [0x0007] 0007 -> PC Move Update
 			packets_db.Add(0x0007, new Packet() { func = ClientPacketHandler.parse_PCMoveUpdate, pos = new short[] { 0, 4, 8, 12, 16 }});
 
+			// [0x0017] 0023 -> Logout to Char
+			packets_db.Add(0x0017, new Packet() { func = ClientPacketHandler.parse_PCLogoutToCharScreen, pos = new short[0] });
+			// [0x0019] 0025 -> Logout Check
+			packets_db.Add(0x0019, new Packet() { func = ClientPacketHandler.parse_PCLogoutToCharCheck, pos = new short[0] });
+			// [0x001A] 0026 -> Quit Check
+			packets_db.Add(0x001A, new Packet() { func = ClientPacketHandler.parse_PCQuitGameCheck, pos = new short[0] });
+			// [0x001B] 0027 -> Quit
+			packets_db.Add(0x001B, new Packet() { func = ClientPacketHandler.parse_PCQuitGame, pos = new short[0] });
+
 			// [0x07D1] 2001 -> Character List Request
 			packets_db.Add(0x07D1, new Packet() { func = ClientPacketHandler.parse_CharListRequest, pos = new short[] { 0 }});
 			// [0x07D2] 2002 -> Create Character

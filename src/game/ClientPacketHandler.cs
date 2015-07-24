@@ -837,5 +837,32 @@ namespace game
 
 			ClientManager.Instance.Send(player, data);
 		}
+
+		/// [0x0017] 23 -> (CS) Player Logout
+		internal static void parse_PCLogoutToCharScreen(Player player, ref PacketStream stream, short[] pos)
+		{
+			// TODO : Logout conditions
+			send_PacketResponse(player, 0x0017, 0);
+		}
+
+		/// [0x0019] 25 -> (CS) Player Logout Check
+		internal static void parse_PCLogoutToCharCheck(Player player, ref PacketStream stream, short[] pos)
+		{
+			// TODO : Logout conditions
+			send_PacketResponse(player, 0x0019, 0);
+		}
+
+		/// [0x001A] 26 -> (CS) Player Quit Check
+		internal static void parse_PCQuitGameCheck(Player player, ref PacketStream stream, short[] pos)
+		{
+			// TODO : Logout conditions
+			send_PacketResponse(player, 0x001A, 0);
+		}
+
+		/// [0x001B] 27 -> (CS) Player Quit
+		internal static void parse_PCQuitGame(Player player, ref PacketStream stream, short[] pos)
+		{
+			// TODO : Logout conditions
+		}
 	}
 }

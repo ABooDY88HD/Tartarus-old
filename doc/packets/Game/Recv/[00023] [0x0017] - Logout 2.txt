@@ -1,2 +1,0 @@
-// It receives a 00 packet as response
-[Header]

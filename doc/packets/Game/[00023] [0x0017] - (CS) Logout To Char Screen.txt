@@ -1,0 +1,8 @@
+// Called when the player clicks
+// the confirm button on character
+// selection button message
+
+// It receives a 00 packet as response
+
+Responses:
+	0 = OK

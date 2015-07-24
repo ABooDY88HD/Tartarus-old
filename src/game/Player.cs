@@ -40,10 +40,56 @@ namespace game
 		public int AccountId;
 		public byte Permission;
 		public Network NetData;
-		public Character Chara;
+		//public Character Chara;
+
+		public int CharId { get; set; }
+		public int Sex { get; set; }
+		public int Race { get; set; }
+		public int HairId { get; set; } // model_00
+		public int FaceId { get; set; } // model_01
+		public int BodyId { get; set; } // model_02
+		public int HandsId { get; set; } // model_03
+		public int FeetId { get; set; } // model_04
+		public int HairColor { get; set; }
+
+		public int Hp { get; set; }
+		public int Mp { get; set; }
+		public int MaxHp { get; set; }
+		public int MaxMp { get; set; }
+		public int Havoc { get; set; }
+
+		public int GuildId { get; set; }
+
+		public int Job { get; set; }
+		public int Level { get; set; }
+		public int JobLevel { get; set; }
+		public string Name { get; set; }
+		public int SkinColor { get; set; }
+
+		public long Gold { get; set; }
+		public int Chaos { get; set; }
+
+		public long Exp { get; set; }
+		public long JP { get; set; }
+
+		public int CreateDate { get; set; }
+
+		public Dictionary<uint, Item> Inventory { get; set; }
+		public List<Quest> QuestList { get; set; }
+
+		public uint[] Equip { get; set; }
+
+		public Point Position { get; set; }
 		
 		public Player(uint pHandle) : base(pHandle, GameObjectType.Player) {
 			this.NetData = new Network();
+
+			Equip = new uint[(int)Item.WearType.WearType_Max];
+			Position = new Point(0, 0);
+
+			//TODO : Calculate
+			this.MaxHp = 100;
+			this.Hp = 100;
 		}
 
 		internal void SendCharacterList()
@@ -62,11 +108,11 @@ namespace game
 					new object[] { this.AccountId }
 				);
 			
-			List<Character> chars = new List<Character>();
+			List<CharacterListEntry> chars = new List<CharacterListEntry>();
 
 			while (reader.Read())
 			{
-				Character c = new Character();
+				CharacterListEntry c = new CharacterListEntry();
 
 				c.Name = (string)reader["name"];
 				c.Race = (int)reader["race"];
@@ -210,50 +256,128 @@ namespace game
 				return false;
 			}
 
-			this.Chara = new Character()
-			{
-				HairColor = (int)reader["hair_color"],
-				Job = (int)reader["job"],
-				JobLevel = (int)reader["job_level"],
-				Level = (int)reader["level"],
-				HairId = (int)reader["hair_id"],
-				FaceId = (int)reader["face_id"],
-				BodyId = (int)reader["body_id"],
-				HandsId = (int)reader["hands_id"],
-				FeetId = (int)reader["feet_id"],
-				Name = charName,
-				Race = (int)reader["race"],
-				Sex = (int)reader["sex"],
-				SkinColor = (int)reader["skin_color"],
-				CharId = (int)reader["char_id"]
-			};
+			this.HairColor = (int)reader["hair_color"];
+			this.Job = (int)reader["job"];
+			this.JobLevel = (int)reader["job_level"];
+			this.Level = (int)reader["level"];
+			this.HairId = (int)reader["hair_id"];
+			this.FaceId = (int)reader["face_id"];
+			this.BodyId = (int)reader["body_id"];
+			this.HandsId = (int)reader["hands_id"];
+			this.FeetId = (int)reader["feet_id"];
+			this.Name = charName;
+			this.Race = (int)reader["race"];
+			this.Sex = (int)reader["sex"];
+			this.SkinColor = (int)reader["skin_color"];
+			this.CharId = (int)reader["char_id"];
 
 			this.X = (float)(int)reader["x"];
 			this.Y = (float)(int)reader["y"];
 			this.Layer = (int)reader["layer"];
 
-			this.Chara.LoadInventory();
-			this.Chara.LoadQuest();
+			this.LoadInventory();
+			this.LoadQuest();
 			
 			return true;
 		}
 
 		internal int GetViewId(Item.WearType wearType)
 		{
-			if (this.Chara.Equip[(int)wearType] > 0)
+			if (this.Equip[(int)wearType] > 0)
 			{
-				return this.Chara.Inventory[this.Chara.Equip[(int)wearType]].Code;
+				return this.Inventory[this.Equip[(int)wearType]].Code;
 			}
 
 			switch (wearType)
 			{
-				case Item.WearType.Armor: return this.Chara.BodyId;
-				case Item.WearType.Glove: return this.Chara.HandsId;
-				case Item.WearType.Boots: return this.Chara.FeetId;
-				case Item.WearType.Face: return this.Chara.FaceId;
-				case Item.WearType.Hair: return this.Chara.HairId;
+				case Item.WearType.Armor: return this.BodyId;
+				case Item.WearType.Glove: return this.HandsId;
+				case Item.WearType.Boots: return this.FeetId;
+				case Item.WearType.Face: return this.FaceId;
+				case Item.WearType.Hair: return this.HairId;
 				default: return 0;
 			}
+		}
+		
+		/// <summary>
+		/// Loads user's inventory List
+		/// </summary>
+		/// <returns></returns>
+		internal bool LoadInventory()
+		{
+			this.Inventory = new Dictionary<uint, Item>();
+
+			Database db = new Database(Server.UserDbConString);
+
+			MySqlDataReader reader =
+				db.ReaderQuery(
+					"SELECT `id`, `code`, `count`, `equip` " +
+					"FROM `item` " +
+					"WHERE `char_id` = @charId",
+					new string[] { "charId" },
+					new object[] { this.CharId }
+				);
+
+			while (reader.Read())
+			{
+				Item i = GObjectManager.GetNewItem();
+			}
+
+			return true;
+		}
+
+		/// <summary>
+		/// Loads user's quest list
+		/// </summary>
+		internal void LoadQuest()
+		{
+			this.QuestList = new List<Quest>();
+
+			Database db = new Database(Server.UserDbConString);
+			// TODO : Query CleanUP
+
+			MySqlDataReader reader =
+				db.ReaderQuery(
+					"SELECT `id`, `quest_id`, `start_text`, `remain_time`, `progress`," +
+					"`status1`, `status2`, `status3`, `status4`, `status5`, `status6`" +
+					" FROM `quest`" +
+					" WHERE `char_id` = @charId",
+					new string[] { "charId" },
+					new object[] { this.CharId }
+				);
+
+			while (reader.Read())
+			{
+				Quest q = new Quest()
+				{
+					StartText = (int)reader["start_text"],
+					Code = (int)reader["quest_id"],
+					Status1 = (int)reader["status1"],
+					Status2 = (int)reader["status2"],
+					Status3 = (int)reader["status3"],
+					Status4 = (int)reader["status4"],
+					Status5 = (int)reader["status5"],
+					Status6 = (int)reader["status6"],
+					RemainTime = (int)reader["remain_time"],
+					Progress = (Quest.Status)(int)reader["status"]
+				};
+				this.QuestList.Add(q);
+			}
+		}
+
+		internal void Save()
+		{
+			Database db = new Database(Server.UserDbConString);
+			
+			db.WriteQuery(
+				"UPDATE `char` SET `x` = @x, `y` = @y WHERE `char_id` = @cid",
+				new string[] { 
+					"cid", "x", "y"
+				},
+				new object[] { 
+					this.CharId,  (int) this.Position.X, (int) this.Position.Y
+				}
+			);
 		}
 	}
 }

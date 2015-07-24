@@ -160,7 +160,7 @@ namespace game
 			{
 				return;
 			}
-			else if (!player.Chara.LoadInventory())
+			else if (!player.LoadInventory())
 			{
 				return;
 			}
@@ -180,8 +180,8 @@ namespace game
 
 			//PacketParser.send_Packet22(sid, 1);
 
-			ClientPacketHandler.send_Property(player, "job", player.Chara.Job);
-			ClientPacketHandler.send_Property(player, "job_level", player.Chara.JobLevel);
+			ClientPacketHandler.send_Property(player, "job", player.Job);
+			ClientPacketHandler.send_Property(player, "job_level", player.JobLevel);
 			ClientPacketHandler.send_Property(player, "job_0", 0);
 			ClientPacketHandler.send_Property(player, "jlv_0", 0);
 			ClientPacketHandler.send_Property(player, "job_1", 0);
@@ -194,7 +194,7 @@ namespace game
 
 			//PacketParser.send_Packet10(sid, 4);
 
-			ClientPacketHandler.send_Property(player, "job", player.Chara.Job, true);
+			ClientPacketHandler.send_Property(player, "job", player.Job, true);
 			
 			//PacketParser.send_OpenPopUp(sid, "www.google.com");
 
@@ -223,9 +223,9 @@ namespace game
 			ClientPacketHandler.send_UpdateLevel(player);
 			ClientPacketHandler.send_UpdateExp(player);
 
-			ClientPacketHandler.send_Property(player, "job", player.Chara.Job);
+			ClientPacketHandler.send_Property(player, "job", player.Job);
 
-			ClientPacketHandler.send_Property(player, "job_level", player.Chara.JobLevel);
+			ClientPacketHandler.send_Property(player, "job_level", player.JobLevel);
 			ClientPacketHandler.send_Property(player, "job_0", 0);
 			ClientPacketHandler.send_Property(player, "jlv_0", 0);
 			ClientPacketHandler.send_Property(player, "job_1", 0);

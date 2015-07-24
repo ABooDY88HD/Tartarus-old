@@ -128,7 +128,7 @@ namespace game
 		/// <0x14>.B <0>7B <0x14>.B
 		/// <0>.87B <0x0A>.B <0>.7B <0x0A>.B <0>.7B
 		/// <0>.83B <0x01>.B <0>.123B
-		internal static void send_CharacterList(Player player, Character[] characters)
+		internal static void send_CharacterList(Player player, CharacterListEntry[] characters)
 		{
 			PacketStream data = new PacketStream(0x07D4);
 			data.Write(new byte[6], 0, 6);
@@ -345,22 +345,22 @@ namespace game
 			data.WriteByte((byte)player.Layer);
 			data.WriteFloat(180f);//player.Chara.Face);
 			data.WriteInt32(RegionMngr.RegionSize);
-			data.WriteInt32(player.Chara.Hp);
-			data.WriteInt32(player.Chara.Mp);
-			data.WriteInt32(player.Chara.MaxHp);
-			data.WriteInt32(player.Chara.MaxMp);
-			data.WriteInt32(player.Chara.Havoc);
+			data.WriteInt32(player.Hp);
+			data.WriteInt32(player.Mp);
+			data.WriteInt32(player.MaxHp);
+			data.WriteInt32(player.MaxMp);
+			data.WriteInt32(player.Havoc);
 			data.WriteInt32(Globals.MaxHavoc);
 
-			data.WriteInt32(player.Chara.Sex);
-			data.WriteInt32(player.Chara.Race);
-			data.WriteInt32(player.Chara.SkinColor);
-			data.WriteInt32(player.Chara.FaceId);
-			data.WriteInt32(player.Chara.HairId);
-			data.WriteString(player.Chara.Name, 19);
+			data.WriteInt32(player.Sex);
+			data.WriteInt32(player.Race);
+			data.WriteInt32(player.SkinColor);
+			data.WriteInt32(player.FaceId);
+			data.WriteInt32(player.HairId);
+			data.WriteString(player.Name, 19);
 
 			data.WriteInt32(Globals.CellSize);
-			data.WriteInt32(player.Chara.GuildId);
+			data.WriteInt32(player.GuildId);
 
 			ClientManager.Instance.Send(player, data);
 		}
@@ -369,9 +369,9 @@ namespace game
 		{
 			PacketStream data = new PacketStream((short)0x00CF);
 
-			data.WriteInt16((short)player.Chara.Inventory.Count);
+			data.WriteInt16((short)player.Inventory.Count);
 			int i = 0;
-			foreach (Item item in player.Chara.Inventory.Values)
+			foreach (Item item in player.Inventory.Values)
 			{
 				data.WriteUInt32(item.Handle);
 				data.WriteInt32(item.Code);
@@ -735,8 +735,8 @@ namespace game
 		{
 			PacketStream data = new PacketStream((short)0x03E9);
 
-			data.WriteInt64(player.Chara.Gold);
-			data.WriteInt32(player.Chara.Chaos);
+			data.WriteInt64(player.Gold);
+			data.WriteInt32(player.Chaos);
 
 			ClientManager.Instance.Send(player, data);
 		}
@@ -747,8 +747,8 @@ namespace game
 			PacketStream data = new PacketStream((short)0x03EA);
 
 			data.WriteUInt32(player.Handle);
-			data.WriteInt32(player.Chara.Level);
-			data.WriteInt32(player.Chara.JobLevel);
+			data.WriteInt32(player.Level);
+			data.WriteInt32(player.JobLevel);
 
 			ClientManager.Instance.Send(player, data);
 		}
@@ -759,8 +759,8 @@ namespace game
 			PacketStream data = new PacketStream((short)0x03EB);
 
 			data.WriteUInt32(player.Handle);
-			data.WriteInt64(player.Chara.Exp);
-			data.WriteInt64(player.Chara.JP);
+			data.WriteInt64(player.Exp);
+			data.WriteInt64(player.JP);
 
 			ClientManager.Instance.Send(player, data);
 		}

@@ -10,9 +10,8 @@ using System.Threading.Tasks;
 
 namespace game
 {
-	public class Character
+	public class CharacterListEntry
 	{
-		public int CharId { get; set; }
 		public int Sex { get; set; }
 		public int Race { get; set; }
 		public int HairId { get; set; } // model_00
@@ -22,25 +21,11 @@ namespace game
 		public int FeetId { get; set; } // model_04
 		public int HairColor { get; set; }
 
-		public int Hp { get; set; }
-		public int Mp { get; set; }
-		public int MaxHp { get; set; }
-		public int MaxMp { get; set; }
-		public int Havoc { get; set; }
-
-		public int GuildId { get; set; }
-
 		public int Job { get; set; }
 		public int Level { get; set; }
 		public int JobLevel { get; set; }
 		public string Name { get; set; }
 		public int SkinColor { get; set; }
-
-		public long Gold { get; set; }
-		public int Chaos { get; set; }
-		
-		public long Exp { get; set; }
-		public long JP { get; set; }
 
 		public int CreateDate { get; set; }
 
@@ -50,7 +35,7 @@ namespace game
 		public uint[] Equip { get; set; }
 
 		public Point Position { get; set; }
-		public Character()
+		/*public Character()
 		{
 			Equip = new uint[(int)Item.WearType.WearType_Max];
 			Position = new Point(0,0);
@@ -139,6 +124,6 @@ namespace game
 					this.CharId,  (int) this.Position.X, (int) this.Position.Y
 				}
 			);
-		}
+		}*/
 	}
 }

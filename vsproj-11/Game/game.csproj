@@ -89,8 +89,8 @@
     <Compile Include="..\..\src\game\AuthServer.cs">
       <Link>game\AuthServer.cs</Link>
     </Compile>
-    <Compile Include="..\..\src\game\Character.cs">
-      <Link>game\Character.cs</Link>
+    <Compile Include="..\..\src\game\CharacterListEntry.cs">
+      <Link>game\CharacterListEntry.cs</Link>
     </Compile>
     <Compile Include="..\..\src\game\ClientManager.cs">
       <Link>game\ClientManager.cs</Link>

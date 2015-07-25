@@ -174,7 +174,8 @@ namespace game
 					"`job_0`, `job0_level`," +
 					"`job_1`, `job1_level`," +
 					"`job_2`, `job2_level`," +
-					"`create_date`, `delete_date`" +
+					"`create_date`, `delete_date`," +
+					"`client_info`" +
 				") VALUES (" +
 					"@accId,0," +
 					"@name,@sex,@race," +
@@ -187,21 +188,23 @@ namespace game
 					"0,0," +
 					"0,0," +
 					"0,0," +
-					"@createDate,0" +
+					"@createDate,0," +
+					"@clientInfo" +
 				")",
 				new string[] { 
 					"accId", "name", "sex", "race",
 					"hairId", "faceId", "bodyId",
 					"handId", "feetId", "faceDetailId",
 					"hairColor", "skinColor", "x", "y",
-					"job", "createDate"
+					"job", "createDate", "clientInfo"
 				},
 				new object[] { 
 					this.AccountId, name, sex, race,
 					hairId, faceId, bodyId,
 					handsId, feetId, faceDetail,
 					hairColor, skinColor, x, y,
-					job, TimeUtils.GetTimeStamp(DateTime.Now)
+					job, TimeUtils.GetTimeStamp(DateTime.Now),
+					"QS2=0,2,0|QS2=1,2,2|QS2=11,2,1|QS2=24,2,7|QS2=25,2,8|QS2=35,2,28"
 				}
 			);
 

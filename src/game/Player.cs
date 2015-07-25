@@ -162,7 +162,7 @@ namespace game
 			int job = 0;
 			int startWeapon = 0;
 			int startBag = 480001;
-			//int startOutfit = 0;
+			int startOutfit = 0;
 
 			// Defines start job and position
 			switch (race)
@@ -171,18 +171,33 @@ namespace game
 					x = 168356; y = 55399;
 					job = 300;
 					startWeapon = 103100; // Beginner's Dirk
+					
+					if (clothesId == 601)
+						startOutfit = 230100;
+					else
+						startOutfit = 230109;
 					break;
 
 				case (int)PCRace.Deva:
-					x = 164474; y = 52932;
-					job = 200;
+					x = 164335; y = 49510;
+					job = 100;
 					startWeapon = 106100; // Beginner's Mace
+
+					if (clothesId == 601)
+						startOutfit = 240100;
+					else
+						startOutfit = 240109;
 					break;
 
 				case (int)PCRace.Gaia:
-					x = 164335; y = 49510;
-					job = 100;
+					x = 164474; y = 52932;
+					job = 200;
 					startWeapon = 112100; //Trainee's Small Axe
+
+					if (clothesId == 601)
+						startOutfit = 220100;
+					else
+						startOutfit = 220109;
 					break;
 			}
 
@@ -244,8 +259,9 @@ namespace game
 			startItem.WearInfo = Item.WearType.RightHand;
 			Item.CharacterGetItem(charId, startItem);
 
-			//startItem.Count = start
-			//Item.CharacterGetItem(charId, startItem);
+			startItem.Code = startOutfit;
+			startItem.WearInfo = Item.WearType.Armor;
+			Item.CharacterGetItem(charId, startItem);
 
 			ClientPacketHandler.send_PacketResponse(this, (short)0x07D2);
 		}

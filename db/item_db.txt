@@ -4,3 +4,12 @@
 112100, "Trainee's Small Axe", 1, 113, 0, 0, 1, 1, 0, 2, 7, 15, 15, 90
 106100, "Beginner's Mace", 1, 106, 0, 0, 1, 1, 0, 2, 7, 15, 15, 108
 480001, "Trainee's Bag", 1, 350, 23, 0, 0, 1, 0, 0, 7, 15, 15, 1
+// Asura Outfit
+230100, "Beginner's Light Leather Jacket", 1, 200, 2, 0, 1, 1, 0, 2, 4, 15, 15, 120
+230109, "Stepper Adventurer Jacket", 1, 200, 2, 0, 1, 1, 0, 2, 4, 15, 15, 120
+// Gaia Outfit
+240100, "Training Silk Clothes", 1, 200, 2, 0, 1, 1, 0, 2, 2, 15, 15, 120
+240109, "Rogue's Training Wear", 1, 200, 2, 0, 1, 1, 0, 2, 2, 15, 15, 120
+// Deva Outfit
+220100, "Beginner's Devarian Suit", 1, 200, 2, 0, 1, 1, 0, 2, 1, 15, 15, 120
+220109, "Adventurer Guide Suit", 1, 200, 2, 0, 1, 1, 0, 2, 1, 15, 15, 120

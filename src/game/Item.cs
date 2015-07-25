@@ -15,6 +15,7 @@ namespace game
 {
 	public class Item : GameObject
 	{
+		[Flags]
 		public enum WearType : int
 		{
 			None = -1,
@@ -60,16 +61,16 @@ namespace game
 
 		}
 
-		public int Code { get; set; }
 		public long UId { get; set; }
+		public int Code { get; set; }
 		public long Count { get; set; }
 		public byte Enhance { get; set; }
 		public byte Level { get; set; }
-		public int WearInfo { get; set; }
+		public WearType WearInfo { get; set; }
 		//public int IdX { get; set; }
 
-		public Item(uint pHandle) : base(pHandle, GameObjectType.Player) {
-			
+		public Item(uint pHandle) : base(pHandle, GameObjectType.Item) {
+			this.WearInfo = WearType.None;
 		}
 
 		public Item() {}

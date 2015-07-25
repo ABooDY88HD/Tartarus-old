@@ -375,7 +375,7 @@ namespace game
 				data.WriteByte(item.Enhance);
 				data.WriteByte(item.Level);
 				data.Write(new byte[81], 0, 81);
-				data.WriteInt32(item.WearInfo);
+				data.WriteInt32((int)item.WearInfo);
 				data.Write(new byte[2], 0, 2);
 				data.WriteInt32(i); // IdX
 				i++;

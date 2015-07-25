@@ -13,6 +13,7 @@ namespace game
 	public static class GObjectManager
 	{
 		public static Dictionary<uint, Player> Players;
+		public static Dictionary<uint, Item> Items;
 
 		private static List<uint> HandlePool;
 		private static uint NextHandle;
@@ -22,7 +23,8 @@ namespace game
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Initializing Game Object Manager\n");
 			
 			Players = new Dictionary<uint, Player>(Settings.MaxConnections);
-			
+			Items = new Dictionary<uint, Item>();
+
 			HandlePool = new List<uint>();
 			NextHandle = 1;
 			
@@ -58,7 +60,10 @@ namespace game
 
 		internal static Item GetNewItem()
 		{
-			throw new NotImplementedException();
+			uint handle = GetFreeHandle();
+			Item p = new Item(handle);
+			Items.Add(handle, p);
+			return p;
 		}
 	}
 }

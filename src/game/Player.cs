@@ -40,7 +40,6 @@ namespace game
 		public int AccountId;
 		public byte Permission;
 		public Network NetData;
-		//public Character Chara;
 
 		public int CharId { get; set; }
 		public int Sex { get; set; }
@@ -321,6 +320,11 @@ namespace game
 			while (reader.Read())
 			{
 				Item i = GObjectManager.GetNewItem();
+				i.UId = (long)reader["id"];
+				i.Code = (int)reader["code"];
+				i.Count = (long)reader["count"];
+				
+				this.Inventory.Add(i.Handle, i);
 			}
 
 			return true;

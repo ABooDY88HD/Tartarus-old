@@ -71,7 +71,7 @@ namespace game
 		public long Exp { get; set; }
 		public long JP { get; set; }
 
-		public int CreateDate { get; set; }
+		public string ClientInfo { get; set; }
 
 		public Dictionary<uint, Item> Inventory { get; set; }
 		public List<Quest> QuestList { get; set; }
@@ -242,7 +242,7 @@ namespace game
 					"SELECT `char_id`,`slot`,`sex`,`race`," +
 					"`hair_id`,`face_id`,`body_id`,`hands_id`,`feet_id`," +
 					"`face_detail_id`,`hair_color`,`skin_color`,`x`,`y`,`layer`," +
-					"`save_x`,`save_y`,`level`,`exp`,`job`,`job_level`" +
+					"`save_x`,`save_y`,`level`,`exp`,`job`,`job_level`, `client_info`" +
 					" FROM `char`" +
 					" WHERE `account_id` = @accId AND `name` = @name AND `delete_date`= 0",
 					new string[] { "accId", "name" },
@@ -274,6 +274,7 @@ namespace game
 			this.Y = (float)(int)reader["y"];
 			this.Layer = (int)reader["layer"];
 
+			this.ClientInfo = (string)reader["client_info"];
 			this.LoadInventory();
 			this.LoadQuest();
 			
@@ -369,6 +370,19 @@ namespace game
 			}
 		}
 
+		internal void SetClientInfo(string newInfo)
+		{
+			this.ClientInfo = newInfo;
+
+			Database db = new Database(Server.UserDbConString);
+
+			db.WriteQuery(
+				"UPDATE `char` SET `client_info` = @info WHERE `char_id` = @cid",
+				new string[] { "cid", "info" },
+				new object[] { this.CharId, newInfo }
+			);
+		}
+
 		internal void Save()
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -382,6 +396,22 @@ namespace game
 					this.CharId,  (int) this.Position.X, (int) this.Position.Y
 				}
 			);
+		}
+
+		internal void SetProperty(string propertyName, string propertyValue)
+		{
+			switch (propertyName)
+			{
+				case "client_info":
+					this.SetClientInfo(propertyValue);
+					break;
+
+				default:
+					ConsoleUtils.Write(ConsoleMsgType.Error, "Trying to set invalid property {0}", propertyName);
+					break;
+			}
+
+			return;
 		}
 	}
 }

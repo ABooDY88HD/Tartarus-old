@@ -257,8 +257,11 @@ namespace game
 			ClientPacketHandler.send_Property(player, "stamina", 0);
 			ClientPacketHandler.send_Property(player, "max_stamina", Globals.MaxStamina);
 			ClientPacketHandler.send_Property(player, "channel", 1);
-
+			
 			ClientPacketHandler.send_EntityState(player);
+
+			ClientPacketHandler.send_Property(player, "client_info", player.ClientInfo, true);
+
 			ClientPacketHandler.send_QuestList(player);
 			ClientPacketHandler.send_Packet625(player);
 			ClientPacketHandler.send_Packet626(player);

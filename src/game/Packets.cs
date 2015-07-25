@@ -48,6 +48,9 @@ namespace game
 			// [0x001B] 0027 -> Quit
 			packets_db.Add(0x001B, new Packet() { func = ClientPacketHandler.parse_PCQuitGame, pos = new short[0] });
 
+			// [0x01FC] 0508 -> Set Property
+			packets_db.Add(0x01FC, new Packet() { func = ClientPacketHandler.parse_SetProperty, pos = new short[] { 0, 16 } });
+
 			// [0x07D1] 2001 -> Character List Request
 			packets_db.Add(0x07D1, new Packet() { func = ClientPacketHandler.parse_CharListRequest, pos = new short[] { 0 }});
 			// [0x07D2] 2002 -> Create Character

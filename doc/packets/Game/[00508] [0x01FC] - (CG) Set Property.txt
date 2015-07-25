@@ -1,0 +1,9 @@
+// Change the value of a property
+// with a string
+
+String(16) property_name;	/* 0 */
+String(?S) value;		/* 16 */ 
+
+// Notes:
+	- Known Porperties:
+		client_info: Hotkey data

@@ -300,14 +300,18 @@ namespace game
 		}
 
 		/// [0x01FB] 507 - (GC) Send the value of a property
-		/// <player handle>.L <0x01>.B <property name>.16S <value/0>.L <0>.L [str value].?S
+		/// <player handle>.L <as int>.B <property name>.16S <value/0>.L <0>.L [str value].?S
 		/// For a properties list check the full doc at "docs/packets/Game/"
 		internal static void send_Property(Player player, string property, object value, bool asString = false)
 		{
 			PacketStream data = new PacketStream((short)0x01FB);
 
 			data.WriteUInt32(player.Handle);
-			data.WriteByte(0x01);
+			if (asString)
+				data.WriteByte(0x00);
+			else
+				data.WriteByte(0x01);
+
 			data.WriteString(property, 16);
 			if (asString)
 			{
@@ -856,6 +860,16 @@ namespace game
 		internal static void parse_PCQuitGame(Player player, ref PacketStream stream, short[] pos)
 		{
 			// TODO : Logout conditions
+		}
+
+		/// [0x01FC] 508 -> Set Property
+		/// <property name>.16B <property value>.?S
+		internal static void parse_SetProperty(Player player, ref PacketStream stream, short[] pos)
+		{
+			string propertyName = stream.ReadString(pos[0], 16);
+			string propertyValue = stream.ReadString(pos[1], (stream.GetSize() - 23));
+
+			player.SetProperty(propertyName, propertyValue);
 		}
 	}
 }

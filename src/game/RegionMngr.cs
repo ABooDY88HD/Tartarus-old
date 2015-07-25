@@ -48,20 +48,23 @@ namespace game
 
 		public static void Start()
 		{
-			Regions = new Region[Settings.MapLengthX*(MapSize/RegionSize)][];
-			/*for (int i = 0; i < Regions.Length; i++)
+			if (Settings.CheckCollision)
 			{
-				Regions[i] = new Region[Settings.MapLengthY * (MapSize / RegionSize)];
-				for (int j = 0; j < Regions[i].Length; j++)
-					Regions[i][j] = new Region();
-			}*/
-			Maps = new Map[Settings.MapLengthX][];
-			for (int i = 0; i < Maps.Length; i++)
-			{
-				Maps[i] = new Map[Settings.MapLengthY];
-			}
+				Regions = new Region[Settings.MapLengthX * (MapSize / RegionSize)][];
+				/*for (int i = 0; i < Regions.Length; i++)
+				{
+					Regions[i] = new Region[Settings.MapLengthY * (MapSize / RegionSize)];
+					for (int j = 0; j < Regions[i].Length; j++)
+						Regions[i][j] = new Region();
+				}*/
+				Maps = new Map[Settings.MapLengthX][];
+				for (int i = 0; i < Maps.Length; i++)
+				{
+					Maps[i] = new Map[Settings.MapLengthY];
+				}
 
-			LoadMap("db/maps/m010_003.nfa");
+				LoadMap("db/maps/m010_003.nfa");
+			}
 		}
 
 		private static void LoadMap(string dir)
@@ -115,9 +118,15 @@ namespace game
 
 		internal static void PcWalkCheck(Player player, float startX, float startY, Point[] movePos)
 		{
-			ConsoleUtils.Write(ConsoleMsgType.Debug, "[Debug Move] startX: {0} ; startY: {1} ; Points: {2}\n", startX, startY, movePos.Length);
-			for (int i = 0; i < movePos.Length; i++)
-				ConsoleUtils.Write(ConsoleMsgType.Debug, "--> MovePos[{0}]: ( {1}, {2} )\n", i, (int)movePos[i].X, (int)movePos[i].Y);
+			if (!Settings.CheckCollision)
+			{
+				ClientPacketHandler.send_PCMoveTo(player, movePos.ToArray());
+				return;
+			}
+
+			//ConsoleUtils.Write(ConsoleMsgType.Debug, "[Debug Move] startX: {0} ; startY: {1} ; Points: {2}\n", startX, startY, movePos.Length);
+			//for (int i = 0; i < movePos.Length; i++)
+			//	ConsoleUtils.Write(ConsoleMsgType.Debug, "--> MovePos[{0}]: ( {1}, {2} )\n", i, (int)movePos[i].X, (int)movePos[i].Y);
 
 			List<Point> moves = new List<Point>();
 			int mapX = 10; int mapY = 3;
@@ -141,7 +150,7 @@ namespace game
 				{
 					if (Geometry.DoIntersect(new Point(fromX, fromY), movePos[i], m.Collisions[j].P1, m.Collisions[j].P2))
 					{
-						ConsoleUtils.Write(ConsoleMsgType.Debug, "Intersects with ({0}, {1}) ({2}, {3})!\n", (int)m.Collisions[j].P1.X, (int)m.Collisions[j].P1.Y, (int)m.Collisions[j].P2.X, (int)m.Collisions[j].P2.Y);
+						//ConsoleUtils.Write(ConsoleMsgType.Debug, "Intersects with ({0}, {1}) ({2}, {3})!\n", (int)m.Collisions[j].P1.X, (int)m.Collisions[j].P1.Y, (int)m.Collisions[j].P2.X, (int)m.Collisions[j].P2.Y);
 						endOfTest = true;
 						break;
 					}
@@ -153,12 +162,12 @@ namespace game
 				}
 				else
 				{
-					ConsoleUtils.Write(ConsoleMsgType.Debug, "OK! ( {0}, {1} )\n", movePos[i].X, movePos[i].Y);
+					//ConsoleUtils.Write(ConsoleMsgType.Debug, "OK! ( {0}, {1} )\n", movePos[i].X, movePos[i].Y);
 					moves.Add(movePos[i]);
 				}
 			}
 
-			Console.Write("End of Move Process\n");
+			//Console.Write("End of Move Process\n");
 			
 			ClientPacketHandler.send_PCMoveTo(player, moves.ToArray());
 		}

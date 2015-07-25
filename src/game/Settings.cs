@@ -42,7 +42,7 @@ namespace game
 		// Map Settings
 		public static Int32 MapLengthX;
 		public static Int32 MapLengthY;
-
+		public static Boolean CheckCollision;
 		/// <summary>
 		/// Types of Settings
 		/// </summary>
@@ -100,6 +100,7 @@ namespace game
 			// Map Settings
 			MapLengthX = (Int32)ParseSetting(ref settings, DType.Int32, "map_length_x", 0, false);
 			MapLengthY = (Int32)ParseSetting(ref settings, DType.Int32, "map_length_y", 0, false);
+			CheckCollision = (Boolean)ParseSetting(ref settings, DType.Bool, "check_collision", true, false);
 		}
 
 		/// <summary>

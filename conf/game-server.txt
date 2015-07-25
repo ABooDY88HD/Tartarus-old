@@ -38,3 +38,9 @@ notice_url: http://127.0.0.1/notice.htm
 // Map Size
 map_length_x: 14
 map_length_y: 16
+
+// Do collision checks?
+// This causes extra overload on the server
+// but avoids players cheating with their
+// modified clients
+check_collision: 1

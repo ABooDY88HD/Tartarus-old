@@ -32,6 +32,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `job2_level` int(11) NOT NULL,
   `create_date` int(10) NOT NULL,
   `delete_date` int(10) NOT NULL,
+  `client_info` varchar(4096) NOT NULL,
   PRIMARY KEY (`char_id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;
 

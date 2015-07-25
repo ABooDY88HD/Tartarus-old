@@ -1,3 +1,9 @@
 // Sends a request to delete
 // a character
+// Receives a 00 packet with response
 String(19) char_name;	/* 0 */
+
+Responses:
+	0 - OK!
+	1 - Character does not Exists ; Input password box
+	2+ - You may not delete this character

@@ -109,6 +109,28 @@ namespace common
 			}
 		}
 
+		/// <summary>
+		/// Executes a query to delete data
+		/// </summary>
+		/// <param name="query">the query</param>
+		/// <param name="parNames">parameters name</param>
+		/// <param name="parVals">parameters value</param>
+		/// <returns></returns>
+		public int DeleteQuery(string query, string[] parNames, object[] parVals)
+		{
+			if (!Open()) return -1;
+
+			using (MySqlCommand cmd = new MySqlCommand(query, Connection))
+			{
+				for (int i = 0; i < parNames.Length; i++)
+				{
+					cmd.Parameters.AddWithValue(parNames[i], parVals[i]);
+				}
+
+				return cmd.ExecuteNonQuery();
+			}
+		}
+
 		// ============================
 		// Garbage Collection Methods
 		// ============================

@@ -107,6 +107,8 @@ namespace game
 		internal static void parse_DeleteCharacter(Player player, ref PacketStream stream, short[] pos)
 		{
 			string charName = stream.ReadString(pos[0], 19);
+
+			player.DeleteCharacter(charName);
 		}
 
 		/// [0x07D4] 2004 -> Sends the list of account characters

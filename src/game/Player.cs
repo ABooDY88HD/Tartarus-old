@@ -471,5 +471,21 @@ namespace game
 
 			return;
 		}
+
+		internal void DeleteCharacter(string charName)
+		{
+			Database db = new Database(Server.UserDbConString);
+
+			int r = db.DeleteQuery(
+				"DELETE FROM `char` WHERE `account_id` = @accId AND `name` = @charName",
+				new string[] { "accId", "charName" },
+				new object[] { this.AccountId, charName }
+			);
+
+			if (r > 0)
+				ClientPacketHandler.send_PacketResponse(this, 0x07D3, 0);
+			else
+				ClientPacketHandler.send_PacketResponse(this, 0x07D3, 1);
+		}
 	}
 }

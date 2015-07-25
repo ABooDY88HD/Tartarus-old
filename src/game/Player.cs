@@ -91,6 +91,9 @@ namespace game
 			this.Hp = 100;
 		}
 
+		/// <summary>
+		/// Loads and sends the list of characters of this account
+		/// </summary>
 		internal void SendCharacterList()
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -155,6 +158,21 @@ namespace game
 			ClientPacketHandler.send_CharacterList(this, chars.ToArray());
 		}
 
+		/// <summary>
+		/// Creates a new character
+		/// </summary>
+		/// <param name="name">char name</param>
+		/// <param name="sex">sex</param>
+		/// <param name="race">race</param>
+		/// <param name="hairId">hair ID</param>
+		/// <param name="faceId">Face ID</param>
+		/// <param name="bodyId">Body ID</param>
+		/// <param name="handsId">Hands ID</param>
+		/// <param name="feetId">Feet ID</param>
+		/// <param name="hairColor">Hair Color</param>
+		/// <param name="faceDetail">Face Detail</param>
+		/// <param name="clothesId">Clothers ID (601/602)</param>
+		/// <param name="skinColor">Skin Color</param>
 		internal void CreateCharacter(string name, int sex, int race, int hairId, int faceId, int bodyId, int handsId, int feetId, int hairColor, int faceDetail, int clothesId, int skinColor)
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -266,6 +284,10 @@ namespace game
 			ClientPacketHandler.send_PacketResponse(this, (short)0x07D2);
 		}
 
+		/// <summary>
+		/// Checks if a character name is already in use
+		/// </summary>
+		/// <param name="name">the name to be checked</param>
 		internal void CharNameExists(string name)
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -290,6 +312,11 @@ namespace game
 			}
 		}
 
+		/// <summary>
+		/// Loads a character data
+		/// </summary>
+		/// <param name="charName">the name of the character</param>
+		/// <returns>true on success, false otherwise</returns>
 		internal bool LoadCharacter(string charName)
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -339,6 +366,11 @@ namespace game
 			return true;
 		}
 
+		/// <summary>
+		/// Gets the ID for appearances
+		/// </summary>
+		/// <param name="wearType">the slot</param>
+		/// <returns>the view ID</returns>
 		internal int GetViewId(Item.WearType wearType)
 		{
 			if (this.Equip[(int)wearType] > 0)
@@ -428,6 +460,10 @@ namespace game
 			}
 		}
 
+		/// <summary>
+		/// Updates hotkey data
+		/// </summary>
+		/// <param name="newInfo">new hotkey data</param>
 		internal void SetClientInfo(string newInfo)
 		{
 			this.ClientInfo = newInfo;
@@ -441,6 +477,9 @@ namespace game
 			);
 		}
 
+		/// <summary>
+		/// Save characters position
+		/// </summary>
 		internal void Save()
 		{
 			Database db = new Database(Server.UserDbConString);
@@ -456,6 +495,11 @@ namespace game
 			);
 		}
 
+		/// <summary>
+		/// Updates a value of a property
+		/// </summary>
+		/// <param name="propertyName">the name of the property</param>
+		/// <param name="propertyValue">new property value</param>
 		internal void SetProperty(string propertyName, string propertyValue)
 		{
 			switch (propertyName)
@@ -472,6 +516,10 @@ namespace game
 			return;
 		}
 
+		/// <summary>
+		/// Deletes a character form an account
+		/// </summary>
+		/// <param name="charName">the name of the character to delete</param>
 		internal void DeleteCharacter(string charName)
 		{
 			Database db = new Database(Server.UserDbConString);

@@ -1,0 +1,6 @@
+//Structure:
+//id, "dummy name", type, class, wear_type, grade, rank, level, enhance, socket, equip_races, equip_classes, equip_depth, weight
+103100, "Beginner's Dirk", 1, 103, 0, 0, 1, 1, 0, 2, 7, 15, 15, 54
+112100, "Trainee's Small Axe", 1, 113, 0, 0, 1, 1, 0, 2, 7, 15, 15, 90
+106100, "Beginner's Mace", 1, 106, 0, 0, 1, 1, 0, 2, 7, 15, 15, 108
+480001, "Trainee's Bag", 1, 350, 23, 0, 0, 1, 0, 0, 7, 15, 15, 1

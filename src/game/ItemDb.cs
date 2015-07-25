@@ -12,43 +12,65 @@ namespace game
 {
 	public static class ItemDb
 	{
-		public class Item
+		public class ItemEntry
 		{
-			public int Type { get; set; }
-			public int Class { get; set; }
-			public int WearType { get; set; }
-			public int EquipRaces { get; set; }
-			public int EquipClasses { get; set; }
-			public int EquipDepth { get; set; }
+			public Item.Type Type { get; set; }
+			public Item.Class Class { get; set; }
+			public Item.WearType WearType { get; set; }
+			public int Grade { get; set; }
+			public int Rank { get; set; }
+			public int Level { get; set; }
+			public int Enhance { get; set; }
+			public int Socket { get; set; }
+			public Db.Races EquipRaces { get; set; }
+			public Db.Classes EquipClasses { get; set; }
+			public Db.JobDepth EquipDepth { get; set; }
 			public int Weight { get; set; }
 		}
-
-		public static Dictionary<int, Item> Db { get; private set; }
+		public static Dictionary<int, ItemEntry> Db { get; private set; }
 
 		public static void Start()
 		{
-			Db = new Dictionary<int, Item>();
-			Database db = new Database(Server.GameDbConString);
+			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Item Database...\n");
 
-			MySqlDataReader reader =
-				db.ReaderQuery("SELECT `id`, `name_id`, `type`, `class`," +
-							"`wear_type`, `equip_races`, `equip_classes`," +
-							"`equip_depth`, `weight` FROM `item`", null, null);
-			
-			while (reader.Read())
+			Db = new Dictionary<int, ItemEntry>();
+			List<string[]> entries = game.Db.LoadDb("db/item_db.txt", "isiiiiiiiiiiii");
+
+			for (int i = 0; i < entries.Count; i++)
 			{
-				ItemDb.Item item = new Item()
+				int itemId;
+				if (!Int32.TryParse(entries[i][0], out itemId))
 				{
-					Class = (int)reader["class"],
-					//EquipClasses = (short)reader["equip_classes"],
-					//EquipDepth = (short)reader["equip_depth"],
-					//EquipRaces = (short)reader["equip_races"],
-					Type = (int)reader["type"],
-					WearType = (int)reader["wear_type"],
-					Weight = (int)reader["weight"]
-				};
-				Db.Add((int)reader["id"], item);
+					ConsoleUtils.Write(ConsoleMsgType.Error, "Invalid item Id '{0}'. Int expected. Skipping line...\n", entries);
+				}
+				else
+				{
+					try
+					{
+						ItemEntry item = new ItemEntry();
+						item.Type = (Item.Type)Int32.Parse(entries[i][2]);
+						item.Class = (Item.Class)Int32.Parse(entries[i][3]);
+						item.WearType = (Item.WearType)Int32.Parse(entries[i][4]);
+						item.Grade = Int32.Parse(entries[i][5]);
+						item.Rank = Int32.Parse(entries[i][6]);
+						item.Level = Int32.Parse(entries[i][7]);
+						item.Enhance = Int32.Parse(entries[i][8]);
+						item.Socket = Int32.Parse(entries[i][9]);
+						item.EquipRaces = (Db.Races)Int32.Parse(entries[i][10]);
+						item.EquipClasses = (Db.Classes)Int32.Parse(entries[i][11]);
+						item.EquipDepth = (Db.JobDepth)Int32.Parse(entries[i][12]);
+						item.Weight = Int32.Parse(entries[i][13]);
+
+						Db.Add(itemId, item);
+					}
+					catch (Exception e)
+					{
+						ConsoleUtils.Write(ConsoleMsgType.Error, "Error parsing item Id {0}. Skipping line...\n", itemId);
+						ConsoleUtils.Write(ConsoleMsgType.Error, "Error: {0}\n", e.Message);
+					}
+				}
 			}
+			ConsoleUtils.Write(ConsoleMsgType.Status, "Item Database Loaded.\n");
 		}
 	}
 }

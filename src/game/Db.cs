@@ -13,6 +13,32 @@ namespace game
 {
 	public static class Db
 	{
+		[Flags]
+		public enum Races
+		{
+			Deva = 1,
+			Gaia = 2,
+			Asura = 4
+		}
+
+		[Flags]
+		public enum Classes
+		{
+			Fighter = 1,
+			Hunter = 2,
+			Magician = 4,
+			Summoner = 8
+		}
+
+		[Flags]
+		public enum JobDepth
+		{
+			Basic = 1,
+			First = 2,
+			Second = 4,
+			Master = 8
+		}
+
 		public static List<string[]> LoadDb(string fileName, string fields)
 		{
 			if (!File.Exists(fileName)) {
@@ -21,6 +47,7 @@ namespace game
 			}
 
 			string file = File.ReadAllText(fileName);
+			file = file.Replace("\r", "");
 			file = Regex.Replace(file, "//(.*?)\r?\n", "", RegexOptions.Singleline);
 			
 			StringBuilder str = new StringBuilder();
@@ -29,13 +56,14 @@ namespace game
 				if (i > 0) str.Append(", ");
 
 				if(fields[i].Equals('s')) { // String Field
-					str.Append("\"(.*?)\"");
+					str.Append("\"(.+)\"");
 				} else if (fields[i].Equals('i')) { // Int Field
-					str.Append("(.*?)");
+					str.Append("(.+)");
 				} else if (fields[i].Equals('g')) { // Group Field
-					str.Append("\\{(.*?)\\}");
+					str.Append("\\{(.+)\\}");
 				}
 			}
+			str.Append("?$");
 			
 			Regex r = new Regex(str.ToString(), RegexOptions.Multiline);
 			MatchCollection mc = r.Matches(file);

@@ -50,6 +50,16 @@ namespace game
 			WearType_Max
 		}
 
+		public enum Type : int
+		{
+
+		}
+
+		public enum Class : int
+		{
+
+		}
+
 		public int Code { get; set; }
 		public long UId { get; set; }
 		public long Count { get; set; }

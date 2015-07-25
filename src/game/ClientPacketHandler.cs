@@ -307,7 +307,7 @@ namespace game
 			PacketStream data = new PacketStream((short)0x01FB);
 
 			data.WriteUInt32(player.Handle);
-			data.WriteByte(0x00);
+			data.WriteByte(0x01);
 			data.WriteString(property, 16);
 			if (asString)
 			{

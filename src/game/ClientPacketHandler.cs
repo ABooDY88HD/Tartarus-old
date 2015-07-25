@@ -13,13 +13,6 @@ namespace game
 {
 	public static class ClientPacketHandler
 	{
-		internal enum LoginResult
-		{
-			LOGINRESULT_FAIL = 0x1,
-			LOGINRESULT_FAIL2 = 0x100,
-			LOGINRESULT_SUCCESS = 0x10000
-		}
-
 		private static XDes Des;
 		private static Dictionary<short, Packets.Packet> packet_db;
 

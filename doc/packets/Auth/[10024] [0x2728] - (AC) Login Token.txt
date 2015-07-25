@@ -1,0 +1,7 @@
+// Sends a login token to client
+// to be used to validate its connection
+// to game-server
+00 00 /* 0 */// Unknown
+String(8) key; /* 2 */// Client sends this with Packet 2005 to Game Server
+0A (?)
+00 00 00

@@ -51,13 +51,15 @@ namespace auth
 		
 		#region Parse Packet
 
-		// [0x270F] 9999 -> Unknown1
+		/// [0x270F] 9999 -> (CA) Unknown1
 		internal static void parse_Unknown1(Client client, ref PacketStream pStream, short[] pos) { return; }
 		
-		// [0x2711] 10001 -> Client Version
+		/// [0x2711] 10001 -> (CA) Client Version
+		/// <version>.20S
 		internal static void parse_ClientVersion(Client client, ref PacketStream pStream, short[] pos) { return; }
 		
-		// [0x271A] 10010 -> Login Try
+		/// [0x271A] 10010 -> (CA) Login
+		/// <username>.60S <password>.8B
 		internal static void parse_LoginTry(Client client, ref PacketStream pStream, short[] pos)
 		{
 			string user_id = ByteUtils.toString(pStream.ReadBytes((pos[0]), 60));
@@ -66,13 +68,14 @@ namespace auth
 			client.TryLogin(user_id, password);
 		}
 		
-		// [0x2725] 10021 -> Request Server List
+		/// [0x2725] 10021 -> (CA) Request Server List
 		internal static void parse_RequestServerList(Client client, ref PacketStream pStream, short[] pos)
 		{
 			Server.OnUserRequestServerList(client);
 		}
 
-		// [0x2726] 10023 -> Request Game Server Connection
+		/// [0x2726] 10023 -> (CA) Request Game Server Connection
+		/// <server index>.W
 		internal static void parse_JoinGameServer(Client client, ref PacketStream pStream, short[] pos)
 		{
 			byte server_index = pStream.ReadByte(pos[0]);
@@ -83,17 +86,21 @@ namespace auth
 
 		#region Send Packet
 
-		// [0x2710] 10000 -> Login Result
+		/// [0x2710] 10000 -> (AC) Login Result
+		/// <packet id>.W <result>.W <0>.L
 		internal static void send_LoginResult(Client client, Packets.LoginResult result)
 		{
 			PacketStream data = new PacketStream((short)0x2710);
 			data.WriteInt16(0x271A);
-			data.WriteInt32((Int32)result);
-			// official packet has 2 extra zeroes
+			data.WriteInt16((short) result);
+			data.WriteInt32(0);
 			ClientManager.Instance.Send(client, data);
 		}
 
-		// [0x2726] 10022 -> Server List
+		/// [0x2726] 10022 -> (AC) Server List
+		/// <unknown>.W <servers count>.W 
+		/// { <index>.W <name>.22S <notice url>.256S <ip>.16S 
+		///   <port>.W <status>.W <unknown2>.W}*(server count)
 		internal static void send_ServerList(Client client, GameServer[] servers)
 		{
 			PacketStream data = new PacketStream((short)0x2726);
@@ -120,7 +127,8 @@ namespace auth
 			ClientManager.Instance.Send(client, data);
 		}
 
-		// [0x2728] 10024 -> Join Game (Login Token)
+		/// [0x2728] 10024 -> (AC) Join Game (Login Token)
+		/// <unknown>.W <key>.8B <0A 00 00 00>.L
 		internal static void send_JoinGame(Client client, byte[] key)
 		{
 			PacketStream data = new PacketStream((short)0x2728);

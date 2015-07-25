@@ -1,3 +1,0 @@
-Size: 7
-
-[Header]

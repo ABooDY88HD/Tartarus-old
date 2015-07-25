@@ -66,11 +66,10 @@ namespace auth
 			return packets_db;
 		}
 
-		internal enum LoginResult
+		internal enum LoginResult : short
 		{
+			LOGINRESULT_SUCCESS = 0x0,
 			LOGINRESULT_FAIL = 0x1,
-			LOGINRESULT_FAIL2 = 0x100,
-			LOGINRESULT_SUCCESS = 0x10000
 		}
 	}
 }

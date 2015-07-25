@@ -1,0 +1,2 @@
+//Note: Seems to be unused (Value is dated by 2007)
+String(20) version; /* 0 */

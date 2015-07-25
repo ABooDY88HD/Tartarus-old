@@ -1,0 +1,2 @@
+// Request to join a game server
+short server_index; /* 0 */

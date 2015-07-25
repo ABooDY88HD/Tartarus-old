@@ -1,5 +1,0 @@
-Size: 9
-
-[Header]
-byte	server_index
-00

@@ -1,0 +1,6 @@
+// Login packet
+Size: 129
+
+String(60) username; /* 0 */
+String(8) password; /* 60 */ // (DES Hashed -> Key: MERONG)
+[Unknown]

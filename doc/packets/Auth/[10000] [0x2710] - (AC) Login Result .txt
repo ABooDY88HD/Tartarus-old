@@ -1,0 +1,8 @@
+// The result of a login attempt
+Int16 packet_id; /* 0 */ // Seems to be something like "In answer to Packet X"
+Int16 result; /* 2 */
+Int32 00; /* 4 */
+
+Result:
+	0 = Success
+	> 0 = Error messages

@@ -1,0 +1,12 @@
+// Sends a list with all the game servers
+Int16 unknown;			/* 0 */
+Int16 servers_count;	/* 2 */
+struct {
+	Int16 server_index;		/* 4 */
+	String(22) server_name;	/* 6 */   // 0 terminated
+	String(256)	notice_url;	/* 28 */  // 0 terminated
+	String(16) server_ip;	/* 284 */ // 0 terminated
+	Int16 server_port;		/* 300 */
+	Int16 server_status;	/* 302 */
+	Int16 unknown2;			/* 304 */
+} servers[servers_count];

@@ -15,7 +15,7 @@ struct {
 	00 00 00 00				/* 44 */
 	05 00 00 00				/* 48 */
 	Int32 right_hand;		/* 52 */
-	Int32 shield_id;		/* 54 */ //(?)
+	Int32 left_hand;		/* 54 */
 	Int32 armor_id;			/* 58 */
 	Int32 cap_id;			/* 62 */
 	Int32 hand_id; 			/* 66 */

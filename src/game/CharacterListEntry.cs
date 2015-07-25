@@ -29,101 +29,11 @@ namespace game
 
 		public int CreateDate { get; set; }
 
-		public Dictionary<uint, Item> Inventory { get; set; }
-		public List<Quest> QuestList { get; set; }
+		public int[] Equip { get; set; }
 
-		public uint[] Equip { get; set; }
-
-		public Point Position { get; set; }
-		/*public Character()
+		public CharacterListEntry()
 		{
-			Equip = new uint[(int)Item.WearType.WearType_Max];
-			Position = new Point(0,0);
-
-			//TODO : Calculate
-			this.MaxHp = 100;
-			this.Hp = 100;
+			Equip = new int[(int)Item.WearType.WearType_Max];
 		}
-		
-		/// <summary>
-		/// Loads user's inventory List
-		/// </summary>
-		/// <returns></returns>
-		internal bool LoadInventory()
-		{
-			this.Inventory = new Dictionary<uint, Item>();
-
-			Database db = new Database(Server.UserDbConString);
-
-			MySqlDataReader reader =
-				db.ReaderQuery(
-					"SELECT `id`, `code`, `count`, `equip` " +
-					"FROM `item` " +
-					"WHERE `char_id` = @charId",
-					new string[] { "charId" },
-					new object[] { this.CharId }
-				);
-
-			while (reader.Read())
-			{
-				Item i = GObjectManager.GetNewItem();
-			}
-
-			return true;
-		}
-
-		/// <summary>
-		/// Loads user's quest list
-		/// </summary>
-		internal void LoadQuest()
-		{
-			this.QuestList = new List<Quest>();
-
-			Database db = new Database(Server.UserDbConString);
-			// TODO : Query CleanUP
-
-			MySqlDataReader reader =
-				db.ReaderQuery(
-					"SELECT `id`, `quest_id`, `start_text`, `remain_time`, `progress`," +
-					"`status1`, `status2`, `status3`, `status4`, `status5`, `status6`" +
-					" FROM `quest`" +
-					" WHERE `char_id` = @charId",
-					new string[] { "charId" },
-					new object[] { this.CharId }
-				);
-
-			while (reader.Read())
-			{
-				Quest q = new Quest()
-				{
-					StartText = (int)reader["start_text"],
-					Code = (int)reader["quest_id"],
-					Status1 = (int)reader["status1"],
-					Status2 = (int)reader["status2"],
-					Status3 = (int)reader["status3"],
-					Status4 = (int)reader["status4"],
-					Status5 = (int)reader["status5"],
-					Status6 = (int)reader["status6"],
-					RemainTime = (int)reader["remain_time"],
-					Progress = (Quest.Status)(int)reader["status"]
-				};
-				this.QuestList.Add(q);
-			}
-		}
-
-		internal void Save()
-		{
-			Database db = new Database(Server.UserDbConString);
-			
-			db.WriteQuery(
-				"UPDATE `char` SET `x` = @x, `y` = @y WHERE `char_id` = @cid",
-				new string[] { 
-					"cid", "x", "y"
-				},
-				new object[] { 
-					this.CharId,  (int) this.Position.X, (int) this.Position.Y
-				}
-			);
-		}*/
 	}
 }

@@ -51,7 +51,7 @@ namespace game
 			WearType_Max
 		}
 
-		public enum Type : int
+		public enum ItemType : int
 		{
 
 		}
@@ -74,5 +74,26 @@ namespace game
 		}
 
 		public Item() {}
+
+		public static void CharacterGetItem(int charId, Item item)
+		{
+			Database db = new Database(Server.UserDbConString);
+			
+			db.WriteQuery(
+				"INSERT INTO `item`(" +
+					"`char_id`, `code`, `count`, `equip`" +
+				") VALUES (" +
+					"@charId, @code, @count, @equip" +
+				")",
+				new string[] { 
+					"charId", "code", "count", "equip"
+				},
+				new object[] { 
+					charId, item.Code, item.Count, (int)item.WearInfo
+				}
+			);
+
+			return;
+		}
 	}
 }

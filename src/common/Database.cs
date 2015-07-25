@@ -92,7 +92,7 @@ namespace common
 		/// <param name="parNames">parameters name</param>
 		/// <param name="parVals">parameters value</param>
 		/// <returns></returns>
-		public int WriteQuery(string query, string[] parNames, object[] parVals)
+		public long WriteQuery(string query, string[] parNames, object[] parVals)
 		{
 			if (!Open()) return -1;
 
@@ -103,7 +103,9 @@ namespace common
 					cmd.Parameters.AddWithValue(parNames[i], parVals[i]);
 				}
 
-				return cmd.ExecuteNonQuery();
+				cmd.ExecuteNonQuery();
+
+				return cmd.LastInsertedId;
 			}
 		}
 

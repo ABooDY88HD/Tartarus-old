@@ -139,30 +139,39 @@ namespace game
 
 				data.Write(new byte[8], 0, 8);
 				data.Write(new byte[4] { 0x05, 0x00, 0x00, 0x00 }, 0, 4);
-				data.WriteInt32(0); // Right Hand Item
-				data.WriteInt32(0); // 
-				data.WriteInt32(0); // Armor ID
-				data.WriteInt32(0); // 4
-				data.WriteInt32(0); // 8
-				data.WriteInt32(0); // 12
-				data.WriteInt32(0); // 16
-				data.WriteInt32(0); // 20
-				data.WriteInt32(0); // 24
-				data.WriteInt32(0); // 28
-				data.WriteInt32(0); // 32
-				data.WriteInt32(0); // 36
-				data.WriteInt32(0); // 40
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.RightHand]); // Right Hand Item
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.LeftHand]); // 
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Armor]); // Armor ID
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Helm]); // 4
+				
+				int temp = characters[i].Equip[(int)Item.WearType.Glove];
+				if (temp == 0)
+					temp = characters[i].HandsId;
+				data.WriteInt32(temp); // 8
+				
+				temp = characters[i].Equip[(int)Item.WearType.Boots];
+				if (temp == 0)
+					temp = characters[i].FeetId;
+				data.WriteInt32(temp); // 12
+				
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Belt]); // 16
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Mantle]); // 20
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Necklace]); // 24
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Ring]); // 28
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.SecondRing]); // 32
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Ear]); // 36
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.Face]); // 40
 				data.WriteInt32(0); // 44
 				data.WriteInt32(0); // 48
-				data.WriteInt32(0); // 52
-				data.WriteInt32(0); // 56
-				data.WriteInt32(0); // 60
-				data.WriteInt32(0); // 64
-				data.WriteInt32(0); // 68
-				data.WriteInt32(0); // 72
-				data.WriteInt32(0); // 76
-				data.WriteInt32(0); // 80
-				data.WriteInt32(0); // Bag ID
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoShield]); // 52
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoArmor]); // 56
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoHelm]); // 60
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoGlove]); // 64
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoBoots]); // 68
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoMantle]); // 72
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.DecoShoulder]); // 76
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.RideItem]); // 80
+				data.WriteInt32(characters[i].Equip[(int)Item.WearType.BagSlot]); // Bag ID
 				data.WriteInt32(characters[i].Level); // Level
 				data.WriteInt32(characters[i].Job); // Job
 				data.WriteInt32(characters[i].JobLevel); // Job Level

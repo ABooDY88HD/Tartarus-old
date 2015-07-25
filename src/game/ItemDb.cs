@@ -14,7 +14,7 @@ namespace game
 	{
 		public class ItemEntry
 		{
-			public Item.Type Type { get; set; }
+			public Item.ItemType Type { get; set; }
 			public Item.Class Class { get; set; }
 			public Item.WearType WearType { get; set; }
 			public int Grade { get; set; }
@@ -48,7 +48,7 @@ namespace game
 					try
 					{
 						ItemEntry item = new ItemEntry();
-						item.Type = (Item.Type)Int32.Parse(entries[i][2]);
+						item.Type = (Item.ItemType)Int32.Parse(entries[i][2]);
 						item.Class = (Item.Class)Int32.Parse(entries[i][3]);
 						item.WearType = (Item.WearType)Int32.Parse(entries[i][4]);
 						item.Grade = Int32.Parse(entries[i][5]);

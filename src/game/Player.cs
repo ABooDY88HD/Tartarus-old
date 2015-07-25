@@ -94,6 +94,7 @@ namespace game
 		internal void SendCharacterList()
 		{
 			Database db = new Database(Server.UserDbConString);
+
 			// TODO : Query CleanUP
 			MySqlDataReader reader = 
 				db.ReaderQuery(
@@ -109,6 +110,7 @@ namespace game
 			
 			List<CharacterListEntry> chars = new List<CharacterListEntry>();
 
+			Database db2 = new Database(Server.UserDbConString);
 			while (reader.Read())
 			{
 				CharacterListEntry c = new CharacterListEntry();
@@ -129,6 +131,23 @@ namespace game
 
 				c.CreateDate = (int)reader["create_date"];
 
+				
+				MySqlDataReader equipList =
+					db2.ReaderQuery(
+						"SELECT `code`, `equip`" +
+						" FROM `item`" +
+						" WHERE `char_id` = @charId AND `equip` >= 0",
+						new string[] { "charId" },
+						new object[] { (int)reader["char_id"] }
+					);
+				
+				while (equipList.Read())
+				{
+					c.Equip[(int)equipList["equip"]] = (int)equipList["code"];
+				}
+
+				equipList.Close();
+
 				chars.Add(c);
 			}
 			db.Dispose();
@@ -141,6 +160,9 @@ namespace game
 			Database db = new Database(Server.UserDbConString);
 			float x = 0; float y = 0;
 			int job = 0;
+			int startWeapon = 0;
+			int startBag = 480001;
+			//int startOutfit = 0;
 
 			// Defines start job and position
 			switch (race)
@@ -148,65 +170,82 @@ namespace game
 				case (int)PCRace.Asura:
 					x = 168356; y = 55399;
 					job = 300;
+					startWeapon = 103100; // Beginner's Dirk
 					break;
 
 				case (int)PCRace.Deva:
 					x = 164474; y = 52932;
 					job = 200;
+					startWeapon = 106100; // Beginner's Mace
 					break;
 
 				case (int)PCRace.Gaia:
 					x = 164335; y = 49510;
 					job = 100;
+					startWeapon = 112100; //Trainee's Small Axe
 					break;
 			}
 
-			db.WriteQuery(
-				"INSERT INTO `char`(" +
-					"`account_id`,`slot`," +
-					"`name`,`sex`,`race`," +
-					"`hair_id`, `face_id`, `body_id`, `hands_id`," +
-					"`feet_id`, `face_detail_id`, `hair_color`," +
-					"`skin_color`, `x`, `y`, `layer`," +
-					"`save_x`, `save_y`," +
-					"`level`, `exp`," +
-					"`job`, `job_level`, `job_exp`,`jp`," +
-					"`job_0`, `job0_level`," +
-					"`job_1`, `job1_level`," +
-					"`job_2`, `job2_level`," +
-					"`create_date`, `delete_date`," +
-					"`client_info`" +
-				") VALUES (" +
-					"@accId,0," +
-					"@name,@sex,@race," +
-					"@hairId,@faceId,@bodyId,@handId," +
-					"@feetId,@faceDetailId,@hairColor," +
-					"@skinColor,@x,@y,0," +
-					"0,0," +
-					"1,0," +
-					"@job,1,0,0," +
-					"0,0," +
-					"0,0," +
-					"0,0," +
-					"@createDate,0," +
-					"@clientInfo" +
-				")",
-				new string[] { 
-					"accId", "name", "sex", "race",
-					"hairId", "faceId", "bodyId",
-					"handId", "feetId", "faceDetailId",
-					"hairColor", "skinColor", "x", "y",
-					"job", "createDate", "clientInfo"
-				},
-				new object[] { 
-					this.AccountId, name, sex, race,
-					hairId, faceId, bodyId,
-					handsId, feetId, faceDetail,
-					hairColor, skinColor, x, y,
-					job, TimeUtils.GetTimeStamp(DateTime.Now),
-					"QS2=0,2,0|QS2=1,2,2|QS2=11,2,1|QS2=24,2,7|QS2=25,2,8|QS2=35,2,28"
-				}
-			);
+			int charId =
+				(int) db.WriteQuery(
+					"INSERT INTO `char`(" +
+						"`account_id`,`slot`," +
+						"`name`,`sex`,`race`," +
+						"`hair_id`, `face_id`, `body_id`, `hands_id`," +
+						"`feet_id`, `face_detail_id`, `hair_color`," +
+						"`skin_color`, `x`, `y`, `layer`," +
+						"`save_x`, `save_y`," +
+						"`level`, `exp`," +
+						"`job`, `job_level`, `job_exp`,`jp`," +
+						"`job_0`, `job0_level`," +
+						"`job_1`, `job1_level`," +
+						"`job_2`, `job2_level`," +
+						"`create_date`, `delete_date`," +
+						"`client_info`" +
+					") VALUES (" +
+						"@accId,0," +
+						"@name,@sex,@race," +
+						"@hairId,@faceId,@bodyId,@handId," +
+						"@feetId,@faceDetailId,@hairColor," +
+						"@skinColor,@x,@y,0," +
+						"0,0," +
+						"1,0," +
+						"@job,1,0,0," +
+						"0,0," +
+						"0,0," +
+						"0,0," +
+						"@createDate,0," +
+						"@clientInfo" +
+					")",
+					new string[] { 
+						"accId", "name", "sex", "race",
+						"hairId", "faceId", "bodyId",
+						"handId", "feetId", "faceDetailId",
+						"hairColor", "skinColor", "x", "y",
+						"job", "createDate", "clientInfo"
+					},
+					new object[] { 
+						this.AccountId, name, sex, race,
+						hairId, faceId, bodyId,
+						handsId, feetId, faceDetail,
+						hairColor, skinColor, x, y,
+						job, TimeUtils.GetTimeStamp(DateTime.Now),
+						"QS2=0,2,0|QS2=1,2,2|QS2=11,2,1|QS2=24,2,7|QS2=25,2,8|QS2=35,2,28"
+					}
+				);
+
+			Item startItem = new Item();
+			startItem.Code = startBag;
+			startItem.WearInfo = Item.WearType.BagSlot;
+			startItem.Count = 1;
+			Item.CharacterGetItem(charId, startItem);
+			
+			startItem.Code = startWeapon;
+			startItem.WearInfo = Item.WearType.RightHand;
+			Item.CharacterGetItem(charId, startItem);
+
+			//startItem.Count = start
+			//Item.CharacterGetItem(charId, startItem);
 
 			ClientPacketHandler.send_PacketResponse(this, (short)0x07D2);
 		}

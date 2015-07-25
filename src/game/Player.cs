@@ -414,7 +414,11 @@ namespace game
 				i.UId = (long)reader["id"];
 				i.Code = (int)reader["code"];
 				i.Count = (long)reader["count"];
-				
+				i.WearInfo = (Item.WearType)(int)reader["equip"];
+
+				if (i.WearInfo != Item.WearType.None)
+					this.Equip[(int)i.WearInfo] = i.Handle;
+
 				this.Inventory.Add(i.Handle, i);
 			}
 

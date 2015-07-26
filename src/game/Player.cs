@@ -51,6 +51,9 @@ namespace game
 		public int FeetId { get; set; } // model_04
 		public int HairColor { get; set; }
 
+		public Stats BaseStats { get; set; }
+		public Stats SCStats { get; set; }
+
 		public int Hp { get; set; }
 		public int Mp { get; set; }
 		public int MaxHp { get; set; }
@@ -80,15 +83,33 @@ namespace game
 
 		public Point Position { get; set; }
 		
-		public Player(uint pHandle) : base(pHandle, GameObjectType.Player) {
+		public Player(uint pHandle) : base(pHandle, GameObjectType.Player)
+		{
 			this.NetData = new Network();
 
 			Equip = new uint[(int)Item.WearType.WearType_Max];
 			Position = new Point(0, 0);
 
-			//TODO : Calculate
+			LoadStats();
+		}
+
+		private void LoadStats()
+		{
+			this.BaseStats = new Stats();
+			this.SCStats = new Stats();
+
+			this.BaseStats.Recalculate(this.Level);
+			//this.RecalculateHPMP();
+
 			this.MaxHp = 100;
-			this.Hp = 100;
+			this.MaxMp = 100;
+			this.Hp = this.MaxHp;
+		}
+
+		public void RecalculateHPMP()
+		{
+			this.MaxHp = 33 * (this.BaseStats.Vitality + this.SCStats.Vitality) + 20 * this.Level;
+			this.MaxMp = 30 * (this.BaseStats.Intelligence + this.SCStats.Intelligence) + 20 * this.Level;
 		}
 
 		/// <summary>

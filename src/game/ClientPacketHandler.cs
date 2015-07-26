@@ -584,34 +584,34 @@ namespace game
 			data.Write(b, 0, b.Length);
 			ClientManager.Instance.Send(player, data);
 		}
-		// TODO 
+
+		/// [1000]
 		internal static void send_UpdateStats(Player player, bool isTemp)
 		{
 			PacketStream res = new PacketStream((short)0x03E8);
-			//res.WriteUInt32(NetworkManager.sid2handle(sid));
 			res.WriteUInt32(player.Handle);
 
-			if (isTemp)
+			if (!isTemp)
 			{
-				/*res.WriteInt16(10);
-				res.WriteInt16(player.BaseStats.Strenght);
+				res.WriteInt16(10);
+				res.WriteInt16(player.BaseStats.Strength);
 				res.WriteInt16(player.BaseStats.Vitality);
 				res.WriteInt16(player.BaseStats.Dexterity);
 				res.WriteInt16(player.BaseStats.Agility);
-				res.WriteInt16(player.BaseStats.Inteligence);
+				res.WriteInt16(player.BaseStats.Intelligence);
 				res.WriteInt16(player.BaseStats.Wisdom);
 				res.WriteInt16(player.BaseStats.Luck);
 
 				res.WriteInt16(player.BaseStats.CritPower);
 				res.WriteInt16(player.BaseStats.CritRate);
-				res.WriteInt16(player.BaseStats.PAtk);
-				res.WriteInt16(player.BaseStats.PAtkDiv);
+				res.WriteInt16(player.BaseStats.PAtkRight);
+				res.WriteInt16(player.BaseStats.PAtkLeft);
 				res.WriteInt16(player.BaseStats.PDef);
 				res.WriteInt16(player.BaseStats.BlockDef);
 				res.WriteInt16(player.BaseStats.MAtk);
 				res.WriteInt16(player.BaseStats.MDef);
-				res.WriteInt16(player.BaseStats.Accuracy);
-				res.WriteInt16(player.BaseStats.AccuracyDiv);
+				res.WriteInt16(player.BaseStats.AccuracyRight);
+				res.WriteInt16(player.BaseStats.AccuracyLeft);
 				res.WriteInt16(player.BaseStats.MAccuracy);
 				res.WriteInt16(player.BaseStats.Evasion);
 				res.WriteInt16(player.BaseStats.MRes);
@@ -621,7 +621,7 @@ namespace game
 				res.WriteInt16(player.BaseStats.AtkSpd);
 
 				res.WriteInt16(60);
-				res.WriteInt16(9119);
+				res.WriteInt16(player.BaseStats.MaxWeight);
 				res.WriteInt16(0);
 				res.WriteInt16(player.BaseStats.CastSpd);
 				res.WriteInt16(player.BaseStats.ReCastSpd);
@@ -640,58 +640,58 @@ namespace game
 				res.WriteInt16(player.BaseStats.MPierce);
 				res.WriteInt16(player.BaseStats.MPiercePer);
 				res.WriteInt16(player.BaseStats.PPierce);
-				res.WriteInt16(player.BaseStats.PPiercePer);*/
+				res.WriteInt16(player.BaseStats.PPiercePer);
 			}
 			else
 			{
-				/*res.WriteInt16(10);
-				res.WriteInt16(player.TempStats.Strenght);
-				res.WriteInt16(player.TempStats.Vitality);
-				res.WriteInt16(player.TempStats.Dexterity);
-				res.WriteInt16(player.TempStats.Agility);
-				res.WriteInt16(player.TempStats.Inteligence);
-				res.WriteInt16(player.TempStats.Wisdom);
-				res.WriteInt16(player.TempStats.Luck);
+				res.WriteInt16(10);
+				res.WriteInt16(player.SCStats.Strength);
+				res.WriteInt16(player.SCStats.Vitality);
+				res.WriteInt16(player.SCStats.Dexterity);
+				res.WriteInt16(player.SCStats.Agility);
+				res.WriteInt16(player.SCStats.Intelligence);
+				res.WriteInt16(player.SCStats.Wisdom);
+				res.WriteInt16(player.SCStats.Luck);
 
-				res.WriteInt16(player.TempStats.CritPower);
-				res.WriteInt16(player.TempStats.CritRate);
-				res.WriteInt16(player.TempStats.PAtk);
-				res.WriteInt16(player.TempStats.PAtkDiv);
-				res.WriteInt16(player.TempStats.PDef);
-				res.WriteInt16(player.TempStats.BlockDef);
-				res.WriteInt16(player.TempStats.MAtk);
-				res.WriteInt16(player.TempStats.MDef);
-				res.WriteInt16(player.TempStats.Accuracy);
-				res.WriteInt16(player.TempStats.AccuracyDiv);
-				res.WriteInt16(player.TempStats.MAccuracy);
-				res.WriteInt16(player.TempStats.Evasion);
-				res.WriteInt16(player.TempStats.MRes);
-				res.WriteInt16(player.TempStats.BlockPer);
+				res.WriteInt16(player.SCStats.CritPower);
+				res.WriteInt16(player.SCStats.CritRate);
+				res.WriteInt16(player.SCStats.PAtkRight);
+				res.WriteInt16(player.SCStats.PAtkLeft);
+				res.WriteInt16(player.SCStats.PDef);
+				res.WriteInt16(player.SCStats.BlockDef);
+				res.WriteInt16(player.SCStats.MAtk);
+				res.WriteInt16(player.SCStats.MDef);
+				res.WriteInt16(player.SCStats.AccuracyRight);
+				res.WriteInt16(player.SCStats.AccuracyLeft);
+				res.WriteInt16(player.SCStats.MAccuracy);
+				res.WriteInt16(player.SCStats.Evasion);
+				res.WriteInt16(player.SCStats.MRes);
+				res.WriteInt16(player.SCStats.BlockPer);
 
-				res.WriteInt16(player.TempStats.MovSpd);
-				res.WriteInt16(player.TempStats.AtkSpd);
+				res.WriteInt16(player.SCStats.MovSpd);
+				res.WriteInt16(player.SCStats.AtkSpd);
 
 				res.WriteInt16(60);
-				res.WriteInt16(9119);
+				res.WriteInt16(player.SCStats.MaxWeight);
 				res.WriteInt16(0);
-				res.WriteInt16(player.TempStats.CastSpd);
-				res.WriteInt16(player.TempStats.ReCastSpd);
+				res.WriteInt16(player.SCStats.CastSpd);
+				res.WriteInt16(player.SCStats.ReCastSpd);
 				res.WriteInt16(2);
 
-				res.WriteInt16(player.TempStats.HPRegen);
-				res.WriteInt16(player.TempStats.HPRecov);
-				res.WriteInt16(player.TempStats.MPRegen);
-				res.WriteInt16(player.TempStats.MPRecov);
+				res.WriteInt16(player.SCStats.HPRegen);
+				res.WriteInt16(player.SCStats.HPRecov);
+				res.WriteInt16(player.SCStats.MPRegen);
+				res.WriteInt16(player.SCStats.MPRecov);
 
-				res.WriteInt16(player.TempStats.PerfBlock);
-				res.WriteInt16(player.TempStats.MIgnore);
-				res.WriteInt16(player.TempStats.MIgnorePer);
-				res.WriteInt16(player.TempStats.PIgnore);
-				res.WriteInt16(player.TempStats.PIgnorePer);
-				res.WriteInt16(player.TempStats.MPierce);
-				res.WriteInt16(player.TempStats.MPiercePer);
-				res.WriteInt16(player.TempStats.PPierce);
-				res.WriteInt16(player.TempStats.PPiercePer);*/
+				res.WriteInt16(player.SCStats.PerfBlock);
+				res.WriteInt16(player.SCStats.MIgnore);
+				res.WriteInt16(player.SCStats.MIgnorePer);
+				res.WriteInt16(player.SCStats.PIgnore);
+				res.WriteInt16(player.SCStats.PIgnorePer);
+				res.WriteInt16(player.SCStats.MPierce);
+				res.WriteInt16(player.SCStats.MPiercePer);
+				res.WriteInt16(player.SCStats.PPierce);
+				res.WriteInt16(player.SCStats.PPiercePer);
 			}
 
 			res.WriteBool(isTemp);

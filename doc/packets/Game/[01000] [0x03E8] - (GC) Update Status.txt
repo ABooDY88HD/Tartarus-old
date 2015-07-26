@@ -1,0 +1,47 @@
+// Updates all the stats
+// of a character
+UInt32 handle; /* 0 */
+Int16 unknown1; /* 4 */
+Int16 strenght; /* 6 */
+Int16 vitality; /* 8 */
+Int16 dexterity; /* 10 */
+Int16 agility; /* 12 */
+Int16 int; /* 14 */
+Int16 wisdom; /* 16 */
+Int16 luck; /* 18 */
+Int16 crit_rate; /* 20 */
+Int16 crit_power; /* 22 */
+Int16 p_atk_right; /* 24 */
+Int16 p_atk_left; /* 26 */ 
+Int16 p_def;/* 28 */ 
+Int16 block_def;/* 30 */
+Int16 matk;/* 32 */
+Int16 mdef;/* 34 */
+Int16 accuracy_right;/* 36 */
+Int16 accuracy_left; /* 38 */
+Int16 m_accuracy; /* 40 */
+Int16 evasion; /* 42 */
+Int16 m_res; /* 44 */
+Int16 block_per; /* 46 */
+Int16 mov_spd; /* 48 */
+Int16 atk_spd; /* 50 */
+Int16 unknown2; // 60 /* 52 */
+Int16 max_weight; /* 54 */
+Int16 unknown4; // 0  /* 56 */
+Int16 cast_spd;  /* 58 */
+Int16 recast_spd;  /* 60 */
+Int16 unknown5; // 2 /* 62 */
+Int16 hp_regen; /* 64 */
+Int16 hp_recov; /* 66 */
+Int16 mp_regen; /* 68 */
+Int16 mp_recov; /* 70 */
+Int16 perf_block; /* 72 */
+Int16 m_ignore; /* 74 */
+Int16 m_ignore_perc; /* 76 */
+Int16 p_ignore; /* 78 */
+Int16 p_ignore_perc; /* 80 */
+Int16 m_pierce; /* 82 */
+Int16 m_pierce_perc; /* 84 */
+Int16 p_pierce; /* 86 */
+Int16 p_pierce_perc; /* 88 */
+Byte is_temporary; /* 90 */

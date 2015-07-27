@@ -80,13 +80,23 @@ namespace game
 			Equip = new uint[(int)Item.WearType.WearType_Max];
 			Position = new Point(0, 0);
 
-			LoadStats();
+			this.BaseStats = new Stats();
+			this.SCStats = new Stats();
 		}
 
 		private void LoadStats()
 		{
 			this.BaseStats = new Stats();
 			this.SCStats = new Stats();
+
+			// Load Job Stats
+			this.BaseStats.Strength = StatsDb.DB[this.Job].Str;
+			this.BaseStats.Vitality = StatsDb.DB[this.Job].Vit;
+			this.BaseStats.Dexterity = StatsDb.DB[this.Job].Dex;
+			this.BaseStats.Agility = StatsDb.DB[this.Job].Agi;
+			this.BaseStats.Intelligence = StatsDb.DB[this.Job].Int;
+			this.BaseStats.Wisdom = StatsDb.DB[this.Job].Wis;
+			this.BaseStats.Luck = StatsDb.DB[this.Job].Luk;
 
 			this.BaseStats.Recalculate(this.Level);
 			//this.RecalculateHPMP();
@@ -373,7 +383,9 @@ namespace game
 			this.ClientInfo = (string)reader["client_info"];
 			this.LoadInventory();
 			this.LoadQuest();
-			
+
+			this.LoadStats();
+
 			return true;
 		}
 

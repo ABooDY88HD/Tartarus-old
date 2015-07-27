@@ -86,6 +86,7 @@ namespace game
 			GObjectManager.Start();
 
 			ItemDb.Start();
+			StatsDb.Start();
 			//QuestDb.Start();
 
 			RegionMngr.Start();

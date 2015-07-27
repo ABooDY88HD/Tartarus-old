@@ -8,6 +8,16 @@ using System.Threading.Tasks;
 
 namespace game
 {
+	/// <summary>
+	/// Player Races
+	/// </summary>
+	public enum Races
+	{
+		Deva = 3,
+		Gaia = 4,
+		Asura = 5,
+	}
+
 	public enum GameObjectType
 	{
 		Player,

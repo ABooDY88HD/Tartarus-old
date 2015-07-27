@@ -13,16 +13,6 @@ using common.Utilities;
 
 namespace game
 {
-	/// <summary>
-	/// Player Races
-	/// </summary>
-	public enum PCRace
-	{
-		Deva = 3,
-		Gaia = 4,
-		Asura = 5,
-	}
-
 	public class Player : GameObject
 	{
 		public class Network
@@ -206,7 +196,7 @@ namespace game
 			// Defines start job and position
 			switch (race)
 			{
-				case (int)PCRace.Asura:
+				case (int)Races.Asura:
 					x = 168356; y = 55399;
 					job = 300;
 					startWeapon = 103100; // Beginner's Dirk
@@ -217,7 +207,7 @@ namespace game
 						startOutfit = 230109;
 					break;
 
-				case (int)PCRace.Deva:
+				case (int)Races.Deva:
 					x = 164335; y = 49510;
 					job = 100;
 					startWeapon = 106100; // Beginner's Mace
@@ -228,7 +218,7 @@ namespace game
 						startOutfit = 240109;
 					break;
 
-				case (int)PCRace.Gaia:
+				case (int)Races.Gaia:
 					x = 164474; y = 52932;
 					job = 200;
 					startWeapon = 112100; //Trainee's Small Axe

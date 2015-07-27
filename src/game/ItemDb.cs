@@ -27,13 +27,14 @@ namespace game
 			public Db.JobDepth EquipDepth { get; set; }
 			public Int32 Weight { get; set; }
 		}
-		public static Dictionary<Int32, ItemEntry> Db { get; private set; }
+
+		public static Dictionary<Int32, ItemEntry> DB { get; private set; }
 
 		public static void Start()
 		{
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Item Database...\n");
 
-			Db = new Dictionary<int, ItemEntry>();
+			DB = new Dictionary<int, ItemEntry>();
 			Database db = new Database(Server.GameDbConString);
 			MySqlDataReader reader = 
 				db.ReaderQuery(
@@ -61,7 +62,7 @@ namespace game
 				item.EquipDepth = (Db.JobDepth)(sbyte)reader["equip_depth"];
 				item.Weight = (int)reader["weight"];
 
-				Db.Add((int)reader["id"], item);
+				DB.Add((int)reader["id"], item);
 			}
 
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Item Database Loaded.\n");

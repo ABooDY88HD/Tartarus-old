@@ -1,6 +1,0 @@
-[Header]
-[ItemHandle] : UInt32
-[Change] : Int16 // -1 = Unequip ; 0 = Equip
-[PlayerHandle] : UInt32
-Item_Enhance
-00 00 00 00 00 00 00 00 // Unknown

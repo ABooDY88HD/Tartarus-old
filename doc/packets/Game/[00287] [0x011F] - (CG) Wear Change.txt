@@ -1,0 +1,6 @@
+// Sends info about a change in equipped items
+UInt32 item_handle; /* 0 */
+Int16 wear_type; /* 4 */
+UInt32 player_handle; /* 6 */
+Byte item_enhance; /* 10 */
+00 00 00 00 00 00 00 00 // Unknown

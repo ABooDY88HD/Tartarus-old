@@ -893,20 +893,27 @@ namespace game
 		}
 
 		/// [0x011F] -> (GC) Wear Change
-		/// <item handle>.L <change type>.W <player handle>.L <item enhance>.B
-		/// Change Types:
-		///		-1: Unequip
-		internal static void send_WearChange(Player player, uint handle, short change, byte enhance)
+		/// <item handle>.L <wear info>.W <player handle>.L <item enhance>.B
+		/// If wear info is -1, unequip item
+		internal static void send_WearChange(Player player, uint handle, short wearType, byte enhance)
 		{
 			PacketStream data = new PacketStream(0x011F);
 
 			data.WriteUInt32(handle);
-			data.WriteInt16(change);
+			data.WriteInt16(wearType);
 			data.WriteUInt32(player.Handle);
 			data.WriteByte(enhance);
 			data.Write(new byte[8], 0, 8);
 
 			ClientManager.Instance.Send(player, data);
+		}
+
+		internal static void parse_Equip(Player player, ref PacketStream stream, short[] pos)
+		{
+			byte wearType = stream.ReadByte(pos[0]);
+			uint handle = stream.ReadUInt32(pos[1]);
+
+			player.EquipItem(wearType, handle);
 		}
 	}
 }

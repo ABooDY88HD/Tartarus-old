@@ -566,6 +566,11 @@ namespace game
 		internal void UnequipItem(int wearType)
 		{
 			uint handle = this.Equip[wearType];
+			if (handle == 0)
+			{
+				ConsoleUtils.Write(ConsoleMsgType.Error, "Trying to unequip inexistant item.");
+				return;
+			}
 			this.Equip[wearType] = 0;
 
 			ClientPacketHandler.send_WearChange(this, handle, -1, this.Inventory[handle].Enhance);
@@ -573,6 +578,29 @@ namespace game
 			// TODO : send max_havoc, max_chaos, max_stamina properties
 
 			ClientPacketHandler.send_PacketResponse(this, 0x00C9);
+		}
+
+		internal void EquipItem(int wearType, uint itemHandle)
+		{
+			if (!this.Inventory.ContainsKey(itemHandle))
+			{
+				ConsoleUtils.Write(ConsoleMsgType.Error, "Trying to access invalid handle in player inventory.\n");
+				return;
+			}
+			Item i = this.Inventory[itemHandle];
+			this.Equip[(int)i.WearInfo] = itemHandle;
+
+			ClientPacketHandler.send_WearChange(this, itemHandle, (short)i.WearInfo, this.Inventory[itemHandle].Enhance);
+
+			this.BaseStats.Recalculate(this.Level);
+
+			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", Globals.MaxStamina);
+
+			ClientPacketHandler.send_PacketResponse(this, 0x00C8);
+
+			ClientPacketHandler.send_CharacterView(this);
 		}
 	}
 }

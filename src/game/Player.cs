@@ -562,5 +562,17 @@ namespace game
 			else
 				ClientPacketHandler.send_PacketResponse(this, 0x07D3, 1);
 		}
+
+		internal void UnequipItem(int wearType)
+		{
+			uint handle = this.Equip[wearType];
+			this.Equip[wearType] = 0;
+
+			ClientPacketHandler.send_WearChange(this, handle, -1, this.Inventory[handle].Enhance);
+			this.BaseStats.Recalculate(this.Level);
+			// TODO : send max_havoc, max_chaos, max_stamina properties
+
+			ClientPacketHandler.send_PacketResponse(this, 0x00C9);
+		}
 	}
 }

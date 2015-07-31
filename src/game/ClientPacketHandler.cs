@@ -846,34 +846,34 @@ namespace game
 			ClientManager.Instance.Send(player, data);
 		}
 
-		/// [0x0017] 23 -> (CS) Player Logout
+		/// [0x0017] 23 -> (CG) Player Logout
 		internal static void parse_PCLogoutToCharScreen(Player player, ref PacketStream stream, short[] pos)
 		{
 			// TODO : Logout conditions
 			send_PacketResponse(player, 0x0017, 0);
 		}
 
-		/// [0x0019] 25 -> (CS) Player Logout Check
+		/// [0x0019] 25 -> (CG) Player Logout Check
 		internal static void parse_PCLogoutToCharCheck(Player player, ref PacketStream stream, short[] pos)
 		{
 			// TODO : Logout conditions
 			send_PacketResponse(player, 0x0019, 0);
 		}
 
-		/// [0x001A] 26 -> (CS) Player Quit Check
+		/// [0x001A] 26 -> (CG) Player Quit Check
 		internal static void parse_PCQuitGameCheck(Player player, ref PacketStream stream, short[] pos)
 		{
 			// TODO : Logout conditions
 			send_PacketResponse(player, 0x001A, 0);
 		}
 
-		/// [0x001B] 27 -> (CS) Player Quit
+		/// [0x001B] 27 -> (CG) Player Quit
 		internal static void parse_PCQuitGame(Player player, ref PacketStream stream, short[] pos)
 		{
 			// TODO : Logout conditions
 		}
 
-		/// [0x01FC] 508 -> Set Property
+		/// [0x01FC] 508 -> (CG) Set Property
 		/// <property name>.16B <property value>.?S
 		internal static void parse_SetProperty(Player player, ref PacketStream stream, short[] pos)
 		{
@@ -881,6 +881,32 @@ namespace game
 			string propertyValue = stream.ReadString(pos[1], (stream.GetSize() - 23));
 
 			player.SetProperty(propertyName, propertyValue);
+		}
+
+		/// [0x00C9] 201 -> (CG) Unequip Item
+		/// <wear type>.L
+		internal static void parse_Unequip(Player player, ref PacketStream stream, short[] pos)
+		{
+			int wearType = stream.ReadInt32(pos[0]);
+
+			player.UnequipItem(wearType);
+		}
+
+		/// [0x011F] -> (GC) Wear Change
+		/// <item handle>.L <change type>.W <player handle>.L <item enhance>.B
+		/// Change Types:
+		///		-1: Unequip
+		internal static void send_WearChange(Player player, uint handle, short change, byte enhance)
+		{
+			PacketStream data = new PacketStream(0x011F);
+
+			data.WriteUInt32(handle);
+			data.WriteInt16(change);
+			data.WriteUInt32(player.Handle);
+			data.WriteByte(enhance);
+			data.Write(new byte[8], 0, 8);
+
+			ClientManager.Instance.Send(player, data);
 		}
 	}
 }

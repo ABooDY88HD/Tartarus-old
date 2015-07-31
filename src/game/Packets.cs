@@ -48,6 +48,9 @@ namespace game
 			// [0x001B] 0027 -> Quit
 			packets_db.Add(0x001B, new Packet() { func = ClientPacketHandler.parse_PCQuitGame, pos = new short[0] });
 
+			// [0x00C9] 0201 -> Unequip Item
+			packets_db.Add(0x00C9, new Packet() { func = ClientPacketHandler.parse_Unequip, pos = new short[] { 0 } });
+
 			// [0x01FC] 0508 -> Set Property
 			packets_db.Add(0x01FC, new Packet() { func = ClientPacketHandler.parse_SetProperty, pos = new short[] { 0, 16 } });
 

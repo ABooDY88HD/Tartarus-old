@@ -575,9 +575,14 @@ namespace game
 
 			ClientPacketHandler.send_WearChange(this, handle, -1, this.Inventory[handle].Enhance);
 			this.BaseStats.Recalculate(this.Level);
-			// TODO : send max_havoc, max_chaos, max_stamina properties
+
+			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", Globals.MaxStamina);
 
 			ClientPacketHandler.send_PacketResponse(this, 0x00C9);
+
+			ClientPacketHandler.send_CharacterView(this);
 		}
 
 		internal void EquipItem(int wearType, uint itemHandle)

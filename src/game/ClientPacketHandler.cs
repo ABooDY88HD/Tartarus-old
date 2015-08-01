@@ -346,8 +346,8 @@ namespace game
 
 			data.WriteInt16(0);
 			data.WriteUInt32(player.Handle);
-			data.WriteFloat(player.X);
-			data.WriteFloat(player.Y);
+			data.WriteFloat(player.Position.X);
+			data.WriteFloat(player.Position.Y);
 
 			data.WriteFloat(0f); // Z
 			data.WriteByte((byte)player.Layer);
@@ -926,6 +926,112 @@ namespace game
 			data.WriteUInt32(ry);
 
 			ClientManager.Instance.Send(player, data);
+		}
+
+		/// [0x0003]  3 -> (GC) Informs that an entitity entered
+		///					player surroundings
+		///	<main type>.B <object handle>.L <x>.L <y>.L <z>.L <layer>.B
+		///	<sub type>.B <extra data>.?B
+		///	Read the full documentation for extra data values
+		internal static void send_EntityAck(Player player, GameObject objData)
+		{
+			PacketStream data = new PacketStream(0x0003);
+
+			data.WriteByte((byte)objData.Type);
+			data.WriteUInt32(objData.Handle);
+			data.WriteFloat(objData.Position.X);
+			data.WriteFloat(objData.Position.Y);
+			data.WriteFloat(0); // Z
+			data.WriteByte(1);//objData.Layer);
+			data.WriteByte((byte)objData.SubType);
+
+			switch (objData.SubType)
+			{
+				case GameObjectSubType.NPC:
+					{
+						Npc n = (Npc)objData;
+						data.WriteInt32(256); // Status
+						data.WriteInt32(0); // Face Direction (?)
+						data.WriteInt32(100); // HP
+						data.WriteInt32(100); // MaxHP
+						data.WriteInt32(0); // MP
+						data.WriteInt32(0); // Max MP
+						data.WriteInt32(1); // Level
+						data.WriteInt32(0); // unknown
+						data.WriteInt32(0); // unknown
+						data.WriteInt16(0); // unknown
+
+						EncryptedInt crInt = new EncryptedInt(n.Id);
+						crInt.WriteToPacket(data);
+					}
+					break;
+
+				default:
+					ConsoleUtils.Write(ConsoleMsgType.Error, "Unhandled Entity SubType\n");
+					break;
+			}
+
+			ClientManager.Instance.Send(player, data);
+		}
+
+		///
+		public static void send_EntityState(Player player, uint handle, uint state)
+		{
+			PacketStream data = new PacketStream(0x01F4);
+
+			data.WriteUInt32(handle);
+			data.WriteUInt32(state);
+
+			ClientManager.Instance.Send(player, data);
+		}
+
+		///
+		public static void send_Packet1026(Player player, uint handle)
+		{
+			PacketStream data = new PacketStream(0x0204);
+
+			data.WriteUInt32(handle);
+			data.WriteUInt32(0);
+			data.WriteUInt32(19);
+			data.WriteUInt32(20);
+			data.WriteUInt32(20);
+
+			ClientManager.Instance.Send(player, data);
+		}
+	}
+
+	/// <summary>
+	/// Creates an encrypted value
+	/// of an integer
+	/// </summary>
+	public class EncryptedInt
+	{
+		public class HiLo
+		{
+			public short h;
+			public short l;
+		}
+
+		public EncryptedInt(int n)
+		{
+			short r1 = 0;// (short)Globals.GetRandomInt32();
+			short r2 = 0;// (short)Globals.GetRandomInt32();
+
+			m_H.h = r1;
+			m_H.l = (short)(ByteUtils.HiWord(n) + (2 * (r2 - r1)));
+			m_L.h = r2;
+			m_L.l = (short)(ByteUtils.LoWord(n) - (2 * (r2 + r1)));
+		}
+
+		public HiLo m_H = new HiLo();
+		public HiLo m_L = new HiLo();
+
+		public void WriteToPacket(PacketStream packet)
+		{
+			packet.WriteInt16(m_H.h);
+			packet.WriteInt16(m_H.l);
+			packet.WriteInt16(m_L.h);
+			packet.WriteInt16(m_L.l);
 		}
 	}
 }

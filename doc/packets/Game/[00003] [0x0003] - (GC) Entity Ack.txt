@@ -1,0 +1,49 @@
+// Informs that an entity is in the player surrounds
+// Most of this packet discovered by Pyrok
+Byte main_type;
+UInt32 handle;
+Single x;
+Single y;
+Single z;
+Byte layer;
+Byte sub_type;
+[Extra Info]
+
+MainType : int
+
+{
+	Player = 0,
+	NPC = 1,
+	StaticObject = 2,
+
+}
+
+
+
+SubType : int
+{
+	Player = 0,
+	NPC = 1,
+	Item = 2,
+	Mob = 3,
+
+	Summon = 4,
+	SkillProp = 5,
+	FieldProp = 6,
+	Pet = 7,
+
+}
+
+[Extra Info]
+for NPCs:
+	00 01 00 00 // status (00 01 00 00 = Has Startable Quest ?)
+	00 00 00 00 // face direction (?)
+	64 00 00 00 // HP
+	64 00 00 00 // MAX HP
+	00 00 00 00 // MP
+	00 00 00 00 // MAX MP
+	01 00 00 00 // Level
+	00 00 00 00 // unknwon
+	00 00 00 00 // unknown
+	00 00	    // unknown
+	EE 9F AE 16 45 2B 5F 75 // Encrypted Int - Npc ID

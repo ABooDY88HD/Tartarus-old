@@ -69,7 +69,7 @@ namespace game
 		public WearType WearInfo { get; set; }
 		//public int IdX { get; set; }
 
-		public Item(uint pHandle) : base(pHandle, GameObjectType.Item) {
+		public Item(uint pHandle) : base(pHandle, GameObjectType.StaticObject, GameObjectSubType.Item) {
 			this.WearInfo = WearType.None;
 		}
 

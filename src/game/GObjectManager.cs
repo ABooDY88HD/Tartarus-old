@@ -14,6 +14,7 @@ namespace game
 	{
 		public static Dictionary<uint, Player> Players;
 		public static Dictionary<uint, Item> Items;
+		public static Dictionary<uint, Npc> Npcs;
 
 		private static List<uint> HandlePool;
 		private static uint NextHandle;
@@ -24,6 +25,7 @@ namespace game
 			
 			Players = new Dictionary<uint, Player>(Settings.MaxConnections);
 			Items = new Dictionary<uint, Item>();
+			Npcs = new Dictionary<uint, Npc>();
 
 			HandlePool = new List<uint>();
 			NextHandle = 1;
@@ -63,6 +65,14 @@ namespace game
 			uint handle = GetFreeHandle();
 			Item p = new Item(handle);
 			Items.Add(handle, p);
+			return p;
+		}
+
+		internal static Npc GetNewNpc()
+		{
+			uint handle = GetFreeHandle();
+			Npc p = new Npc(handle);
+			Npcs.Add(handle, p);
 			return p;
 		}
 	}

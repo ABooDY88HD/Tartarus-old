@@ -30,7 +30,12 @@ namespace game
 
 	public class Region
 	{
-		
+		public List<uint> Npcs { get; set; }
+
+		public Region()
+		{
+			this.Npcs = new List<uint>();
+		}
 	}
 
 	public class Map
@@ -48,15 +53,16 @@ namespace game
 
 		public static void Start()
 		{
+			Regions = new Region[Settings.MapLengthX * (MapSize / RegionSize)][];
+			for (int i = 0; i < Regions.Length; i++)
+			{
+				Regions[i] = new Region[Settings.MapLengthY * (MapSize / RegionSize)];
+				for (int j = 0; j < Regions[i].Length; j++)
+					Regions[i][j] = new Region();
+			}
+
 			if (Settings.CheckCollision)
 			{
-				Regions = new Region[Settings.MapLengthX * (MapSize / RegionSize)][];
-				/*for (int i = 0; i < Regions.Length; i++)
-				{
-					Regions[i] = new Region[Settings.MapLengthY * (MapSize / RegionSize)];
-					for (int j = 0; j < Regions[i].Length; j++)
-						Regions[i][j] = new Region();
-				}*/
 				Maps = new Map[Settings.MapLengthX][];
 				for (int i = 0; i < Maps.Length; i++)
 				{
@@ -65,6 +71,22 @@ namespace game
 
 				LoadMap("db/maps/m010_003.nfa");
 			}
+
+			Npc n1 = GObjectManager.GetNewNpc();
+			Npc n2 = GObjectManager.GetNewNpc();
+			Npc n3 = GObjectManager.GetNewNpc();
+			n1.Id = 3011; n1.Position = new Point(165220, 52454);
+			n2.Id = 3012; n2.Position = new Point(168402, 54325);
+			n3.Id = 3013; n3.Position = new Point(165223, 49560);
+
+			AddNpcToRegion(n1);
+			AddNpcToRegion(n2);
+			AddNpcToRegion(n3);
+		}
+
+		private static void AddNpcToRegion(Npc n1)
+		{
+			GetRegion(n1.Position.X, n1.Position.Y).Npcs.Add(n1.Handle);
 		}
 
 		private static void LoadMap(string dir)
@@ -177,7 +199,7 @@ namespace game
 		/// </summary>
 		/// <param name="x">x position</param>
 		/// <returns></returns>
-		private static uint GetRegionX(float x)
+		public static uint GetRegionX(float x)
 		{
 			return (uint)x / RegionSize;
 		}
@@ -187,7 +209,7 @@ namespace game
 		/// </summary>
 		/// <param name="y">y position</param>
 		/// <returns></returns>
-		private static uint GetRegionY(float y)
+		public static uint GetRegionY(float y)
 		{
 			return (uint)y / RegionSize;
 		}
@@ -207,16 +229,33 @@ namespace game
 
 			if (player.RegionX != newRX || player.RegionY != newRY)
 			{
-				player.RegionX = newRX;
-				player.RegionY = newRY;
-
-				ClientPacketHandler.send_RegionAck(player, newRX, newRY);
+				OnRegionChange(player, newRX, newRY);
 			}
 
 			// TODO : Character should not be save when it stops walking
 			//		  but in certain time intervals, this is a workaround
 			if (isLast)
 				player.Save();
+		}
+
+		private static void OnRegionChange(Player player, uint newRX, uint newRY)
+		{
+			Region r = Regions[newRX + (player.RegionX - newRX) * 1][newRY + (player.RegionY - newRY) * 1];
+
+			if (r != null)
+			{
+				for (int i = 0; i < r.Npcs.Count; i++)
+				{
+					ClientPacketHandler.send_EntityAck(player, GObjectManager.Npcs[r.Npcs[i]]);
+					ClientPacketHandler.send_EntityState(player, GObjectManager.Npcs[r.Npcs[i]].Handle, 0x0);
+					ClientPacketHandler.send_Packet1026(player, GObjectManager.Npcs[r.Npcs[i]].Handle);
+				}
+			}
+
+			player.RegionX = newRX;
+			player.RegionY = newRY;
+
+			ClientPacketHandler.send_RegionAck(player, newRX, newRY);
 		}
 	}
 }

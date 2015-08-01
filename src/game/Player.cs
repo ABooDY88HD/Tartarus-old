@@ -71,11 +71,10 @@ namespace game
 
 		public uint[] Equip { get; set; }
 
-		public Point Position { get; set; }
 		public uint RegionX { get; set; }
 		public uint RegionY { get; set; }
 		
-		public Player(uint pHandle) : base(pHandle, GameObjectType.Player)
+		public Player(uint pHandle) : base(pHandle, GameObjectType.Player, GameObjectSubType.Player)
 		{
 			this.NetData = new Network();
 
@@ -378,15 +377,17 @@ namespace game
 			this.SkinColor = (int)reader["skin_color"];
 			this.CharId = (int)reader["char_id"];
 
-			this.X = (float)(int)reader["x"];
-			this.Y = (float)(int)reader["y"];
-			this.Layer = (int)reader["layer"];
+			this.Position = new Point((float)(int)reader["x"], (float)(int)reader["y"]);
+			this.Layer = (byte)(int)reader["layer"];
 
 			this.ClientInfo = (string)reader["client_info"];
 			this.LoadInventory();
 			this.LoadQuest();
 
 			this.LoadStats();
+
+			this.RegionX = RegionMngr.GetRegionX(this.Position.X);
+			this.RegionY = RegionMngr.GetRegionY(this.Position.Y);
 
 			return true;
 		}

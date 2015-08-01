@@ -1,3 +1,4 @@
+using common;
 // Copyright (c) Tartarus Dev Team, licensed under GNU GPL.
 // See the LICENSE file
 using System;
@@ -20,23 +21,37 @@ namespace game
 
 	public enum GameObjectType
 	{
-		Player,
-		Item
+		Player = 0,
+		NPC = 1,
+		StaticObject = 2
+	}
+
+	public enum GameObjectSubType
+	{
+		Player = 0,
+		NPC = 1,
+		Item = 2,
+		Mob = 3,
+		Summon = 4,
+		SkillProp = 5,
+		FieldProp = 6,
+		Pet = 7,
 	}
 
 	public abstract class GameObject
 	{
 		public uint Handle { get; private set; }
 		public GameObjectType Type { get; private set; }
+		public GameObjectSubType SubType { get; private set; }
 
-		public float X = 0f;
-		public float Y = 0f;
-		public int Layer = 0;
+		public Point Position { get; set; }
+		public byte Layer = 0;
 
-		public GameObject(uint pHandle, GameObjectType pType)
+		public GameObject(uint pHandle, GameObjectType pType, GameObjectSubType subType)
 		{
 			this.Handle = pHandle;
 			this.Type = pType;
+			this.SubType = subType;
 		}
 
 		public GameObject(){}

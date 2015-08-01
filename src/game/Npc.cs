@@ -8,9 +8,11 @@ using System.Threading.Tasks;
 
 namespace game
 {
-	class Npc : GameObject
+	public class Npc : GameObject
 	{
-		public Npc(uint pHandle) : base(pHandle, GameObjectType.Player) {
+		public int Id { get; set; }
+
+		public Npc(uint pHandle) : base(pHandle, GameObjectType.NPC, GameObjectSubType.NPC) {
 			
 		}
 	}

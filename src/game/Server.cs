@@ -199,8 +199,8 @@ namespace game
 			
 			//PacketParser.send_OpenPopUp(sid, "www.google.com");
 
-			ClientPacketHandler.send_Property(player, "x", player.X, true);
-			ClientPacketHandler.send_Property(player, "y", player.Y, true);
+			ClientPacketHandler.send_Property(player, "x", player.Position.X, true);
+			ClientPacketHandler.send_Property(player, "y", player.Position.Y, true);
 			ClientPacketHandler.send_Property(player, "layer", player.Layer, true);
 			
 			//PacketParser.send_Packet636(sid, 1);

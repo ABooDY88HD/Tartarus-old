@@ -1,6 +1,5 @@
-[Header]
-/* 0 */ UInt32 handle
-/* 4 */ UInt32 state
+UInt32 handle; /* 0 */
+UInt32 state; /* 4 */
 
 state is made with |= 's
 === NPC:

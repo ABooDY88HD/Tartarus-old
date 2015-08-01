@@ -1,0 +1,4 @@
+// Informs the client about
+// a region change
+UInt32 region_x; /* 0 */
+UInt32 region_y; /* 4 */

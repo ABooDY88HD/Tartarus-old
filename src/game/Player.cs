@@ -72,6 +72,8 @@ namespace game
 		public uint[] Equip { get; set; }
 
 		public Point Position { get; set; }
+		public uint RegionX { get; set; }
+		public uint RegionY { get; set; }
 		
 		public Player(uint pHandle) : base(pHandle, GameObjectType.Player)
 		{

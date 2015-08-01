@@ -172,15 +172,46 @@ namespace game
 			ClientPacketHandler.send_PCMoveTo(player, moves.ToArray());
 		}
 
+		/// <summary>
+		/// Returns the X region id of a position
+		/// </summary>
+		/// <param name="x">x position</param>
+		/// <returns></returns>
+		private static uint GetRegionX(float x)
+		{
+			return (uint)x / RegionSize;
+		}
+
+		/// <summary>
+		/// Returns the Y region id of a position
+		/// </summary>
+		/// <param name="y">y position</param>
+		/// <returns></returns>
+		private static uint GetRegionY(float y)
+		{
+			return (uint)y / RegionSize;
+		}
+
 		private static Region GetRegion(float fromX, float fromY)
 		{
-			return Regions[(int)fromX / RegionSize][(int)fromY / RegionSize];
+			return Regions[GetRegionX(fromX)][GetRegionY(fromY)];
 		}
 
 		internal static void UpdatePCPos(Player player, float curX, float curY, bool isLast)
 		{
+			uint newRX = GetRegionX(curX);
+			uint newRY = GetRegionX(curY);
+			
 			player.Position.X = curX;
 			player.Position.Y = curY;
+
+			if (player.RegionX != newRX || player.RegionY != newRY)
+			{
+				player.RegionX = newRX;
+				player.RegionY = newRY;
+
+				ClientPacketHandler.send_RegionAck(player, newRX, newRY);
+			}
 
 			// TODO : Character should not be save when it stops walking
 			//		  but in certain time intervals, this is a workaround

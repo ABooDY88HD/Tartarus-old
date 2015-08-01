@@ -915,5 +915,17 @@ namespace game
 
 			player.EquipItem(wearType, handle);
 		}
+
+		/// [0x000B] 11 -> (GC) Updates current player region
+		/// <region x>.L <region y>.L
+		internal static void send_RegionAck(Player player, uint rx, uint ry)
+		{
+			PacketStream data = new PacketStream(0x000B);
+			
+			data.WriteUInt32(rx);
+			data.WriteUInt32(ry);
+
+			ClientManager.Instance.Send(player, data);
+		}
 	}
 }

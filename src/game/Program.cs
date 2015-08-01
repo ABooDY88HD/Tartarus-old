@@ -74,8 +74,8 @@ namespace game
 		{
 			Dictionary<string, ConsoleCommands.Command> cmdList = new Dictionary<string, ConsoleCommands.Command>();
 
-			cmdList.Add("set_val", new ConsoleCommands.Command("i", ConsoleHelper.SetVal));
-			cmdList.Add("print_val", new ConsoleCommands.Command("", ConsoleHelper.PrintVal));
+			cmdList.Add("set_val", new ConsoleCommands.Command("ii", ConsoleHelper.SetVal));
+			cmdList.Add("print_val", new ConsoleCommands.Command("i", ConsoleHelper.PrintVal));
 			cmdList.Add("print", new ConsoleCommands.Command("s", ConsoleHelper.ConsolePrint));
 			cmdList.Add("exit", new ConsoleCommands.Command("", ConsoleHelper.Exit));
 

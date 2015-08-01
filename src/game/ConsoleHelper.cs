@@ -11,21 +11,38 @@ namespace game
 {
 	public static class ConsoleHelper
 	{
-		public static int TestVal1 { get; set; }
-		public static int TestVal2 { get; set; }
-		public static int TestVal3 { get; set; }
-		public static int TestVal4 { get; set; }
+		public static int[] Values = new int[10];
 
 		public static bool SetVal(object[] args)
 		{
-			TestVal1 = Convert.ToInt32(args[0]);
+			int index, value;
+
+			index = Convert.ToInt32(args[0]);
+			value = Convert.ToInt32(args[1]);
+
+			if (index >= Values.Length || index < 0)
+			{
+				ConsoleUtils.Write(ConsoleMsgType.Error, "Invalid index.\n");
+				return true;
+			}
+
+			Values[index] = value;
 
 			return true;
 		}
 
 		internal static bool PrintVal(object[] args)
 		{
-			ConsoleUtils.Write(ConsoleMsgType.Debug, "Val1: {0}\n", TestVal1);
+			int index;
+			index = Convert.ToInt32(args[0]);
+			
+			if (index >= Values.Length || index < 0)
+			{
+				ConsoleUtils.Write(ConsoleMsgType.Error, "Invalid index.\n");
+				return true;
+			}
+
+			ConsoleUtils.Write(ConsoleMsgType.Debug, "Val: {0}\n", Values[index]);
 			return true;
 		}
 

@@ -248,7 +248,7 @@ namespace game
 				{
 					ClientPacketHandler.send_EntityAck(player, GObjectManager.Npcs[r.Npcs[i]]);
 					ClientPacketHandler.send_EntityState(player, GObjectManager.Npcs[r.Npcs[i]].Handle, 0x0);
-					ClientPacketHandler.send_Packet1026(player, GObjectManager.Npcs[r.Npcs[i]].Handle);
+					ClientPacketHandler.send_Packet516(player, GObjectManager.Npcs[r.Npcs[i]].Handle);
 				}
 			}
 

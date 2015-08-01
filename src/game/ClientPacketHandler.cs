@@ -986,15 +986,15 @@ namespace game
 		}
 
 		///
-		public static void send_Packet1026(Player player, uint handle)
+		public static void send_Packet516(Player player, uint handle)
 		{
 			PacketStream data = new PacketStream(0x0204);
-
+			// TODO 
 			data.WriteUInt32(handle);
-			data.WriteUInt32(0);
-			data.WriteUInt32(19);
-			data.WriteUInt32(20);
-			data.WriteUInt32(20);
+			data.WriteInt32(0);
+			data.WriteInt32(19);
+			data.WriteInt32(20);
+			data.WriteInt32(20);
 
 			ClientManager.Instance.Send(player, data);
 		}

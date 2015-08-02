@@ -1,0 +1,10 @@
+// Sent when player clicks in a menu option (except 0x20)
+Int16 function_length; /* 0 */
+String(function_length) function; /* 2 */
+
+// Notes:
+if the option is a quest, the function will be:
+	quest_info( [QuestID], [TextID] )
+
+if the window was a Start Quest, the function will be:
+	start_quest ( [QuestID], [TextID] )

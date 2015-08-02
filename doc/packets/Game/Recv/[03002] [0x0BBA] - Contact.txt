@@ -1,5 +1,0 @@
-// Sent when starting a dialog with
-// a npc
-// Handle is the target entity handle
-[Header]
-[Handle] : Int32

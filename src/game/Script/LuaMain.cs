@@ -55,6 +55,7 @@ namespace game.Script
 						continue;
 					}
 
+					chunkText.Append(" ");
 					chunkText.Append(File.ReadAllText(fname));
 				}
 				else if (scriptFiles[i].StartsWith("import:"))
@@ -73,6 +74,12 @@ namespace game.Script
 			Chunk = LuaEngine.CompileChunk(chunkText.ToString(), "main", null);
 
 			Global.DoChunk(Chunk);
+			/*
+			 * var luaFunc = LuaSysGlobal["GetStruct"] as Func<LuaResult>;
+			if (luaFunc == null)
+				return null;
+			LuaResult r = luaFunc();
+			 */
 
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Lua Engine initialized...\n");
 			return true;

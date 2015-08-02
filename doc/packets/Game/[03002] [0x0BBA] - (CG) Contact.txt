@@ -1,0 +1,3 @@
+// Sent when starting a dialog with a npc
+// Handle is the target entity handle
+UInt32 npc_handle; /* 0 */

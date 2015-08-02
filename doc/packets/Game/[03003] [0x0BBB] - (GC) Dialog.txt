@@ -1,0 +1,63 @@
+// Contains the dialog to be shown
+Int32 dialog_type; /* 0 */ // ?
+UInt32 npc_handle; /* 4 */
+09 // Title Length (?)
+00 // Unknown
+09 // Text Length (?)
+00 // Unknown
+byte menu_length; // How many bytes the menu_option struct has
+00 // Unknown
+String title; /* 14 */
+String message; /* 14 + title */
+struct {
+	09 // Unknown/Tab (Separator?)
+	String option_text; // @ID
+	09 // Unknown/Tab (Separator?)
+	String option_function; // function() -- Goodbye = 0x20 (' ')
+	09 // Unknown/Tab (Separator?)
+} menu_option[];
+
+// Notes:
+Dialog Types:
+  TYPE_NPC = 0x0,
+  TYPE_DUNGEON_STONE = 0x1,
+  TYPE_DONATION_PROP = 0x2,
+  TYPE_QUEST_INFO_AND_START = 0x3,
+  TYPE_AUCTION_WINDOW = 0x4,
+  TYPE_HUNTAHOLIC_LOBBY = 0x5,
+  TYPE_DONATION_REWARD_NOTIFY = 0x6,
+  TYPE_QUEST_INFO_IN_PROGRESS = 0x7,
+  TYPE_QUEST_INFO_AND_END = 0x8,
+
+Dialog Text:
+	If dialog_type == 0x0:
+		title = @StringID
+		text = @StringID
+
+	If dialog_type == 0x3:
+		title = ???? ?????
+
+		text = QUEST|[QuestID|[TextID]
+			QuestID: The id from QuestResource
+			TextID: The message shown at quest view screen
+
+Menu Options:
+	If dialog_type == 0x0 and the menu option is a Quest:
+		option_text = QUEST|[NameID]|[Status]
+			NameID: ID from StringResource (without @)
+			Status: Progress Info (0 = Available; 1 = In Progress; [...])
+
+		option_function = quest_info ( [QuestID], [TextID] )
+			QuestID: The id from QuestResource
+			TextID: The message shown at quest view screen
+
+	If dialog_type == 0x3:
+		option_text = START
+		option_function = start_quest( [QuestID], [TextID] )
+
+		option_text = REJECT
+		option_function = NULL
+
+	If dialog_type == 0x7:
+		option_text = OK
+		option_function = NULL

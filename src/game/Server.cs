@@ -85,6 +85,7 @@ namespace game
 			// Start Game Object Manager
 			GObjectManager.Start();
 
+			Script.LuaMain.Start();
 			ItemDb.Start();
 			StatsDb.Start();
 			//QuestDb.Start();

@@ -1,0 +1,1 @@
+DebugLog("Hello LUA!")

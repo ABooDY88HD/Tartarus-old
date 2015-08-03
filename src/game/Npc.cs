@@ -52,6 +52,8 @@ namespace game
 				npc.Position = new Point((int)reader["x"], (int)reader["y"]);
 				npc.Face = (sbyte)reader["face"];
 				npc.ContactScript = (string)reader["script"];
+
+				RegionMngr.AddNpcToRegion(npc);
 			}
 
 			ConsoleUtils.Write(ConsoleMsgType.Status, "NPC Database Loaded.\n");

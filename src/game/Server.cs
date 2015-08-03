@@ -85,12 +85,14 @@ namespace game
 			// Start Game Object Manager
 			GObjectManager.Start();
 
+			RegionMngr.Start();
+
 			Script.LuaMain.Start();
 			ItemDb.Start();
 			StatsDb.Start();
+			Npc.Init();
 			//QuestDb.Start();
 
-			RegionMngr.Start();
 
 			/* ************************* *
 			 * Start Network Manager

@@ -71,20 +71,9 @@ namespace game
 
 				LoadMap("db/maps/m010_003.nfa");
 			}
-
-			Npc n1 = GObjectManager.GetNewNpc();
-			Npc n2 = GObjectManager.GetNewNpc();
-			Npc n3 = GObjectManager.GetNewNpc();
-			n1.Id = 3011; n1.Position = new Point(165220, 52454);
-			n2.Id = 3012; n2.Position = new Point(168402, 54325);
-			n3.Id = 3013; n3.Position = new Point(165223, 49560);
-
-			AddNpcToRegion(n1);
-			AddNpcToRegion(n2);
-			AddNpcToRegion(n3);
 		}
 
-		private static void AddNpcToRegion(Npc n1)
+		public static void AddNpcToRegion(Npc n1)
 		{
 			GetRegion(n1.Position.X, n1.Position.Y).Npcs.Add(n1.Handle);
 		}
@@ -216,7 +205,9 @@ namespace game
 
 		private static Region GetRegion(float fromX, float fromY)
 		{
-			return Regions[GetRegionX(fromX)][GetRegionY(fromY)];
+			uint rx = GetRegionX(fromX);
+			uint ry = GetRegionY(fromY);
+			return Regions[rx][ry];
 		}
 
 		internal static void UpdatePCPos(Player player, float curX, float curY, bool isLast)

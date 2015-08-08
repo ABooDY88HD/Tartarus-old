@@ -13,98 +13,97 @@ namespace game
 {
 	public static class QuestDb
 	{
-		public enum Type
+		public class QuestEntry
 		{
-			Misc = 100,
-			KillTotal = 101,
-			KillIndividual = 102,
-			Collect = 103,
-			HuntItem = 106,
-			HuntItemFromAnyMonster = 107,
-			KillPlayer = 108,
-			LearnSkill = 201,
-			UpgradeItem = 301,
-			QuestContact = 401,
-			JobLevel = 501,
-			Parameter = 601,
-			RandomKillIndividual = 901,
-			RandomCollect = 902
-		}
-
-		public class Quest
-		{
-			public Type qType { get; set; }
-			//public int NameId { get; set; }
-			//public int TargetId { get; set; }
-			//public int TextId { get; set; }
 			public int MinLevel { get; set; }
 			public int MaxLevel { get; set; }
 			public int MinJobLevel { get; set; }
 			public int MaxJobLevel { get; set; }
-			//public int LimitRace
-			//public int LimitJobs
+			public Db.Races LimitRaces { get; set; }
+			public Db.Classes LimitClasses { get; set; }
+			public Db.JobDepth LimitDepth { get; set; }
 			public bool Repeatable { get; set; }
 			public int Exp { get; set; }
 			public int JP { get; set; }
 			public int HolicPoint { get; set; }
 			public int Gold { get; set; }
-			public int[] Objectives;
 			public int DropGroup;
+			public Quest.Type Type { get; set; }
+			public int[] Objectives;
+			public int[] Rewards;
+			public sbyte[] RewardsLevel;
+			public int[] RewardsCount;
 		}
-		public static Dictionary<int, Quest> Db { get; private set; }
+		public static Dictionary<int, QuestEntry> DB { get; private set; }
 
 		public static void Start()
 		{
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Quest Database...\n");
 
-			Db = new Dictionary<int, Quest>();
-			List<string[]> entries = game.Db.LoadDb("db/quest_db.txt", "iiiiiiiiiiiiiiggg");
+			DB = new Dictionary<int, QuestEntry>();
+			Database db = new Database(Server.GameDbConString);
+			StringBuilder query = new StringBuilder(
+							"SELECT `id`,`min_level`,`max_level`," +
+							"`min_job_level`,`max_job_level`," +
+							"`limit_races`,`limit_classes`,`limit_depth`,"+
+							"`repeatable`,"+
+							"`exp`,`jp`,`holic_point`,`gold`," +
+							"`drop_group`,`type`,");
 
-			for (int i = 0; i < entries.Count; i++)
+			for (int i = 0; i < Quest.MaxObjectives; i++)
+				query.Append("`objective"+i+"`,");
+			query.Append("`default_reward_id`,`default_reward_level`,`default_reward_quantity`,");
+
+			for (int i = 1; i < Quest.MaxRewards; i++)
+				query.Append("`optional_reward_id"+i+"`,`optional_reward_level"+i+"`,`optional_reward_quantity"+i+"`,");
+
+			query.Remove(query.Length - 1, 1); // removes last comma
+			query.Append(" FROM `quest_db`");
+			
+			MySqlDataReader reader =
+				db.ReaderQuery(query.ToString(), null, null);
+
+			while (reader.Read())
 			{
-				int qId;
-				if (!Int32.TryParse(entries[i][0], out qId))
-				{
-					ConsoleUtils.Write(ConsoleMsgType.Error, "Invalid quest Id '{0}'. Int expected. Skipping line...\n", entries);
-				}
-				else
-				{
-					try
-					{
-						Quest q = new Quest();
-						q.qType = (Type)Int32.Parse(entries[i][1]);
-						q.MinLevel = Int32.Parse(entries[i][2]);
-						q.MaxLevel = Int32.Parse(entries[i][3]);
-						q.MinJobLevel = Int32.Parse(entries[i][4]);
-						q.MaxJobLevel = Int32.Parse(entries[i][5]);
-						//public int LimitRace = entries[i][6];
-						//public int LimitJobs = entries[i][7];
-						q.Repeatable = (Int32.Parse(entries[i][8]) > 0);
-						q.Exp = Int32.Parse(entries[i][9]);
-						q.JP = Int32.Parse(entries[i][10]);
-						q.HolicPoint = Int32.Parse(entries[i][11]);
-						q.Gold = Int32.Parse(entries[i][12]);
-						q.DropGroup = Int32.Parse(entries[i][13]);
+				QuestEntry quest = new QuestEntry();
+				quest.Objectives = new int[Quest.MaxObjectives];
+				quest.Rewards = new int[Quest.MaxRewards];
+				quest.RewardsCount = new int[Quest.MaxRewards];
+				quest.RewardsLevel = new sbyte[Quest.MaxRewards];
 
-						string[] objectives = entries[i][14].Split(',');
-						//string[] main_reward = entries[i][15].Split(',');
-						//string[] opt_reward = entries[i][16].Split(',');
+				int id = (int)reader["id"];
+				quest.MinLevel = (int)reader["min_level"];
+				quest.MaxLevel = (int)reader["max_level"];
+				quest.MinJobLevel = (int)reader["min_job_level"];
+				quest.MaxJobLevel = (int)reader["max_job_level"];
+				quest.LimitRaces = (Db.Races)(sbyte)reader["limit_races"];
+				quest.LimitClasses = (Db.Classes)(sbyte)reader["limit_classes"];
+				quest.LimitDepth = (Db.JobDepth)(sbyte)reader["limit_depth"];
+				quest.Repeatable = (bool)reader["repeatable"];
+				quest.Exp = (int)reader["exp"];
+				quest.JP = (int)reader["jp"];
+				quest.HolicPoint = (int)reader["holic_point"];
+				quest.Gold = (int)reader["gold"];
+				quest.DropGroup = (int)reader["drop_group"];
+				quest.Type = (Quest.Type)(int)reader["type"];
+				for (int i = 0; i < Quest.MaxObjectives; i++ )
+					quest.Objectives[i] = (int)reader["objective"+i];
 
-						q.Objectives = new int[objectives.Length];
-						for (int j = 0; j < objectives.Length; j++)
-						{
-							q.Objectives[j] = Int32.Parse(objectives[j].Trim());
-						}
-					}
-					catch (Exception e)
-					{
-						ConsoleUtils.Write(ConsoleMsgType.Error, "Error parsing quest Id {0}. Skipping line...\n", qId);
-						ConsoleUtils.Write(ConsoleMsgType.Error, "Error: {0}\n", e.Message);
-					}
+				quest.Rewards[0] = (int)reader["default_reward_id"];
+				quest.RewardsLevel[0] = (sbyte)reader["default_reward_level"];
+				quest.RewardsCount[0] = (int)reader["default_reward_quantity"];
+
+				for (int i = 1; i < Quest.MaxRewards; i++)
+				{
+					quest.Rewards[i] = (int)reader["optional_reward_id"+i];
+					quest.RewardsLevel[i] = (sbyte)reader["optional_reward_level"+i];
+					quest.RewardsCount[i] = (int)reader["optional_reward_quantity"+i];
 				}
 
-				ConsoleUtils.Write(ConsoleMsgType.Status, "Quest Database Loaded.\n");
+				DB.Add(id, quest);
 			}
+
+			ConsoleUtils.Write(ConsoleMsgType.Status, "Quest Database Loaded.\n");
 		}
 	}
 }

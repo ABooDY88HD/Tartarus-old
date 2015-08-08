@@ -91,7 +91,7 @@ namespace game
 			ItemDb.Start();
 			StatsDb.Start();
 			Npc.Init();
-			//QuestDb.Start();
+			QuestDb.Start();
 
 
 			/* ************************* *

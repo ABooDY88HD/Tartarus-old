@@ -73,6 +73,8 @@ namespace game
 
 		public uint RegionX { get; set; }
 		public uint RegionY { get; set; }
+
+		public uint ContactHandle { get; set; }
 		
 		public Player(uint pHandle) : base(pHandle, GameObjectType.Player, GameObjectSubType.Player)
 		{

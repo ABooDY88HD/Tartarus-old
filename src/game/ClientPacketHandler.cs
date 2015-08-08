@@ -1007,35 +1007,40 @@ namespace game
 		internal static void parse_DialogOption(Player player, ref PacketStream stream, short[] pos)
 		{
 			string function = stream.ReadString(pos[1], stream.ReadInt16(pos[0]));
+
+			Script.LuaMain.DoFunction(player, function);
 		}
 
 		internal static void parse_Contact(Player player, ref PacketStream stream, short[] pos)
 		{
 			uint npc_handle = stream.ReadUInt32(pos[0]);
+			player.ContactHandle = npc_handle;
+
+			Script.LuaMain.Contact(player, npc_handle);
 		}
 
-		internal static void send_Dialog(Player player, Npc.DialogType dialogType, uint npcHandle, string title, string message, string[] menuTexts, string[] menuCalls)
+		internal static void send_Dialog(Player player, Npc.DialogType dialogType, Script.DialogData dialData)
 		{
-			PacketStream data = new PacketStream(0x0BBB);
+			PacketStream data = new PacketStream(0x0BB8);
 
 			data.WriteInt32((int)dialogType);
-			data.WriteUInt32(npcHandle);
-			data.WriteInt16((short)title.Length);
-			data.WriteInt16((short)message.Length);
+			data.WriteUInt32(player.ContactHandle);
+			data.WriteInt16((short)dialData.Title.Length);
+			data.WriteInt16((short)dialData.Messsage.Length);
 
 			StringBuilder menu = new StringBuilder();
-			for (int i = 0; i < menuTexts.Length; i++)
+			for (int i = 0; i < dialData.Options.Count; i++)
 			{
-				menu.Append(0x09);
-				menu.Append(menuTexts[i]);
-				menu.Append(0x09);
-				menu.Append(menuCalls[i]);
-				menu.Append(0x09);
+				menu.Append((char)0x09);
+				menu.Append(dialData.Options[i]);
+				menu.Append((char)0x09);
+				menu.Append(dialData.Functions[i]);
+				menu.Append((char)0x09);
 			}
 
 			data.WriteInt16((short)menu.Length);
-			data.WriteString(title);
-			data.WriteString(message);
+			data.WriteString(dialData.Title);
+			data.WriteString(dialData.Messsage);
 			data.WriteString(menu.ToString());
 
 			ClientManager.Instance.Send(player, data);

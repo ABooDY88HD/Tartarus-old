@@ -143,6 +143,9 @@
     <Compile Include="..\..\src\game\RegionMngr.cs">
       <Link>game\RegionMngr.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\game\Script\LuaFunctions.cs">
+      <Link>game\Script\LuaFunctions.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\game\Script\LuaMain.cs">
       <Link>game\Script\LuaMain.cs</Link>
     </Compile>

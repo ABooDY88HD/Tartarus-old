@@ -11,6 +11,7 @@ using common;
 
 namespace game.Script
 {
+
 	public class DialogData
 	{
 		public string Title { get; set; }
@@ -27,7 +28,7 @@ namespace game.Script
 		}
 	}
 
-	public static class LuaMain
+	public static partial class LuaMain
 	{
 		private static Lua LuaEngine;
 		private static LuaChunk Chunk;
@@ -123,47 +124,6 @@ namespace game.Script
 		{
 			player.ContactHandle = npc_handle;
 			DoFunction(player, GObjectManager.Npcs[npc_handle].ContactScript);
-		}
-
-		private static void GetFunctions()
-		{
-			Global.DefineFunction("DebugLog", new Action<object[]>(Print));
-
-
-			Global.DefineFunction("dlg_title", new Action<object[]>(DlgTitle));
-			Global.DefineFunction("dlg_text", new Action<object[]>(DlgText));
-			Global.DefineFunction("dlg_menu", new Action<object[]>(DlgMenu));
-			Global.DefineFunction("dlg_show", new Action<object[]>(DlgShow));
-		}
-
-		private static void DlgTitle(object[] obj)
-		{
-			DialData.Title = (string)obj[0];
-		}
-
-		private static void DlgText(object[] obj)
-		{
-			DialData.Messsage = (string)obj[0];
-		}
-
-		private static void DlgMenu(object[] obj)
-		{
-			DialData.Options.Add((string)obj[0]);
-			DialData.Functions.Add((string)obj[1]);
-		}
-
-		private static void DlgShow(object[] obj)
-		{
-			ClientPacketHandler.send_Dialog(GObjectManager.Players[PlayerHandle], Npc.DialogType.Npc, DialData);
-		}
-
-		private static void Print(object[] texts)
-		{
-			foreach (object o in texts)
-			{
-				ConsoleUtils.Write(ConsoleMsgType.Debug, "{0}", o);
-			}
-			Console.Write("\n");
 		}
 	}
 }

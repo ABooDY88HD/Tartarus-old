@@ -1,0 +1,37 @@
+* DebugLog(message)
+Writes a debug message to the console
+
+// Dialog Commands
+* dlg_title("<title>")
+Sets the title of a dialog
+
+* dlg_text("<text>")
+Sets the text of a dialog
+
+* dlg_menu("<menu text>", "<menu function>")
+Sets a menu option to the dialog
+
+* dlg_show()
+Sends the dialog to the player
+
+// 
+* get_value("<value name>")
+Gets a value from the attached character
+
+// Place Holder Commands
+/// These commands are yet to be fully implemented
+* cprint("<message>")
+Same as DebugLog
+
+* set_npc_name("<value>")
+* add_state(int, int, int)
+Does nothing
+
+* get_quest_progress(<quest id>)
+Returns 1
+
+* dlg_text_without_quest_menu("<message>")
+Same as dlg_text
+
+* get_npc_id()
+Returns the npc id

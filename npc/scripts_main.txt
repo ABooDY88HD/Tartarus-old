@@ -1,1 +1,2 @@
-npc: npc/test.lua
+//npc: npc/test.lua
+npc: npc/TraineeIsland.lua

@@ -26,7 +26,17 @@ namespace game.Script
 
 			//
 			Global.DefineFunction("get_value", new Func<string, object>(GetValue));
+
+			// Placeholders
+			Global.DefineFunction("cprint", new Action<object[]>(DebugLog));
+			Global.DefineFunction("set_npc_name", new Action<object[]>(SetNpcName));
+			Global.DefineFunction("get_quest_progress", new Func<int, int>(GetQuestProg));
+			Global.DefineFunction("dlg_text_without_quest_menu", new Action<object>(DlgTextWOMenu));
+			Global.DefineFunction("add_state", new Action<int, int, int>(AddState));
+			Global.DefineFunction("get_npc_id", new Func<int, int>(GetNpcId));
 		}
+
+		
 
 		private static void DebugLog(object[] texts)
 		{
@@ -75,6 +85,35 @@ namespace game.Script
 			}
 
 			return null;
+		}
+
+		///
+		/// Place Holders
+		/// 
+
+		private static int GetNpcId(int arg)
+		{
+			return GObjectManager.Npcs[GObjectManager.Players[PlayerHandle].ContactHandle].Id;
+		}
+
+		private static void AddState(int arg1, int arg2, int arg3)
+		{
+			
+		}
+
+		private static void DlgTextWOMenu(object obj)
+		{
+			DialData.Messsage = (string)obj;
+		}
+
+		private static int GetQuestProg(int arg)
+		{
+			return 1;
+		}
+
+		private static void SetNpcName(object[] obj)
+		{
+			
 		}
 	}
 }

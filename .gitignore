@@ -13,3 +13,4 @@
 # Temporary
 *.suo
 *.tmp
+/vsproj-11/Auth/auth.csproj.user

@@ -1,0 +1,237 @@
+// World Terrain Config
+//
+// TILE_LENGTH=[tile lenght]
+// The length of one side of a square tile. Since the float
+// unit can be specified by accident (including the decimal point)
+//
+// TILECOUNT_PER_SEGMENT=[number of tiles per segment]
+// Entering the number of tiles of one side of the segment
+// to make a square shape.
+// (4x4 in this example, if there's 16 tiles in the segment, use 4)
+//
+// SEGMENTCOUNT_PER_MAP=[number of segments per map]
+// Enter the nummber of segments on one side of a map
+// consisting of a square shape.
+// (Such as 100, if the segment into a 10x10 map specifies a 10.) // Wrong translation?
+//
+// SETFOV=[FOV value]
+// Since the float unit can be specified by accident (including
+// the decimal point).
+// If you enter a value less than 0 or 0 is set to the system default
+//
+//
+// MAPSIZE=[horizontal],[vertical]
+// Number lined with portrait/landscape of the entire map
+// Only one should come ahead of MAPFILE items. (If not,
+// there's a failure in the initialization)
+//
+//
+// [X location],[Y location],"[map file name without extension]"
+// Once the coordinates are duplicated, initialization will fail.
+// Coordinates with the bottom left (0,0)
+// Y increases toward the top and X increases toward the right.
+//
+// Examples>
+//
+// +--------+--------+--------+--------+
+// |        |        |        |        |
+// | f.nfm  | g.nfm  |        |        |
+// |        |        |        |        |
+// +--------+--------+--------+--------+
+// |        |        |        |        |
+// | e.nfm  |        |        |        |
+// |        |        |        |        |
+// +--------+--------+--------+--------+
+// |        |        |        |        |
+// | a.nfm  | b.nfm  | c.nfm  | d.nfm  |
+// |        |        |        |        |
+// +--------+--------+--------+--------+
+//
+// MAPSIZE=4,3
+// 0,0,"a"
+// 1,0,"b"
+// 2,0,"c"
+// 3,0,"d"
+// 0,1,"e"
+// 0,2,"f"
+// 1,2,"g"
+//
+// Whitespace characters are ignored.
+// Semicolon (//) are treated as comments if they
+// are at the start of the line
+//
+
+//TILE_LENGTH=42
+//TILECOUNT_PER_SEGMENT=6
+//SEGMENTCOUNT_PER_MAP=64
+
+//SETFOV=0.7
+
+//MAPLAYER=20
+
+//MAPSIZE=14,16
+
+//=== [Empty] ================================
+//====== Grass Areas (Test place?)
+0,1,"M000_001"
+1,3,"M001_003"
+//====== Empty Area (Test place?)
+1,5,"M001_005"
+
+
+//=== [Bugged] ===============================
+// Ruins of Burning Sand (Bugged)
+13,2,"M013_002"
+
+//=== [Deva Fields] ==========================
+// Laksy City (Deva)
+0,0,"M000_000"
+
+// Ivory Tower
+7,9,"M007_009"
+
+// Lasky City Field
+7,8,"M007_008"
+
+// Fairy Woods and Lizardman Habitat
+8,9,"M008_009"
+
+// Templar Headquarters and Siren's Island
+8,8,"M008_008"
+
+//=== [Asura Fields] ==========================
+// Sinking Swamp
+6,3,"M006_003"
+
+// Katan City (Asura)
+7,3,"M007_003"
+
+// Assassin Guild and Sirag Ruins
+6,4,"M006_004"
+
+// Pyre Site
+7,4,"M007_004"
+
+// Forgotten Portal
+8,3,"M008_003"
+
+//=== [Gaia Fields] ==========================
+// Wolha Cemetery, Relics of Arid Moonlight (field)
+8,5,"M008_005"
+
+// Dead Spirit's Altar
+8,4,"M008_004"
+
+// Bamboo Woods, First Valmore Mines (field)
+9,5,"M009_005"
+
+// Horizon Town (Gaia)
+9,4,"M009_004"
+
+//=== [Rondo Fields] ==========================
+10,8,"M010_008"
+9,9,"M009_009"
+9,8,"M009_008"
+10,7,"M010_007"
+9,7,"M009_007"
+9,6,"M009_006"
+8,7,"M008_007"
+8,6,"M008_006"
+7,7,"M007_007"
+7,6,"M007_006"
+7,5,"M007_005"
+6,5,"M006_005"
+6,6,"M006_006"
+5,6,"M005_006"
+5,7,"M005_007"
+
+//----------------------------------
+
+10,6,"M010_006"
+10,5,"M010_005"
+11,9,"M011_009"
+10,9,"M010_009"
+//=== [] ==========================
+5,5,"M005_005"
+
+//=== [Starting Island] ====================================
+10,3,"M010_003"
+
+// Sea
+9,2,"M009_002"
+10,2,"M010_002"
+9,3,"M009_003"
+11,3,"M011_003"
+10,4,"M010_004"
+11,4,"M011_004"
+
+//=== [Coal Mines] ====================================
+// Coal Mines 1
+13,0,"M013_000"
+// Coal Mines 2
+13,6,"M013_006"
+
+//=== [Crystal Valley] ====================================
+// Crystal Valley 1
+13,3,"M013_003"
+// Crystal Valley 2
+13,5,"M013_005"
+
+//=== [Hidden Village] ====================================
+13,1,"M013_001"
+
+//=== [Arid Moonlight] ====================================
+// Arid Moonlight 1
+13,4,"M013_004"
+// Arid Moonlight 2
+13,7,"M013_007"
+
+//=== [Palmir Plateau] ====================================
+// Palmir Plateau 1
+13,8,"M013_008"
+// Palmir Plateau 2
+13,9,"M013_009"
+
+//=== [Dungeons] ====================================
+12,7,"M012_007"
+
+//=== [TODO] ========================================
+12,0,"M012_000"
+11,0,"M011_000"
+10,0,"M010_000"
+9,0,"M009_000"
+7,0,"M007_000"
+5,0,"M005_000"
+12,10,"M012_010"
+12,9,"M012_009"
+12,8,"M012_008"
+11,2,"M011_002"
+11,8,"M011_008"
+11,7,"M011_007"
+11,6,"M011_006"
+12,4,"M012_004"
+12,6,"M012_006"
+12,5,"M012_005"
+12,3,"M012_003"
+5,8,"M005_008"
+6,8,"M006_008"
+6,7,"M006_007"
+12,2,"M012_002"
+1,1,"M001_001"
+11,01,"M011_001"
+10,1,"M010_001"
+9,01,"M009_001"
+8,01,"M008_001"
+7,01,"M007_001"
+1,2,"M001_002"
+12,01,"M012_001"
+6,01,"M006_001"
+1,0,"M001_000"
+4,5,"M004_005"
+3,5,"M003_005"
+2,5,"M002_005"
+4,4,"M004_004"
+3,4,"M003_004"
+2,4,"M002_004"
+1,4,"M001_004"
+2,3,"M002_003"

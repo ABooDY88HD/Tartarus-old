@@ -1,1 +1,8 @@
-[Header]
+String(21) message_type;
+Int16 message_size;
+String(message_size) message;
+00
+
+Message Type / Data:
+	Type: @QUEST
+	Data: xSTART|SUCCESS|[QuestID]

@@ -1,6 +1,6 @@
 // Sends a list of URLs to the client
 
-Int16 string_length 			/* 0 */
+Int16 string_length;			/* 0 */
 String(string_length) url_list;	/* 2 */
 
 // Notes:

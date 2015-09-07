@@ -1,5 +1,0 @@
-UInt32 npc_handle;     /* 0 */
-UInt32 unknown1; // 0  /* 4 */
-UInt32 unknown2; // 19 /* 4 */
-UInt32 unknown3; // 20 /* 4 */
-UInt32 unknown1; // 20 /* 4 */

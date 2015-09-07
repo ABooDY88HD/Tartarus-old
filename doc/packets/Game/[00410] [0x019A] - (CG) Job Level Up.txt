@@ -1,0 +1,9 @@
+// Sent by the client when user clicks
+// Lv UP job in skill window
+
+[Header]
+UInt32 handle;
+
+// Sends a Packet 00
+response: 0 = success
+parameter: player handle

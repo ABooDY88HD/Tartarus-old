@@ -1,7 +1,7 @@
 // Updates all the stats
 // of a character
 UInt32 handle; /* 0 */
-Int16 unknown1; /* 4 */
+Int16 job_id; /* 4 */
 Int16 strenght; /* 6 */
 Int16 vitality; /* 8 */
 Int16 dexterity; /* 10 */

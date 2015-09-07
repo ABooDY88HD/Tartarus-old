@@ -39,6 +39,9 @@ namespace game
 			// [0x0007] 0007 -> PC Move Update
 			packets_db.Add(0x0007, new Packet() { func = ClientPacketHandler.parse_PCMoveUpdate, pos = new short[] { 0, 4, 8, 12, 16 }});
 
+			// [0x0014] 0020 -> Client Command
+			packets_db.Add(0x0014, new Packet() { func = ClientPacketHandler.parse_ClientCommand, pos = new short[] { 22, 24 } });
+
 			// [0x0017] 0023 -> Logout to Char
 			packets_db.Add(0x0017, new Packet() { func = ClientPacketHandler.parse_PCLogoutToCharScreen, pos = new short[0] });
 			// [0x0019] 0025 -> Logout Check
@@ -52,6 +55,12 @@ namespace game
 			packets_db.Add(0x00C8, new Packet() { func = ClientPacketHandler.parse_Equip, pos = new short[] { 0, 1 } });
 			// [0x00C9] 0201 -> Unequip Item
 			packets_db.Add(0x00C9, new Packet() { func = ClientPacketHandler.parse_Unequip, pos = new short[] { 0 } });
+
+			// [0x0192] 0402 -> Learn Skill
+			packets_db.Add(0x0192, new Packet() { func = ClientPacketHandler.parse_LearnSkill, pos = new short[] { 0, 4, 8 } });
+
+			// [0x019A] 0410 -> Job LevelUp
+			packets_db.Add(0x019A, new Packet() { func = ClientPacketHandler.parse_JobLevelUp, pos = new short[] { 0 } });
 
 			// [0x01FC] 0508 -> Set Property
 			packets_db.Add(0x01FC, new Packet() { func = ClientPacketHandler.parse_SetProperty, pos = new short[] { 0, 16 } });

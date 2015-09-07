@@ -1,0 +1,11 @@
+UInt32 handle;
+Int32 skill_id;
+Int16 target_level; // ?
+
+// Sends 00 as response.
+response:
+	0 = Success
+	0D = Fail (?)
+
+parameter:
+	skill id

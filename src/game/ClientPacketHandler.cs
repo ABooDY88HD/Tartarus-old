@@ -593,7 +593,7 @@ namespace game
 
 			if (!isTemp)
 			{
-				res.WriteInt16(10);
+				res.WriteInt16((short)player.Job);
 				res.WriteInt16(player.BaseStats.Strength);
 				res.WriteInt16(player.BaseStats.Vitality);
 				res.WriteInt16(player.BaseStats.Dexterity);
@@ -1044,6 +1044,79 @@ namespace game
 			data.WriteString(menu.ToString());
 
 			ClientManager.Instance.Send(player, data);
+		}
+
+
+		internal static void parse_ClientCommand(Player player, ref PacketStream stream, short[] pos)
+		{
+			short size = stream.ReadInt16(pos[0]);
+			string cmd = stream.ReadString(pos[1], size);
+			// TODO : Action
+		}
+
+		internal static void parse_LearnSkill(Player player, ref PacketStream stream, short[] pos)
+		{
+			uint handle = stream.ReadUInt32(pos[0]);
+			int skillId = stream.ReadInt32(pos[1]);
+			short targetLevel = stream.ReadInt16(pos[2]);
+
+			// TODO : Action
+		}
+
+		internal static void send_SkillList(Player player)
+		{
+			// TODO : Requires a skill array
+			PacketStream stream = new PacketStream(0x0193);
+
+			stream.WriteUInt32(player.Handle);
+			//stream.WriteInt16(skills.Length);
+			stream.WriteByte(0);
+			/*
+			for (int i = 0; i < skills.Length; i++)
+			{
+				stream.WriteInt32(skills[i].Id);
+				stream.WriteByte(skills[i].Level);
+				stream.WriteByte(skills[i].Level);
+				stream.WriteUInt32(skills[i].Cooldown);
+				stream.WriteUInt32(0);
+			}
+			*/
+
+			ClientManager.Instance.Send(player, stream);
+		}
+
+		internal static void parse_JobLevelUp(Player player, ref PacketStream stream, short[] pos)
+		{
+			uint handle = stream.ReadUInt32(pos[0]);
+			
+			// TODO : Action
+		}
+
+		internal static void send_MaxHPMPUpdate(Player player, int oldHp, int oldMp)
+		{
+			PacketStream stream = new PacketStream(0x01FD);
+			
+			stream.WriteUInt32(player.Handle);
+			stream.WriteInt32(0);
+			stream.WriteInt32(oldHp);
+			stream.WriteInt32(player.MaxHp);
+			stream.WriteInt32(0);
+			stream.WriteInt32(oldMp);
+			stream.WriteInt32(player.MaxMp);
+			stream.WriteByte(0);
+
+			ClientManager.Instance.Send(player, stream);
+		}
+
+		internal static void send_RecoverHPMP(Player player, int hpRec, int mpRec)
+		{
+			PacketStream stream = new PacketStream(0x0204);
+
+			stream.WriteUInt32(player.Handle);
+			stream.WriteInt32(hpRec);
+			stream.WriteInt32(mpRec);
+			stream.WriteInt32(player.Hp);
+			stream.WriteInt32(player.Mp);
 		}
 	}
 

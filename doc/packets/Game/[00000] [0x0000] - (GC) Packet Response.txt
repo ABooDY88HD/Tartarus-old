@@ -1,5 +1,5 @@
 // This is a status packet, It sends a "response" to certain
 // packet IDs by using a Status code
 Int16 packet_id;	/* 0 */
-Int32 response;		/* 4 */
-Int16 00;			/* 8 */
+Int16 response;		/* 2 */
+UInt32 parameter;	/* 4 */

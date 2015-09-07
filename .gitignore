@@ -14,3 +14,7 @@
 *.suo
 *.tmp
 /vsproj-11/Auth/auth.csproj.user
+/Game.exe
+/Game.exe.config
+/Auth.exe
+/Auth.exe.config

@@ -1,0 +1,5 @@
+UInt32 handle;
+Int32 hp_recover;
+Int32 mp_recover;
+Int32 new_hp;
+Int32 new_mp;

@@ -1,0 +1,8 @@
+UInt32 handle;
+4B unknown; // 0
+Int32 old_hp;
+Int32 new_hp;
+4B Unknown // 0
+Int32 old_mp;
+Int32 new_mp;
+00

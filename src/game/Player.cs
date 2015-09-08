@@ -52,7 +52,7 @@ namespace game
 
 		public int GuildId { get; set; }
 
-		public int Job { get; set; }
+		public short Job { get; set; }
 		public int Level { get; set; }
 		public int JobLevel { get; set; }
 		public string Name { get; set; }
@@ -63,6 +63,11 @@ namespace game
 
 		public long Exp { get; set; }
 		public long JP { get; set; }
+		public int TP { get; set; }
+
+		public int MaxStamina { get; set; }
+		public int MaxChaos { get; set; }
+		public int MaxHavoc { get; set; }
 
 		public string ClientInfo { get; set; }
 
@@ -70,6 +75,8 @@ namespace game
 		public List<Quest> QuestList { get; set; }
 
 		public uint[] Equip { get; set; }
+
+		public Dictionary<int, Skill> SkillList { get; set; }
 
 		public uint RegionX { get; set; }
 		public uint RegionY { get; set; }
@@ -91,6 +98,7 @@ namespace game
 		{
 			this.BaseStats = new Stats();
 			this.SCStats = new Stats();
+			this.BaseStats.JobID = this.Job;
 
 			// Load Job Stats
 			this.BaseStats.Strength = StatsDb.DB[this.Job].Str;
@@ -147,7 +155,7 @@ namespace game
 				c.Sex = (int)reader["sex"];
 				c.SkinColor = (int)reader["skin_color"];
 				c.HairColor = (int)reader["hair_color"];
-				c.Job = (int)reader["job"];
+				c.Job = (short)reader["job"];
 				c.JobLevel = (int)reader["job_level"];
 				c.Level = (int)reader["level"];
 				c.HairId = (int)reader["hair_id"];
@@ -201,7 +209,7 @@ namespace game
 		{
 			Database db = new Database(Server.UserDbConString);
 			float x = 0; float y = 0;
-			int job = 0;
+			short job = 0;
 			int startWeapon = 0;
 			int startBag = 480001;
 			int startOutfit = 0;
@@ -364,36 +372,194 @@ namespace game
 				return false;
 			}
 
+			this.MaxStamina = Globals.MaxStamina;
+			this.MaxChaos = 0;
+			this.MaxHavoc = 0;
+
+			this.Gold = 0;
+			this.Chaos = 0;
+			this.TP = 0;
+
 			this.HairColor = (int)reader["hair_color"];
-			this.Job = (int)reader["job"];
-			this.JobLevel = (int)reader["job_level"];
-			this.Level = (int)reader["level"];
 			this.HairId = (int)reader["hair_id"];
 			this.FaceId = (int)reader["face_id"];
 			this.BodyId = (int)reader["body_id"];
 			this.HandsId = (int)reader["hands_id"];
 			this.FeetId = (int)reader["feet_id"];
+
 			this.Name = charName;
 			this.Race = (int)reader["race"];
 			this.Sex = (int)reader["sex"];
 			this.SkinColor = (int)reader["skin_color"];
 			this.CharId = (int)reader["char_id"];
 
-			this.Position = new Point((float)(int)reader["x"], (float)(int)reader["y"]);
+			this.Position = new Point((int)reader["x"], (int)reader["y"]);
 			this.Layer = (byte)(int)reader["layer"];
 
 			this.ClientInfo = (string)reader["client_info"];
-			this.LoadInventory();
-			this.LoadQuest();
 
-			this.LoadStats();
+			this.LoadQuest();
 
 			this.RegionX = RegionMngr.GetRegionX(this.Position.X);
 			this.RegionY = RegionMngr.GetRegionY(this.Position.Y);
 
+			//==== Character level/job/skills/buffs loading
+			this.Level = (int)reader["level"];
+			this.Job = (short)reader["job"];
+			this.JobLevel = (int)reader["job_level"];
+
+			this.LoadStats();
+			this.LoadSkills();
+
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+
+			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+
+			//==== Character item loading
+			this.LoadInventory();
+			this.LoadSummons();
+
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+
+			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+
+			//==== ??? loading
+			/*
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+
+			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+			*/
+
+			ClientPacketHandler.send_LoginResult(this);
+
+			//==== ??? loading
+			/*
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+
+			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+			*/
+			
+			//this.SetLevel((int)reader["level"]);
+
+
+			ClientPacketHandler.send_InventoryList(this);
+			ClientPacketHandler.send_EquipSummon(this);
+			ClientPacketHandler.send_CharacterView(this);
+			ClientPacketHandler.send_UpdateGoldChaos(this);
+
+			ClientPacketHandler.send_Property(this, "tp", this.TP);
+			ClientPacketHandler.send_Property(this, "chaos", this.Chaos);
+			
+			ClientPacketHandler.send_UpdateLevel(this);
+			ClientPacketHandler.send_UpdateExp(this);
+
+			ClientPacketHandler.send_Property(this, "job", this.Job);
+
+			ClientPacketHandler.send_Property(this, "job_level", this.JobLevel);
+			ClientPacketHandler.send_Property(this, "job_0", 0);
+			ClientPacketHandler.send_Property(this, "jlv_0", 0);
+			ClientPacketHandler.send_Property(this, "job_1", 0);
+			ClientPacketHandler.send_Property(this, "jlv_1", 0);
+			ClientPacketHandler.send_Property(this, "job_2", 0);
+			ClientPacketHandler.send_Property(this, "jlv_2", 0);
+
+			if (this.SkillList.Count > 0)
+				ClientPacketHandler.send_SkillList(this);
+
+			ClientPacketHandler.send_Packet404(this);
+			ClientPacketHandler.send_Packet1005(this);
+
+			ClientPacketHandler.send_BeltSlotInfo(this);
+			ClientPacketHandler.send_GameTime(this);
+
+			ClientPacketHandler.send_Property(this, "huntaholic_point", 0);
+			ClientPacketHandler.send_Property(this, "huntaholic_ent", 12);
+			ClientPacketHandler.send_Property(this, "ap", 0);
+
+			ClientPacketHandler.send_Packet4700(this);
+
+			ClientPacketHandler.send_Property(this, "alias", 0, true, "");
+			ClientPacketHandler.send_Property(this, "ethereal_stone", 0);
+			ClientPacketHandler.send_Property(this, "dk_count", 0);
+			ClientPacketHandler.send_Property(this, "pk_count", 0);
+			ClientPacketHandler.send_Property(this, "immoral", 0);
+			ClientPacketHandler.send_Property(this, "stamina", 0);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+			ClientPacketHandler.send_Property(this, "channel", 1);
+
+			ClientPacketHandler.send_EntityState(this);
+
+			if (this.ClientInfo != "")
+				ClientPacketHandler.send_Property(this, "client_info", 0, true, this.ClientInfo);
+
+
+			ClientPacketHandler.send_QuestList(this);
+			ClientPacketHandler.send_Packet625(this);
+			ClientPacketHandler.send_Packet626(this);
+			ClientPacketHandler.send_Packet627(this);
+			ClientPacketHandler.send_Packet629(this);
+
+			ClientPacketHandler.send_Packet631(this, 1);
+			ClientPacketHandler.send_Packet631(this, 2);
+			ClientPacketHandler.send_Packet631(this, 3);
+			ClientPacketHandler.send_Packet631(this, 4);
+			ClientPacketHandler.send_Packet631(this, 5);
+
+			//PacketParser.send_Packet22(sid, 2);
+			//PacketParser.send_Packet22(sid, 3);
+
+			ClientPacketHandler.send_Property(this, "playtime", 0);
+			ClientPacketHandler.send_Property(this, "playtime_limit1", 1080000);
+			ClientPacketHandler.send_Property(this, "playtime_limit2", 1800000);
+
+			ClientPacketHandler.send_LocationInfo(this);
+			ClientPacketHandler.send_WeatherInfo(this);
+
+			ClientPacketHandler.send_Property(this, "playtime", 0);
+
+			//PacketParser.send_Packet22(sid, 4);
+
+			//PacketParser.send_Packet08(sid, 1);
+
+			///ClientPacketHandler.send_GameTime(this);
+			//PacketParser.send_Packet1101(this, 2);
+
+			///ClientPacketHandler.send_LocationInfo(this);
+
+			ClientPacketHandler.send_Property(this, "stamina_regen", 30);
+
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+
 			return true;
 		}
 
+		/// <summary>
+		/// Sets the character's position
+		/// </summary>
+		/// <param name="jobLv"></param>
+		private void SetPosition(float x, float y, byte layer)
+		{
+			this.Position = new Point(x, y);
+			this.Layer = layer;
+
+			ClientPacketHandler.send_Property(this, "x", 0, true, this.Position.X.ToString());
+			ClientPacketHandler.send_Property(this, "y", 0, true, this.Position.Y.ToString());
+			ClientPacketHandler.send_Property(this, "layer", 0, true, this.Layer.ToString());
+		}
+		
 		/// <summary>
 		/// Gets the ID for appearances
 		/// </summary>
@@ -451,6 +617,40 @@ namespace game
 			}
 
 			return true;
+		}
+
+		/// <summary>
+		/// Loads user's skill list
+		/// </summary>
+		private void LoadSkills()
+		{
+			this.SkillList = new Dictionary<int,Skill>();
+
+			Database db = new Database(Server.UserDbConString);
+
+			MySqlDataReader reader =
+				db.ReaderQuery(
+					"SELECT `id`, `level` " +
+					"FROM `skill` " +
+					"WHERE `char_id` = @charId",
+					new string[] { "charId" },
+					new object[] { this.CharId }
+				);
+
+			while (reader.Read())
+			{
+				Skill skill = new Skill();
+
+				skill.Id = (int)reader["id"];
+				skill.Level = (short)reader["level"];
+
+				this.SkillList.Add(skill.Id, skill);
+			}
+		}
+
+		private void LoadSummons()
+		{
+			///ClientPacketHandler.send_EquipSummon(this);
 		}
 
 		/// <summary>

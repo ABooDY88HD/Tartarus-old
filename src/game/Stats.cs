@@ -10,7 +10,7 @@ namespace game
 {
 	public class Stats
 	{
-		// Unknown
+		public short JobID;
 		public short Strength;
 		public short Vitality;
 		public short Dexterity;

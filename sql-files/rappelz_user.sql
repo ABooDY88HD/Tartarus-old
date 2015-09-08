@@ -20,7 +20,7 @@ CREATE TABLE IF NOT EXISTS `char` (
   `save_y` int(11) NOT NULL,
   `level` int(11) NOT NULL,
   `exp` int(11) NOT NULL,
-  `job` int(11) NOT NULL,
+  `job` smallint(5) NOT NULL,
   `job_level` int(11) NOT NULL,
   `job_exp` int(11) NOT NULL,
   `jp` bigint(20) NOT NULL,
@@ -60,3 +60,10 @@ CREATE TABLE IF NOT EXISTS `quest` (
   `remain_time` int(11) NOT NULL,
   `progress` tinyint(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+CREATE TABLE IF NOT EXISTS `skill` (
+  `char_id` int(11) NOT NULL,
+  `id` int(11) NOT NULL,
+  `level` smallint(5) NOT NULL
+  PRIMARY KEY  (`char_id`,`id`)
+) ENGINE=MyISAM  DEFAULT CHARSET=latin1;

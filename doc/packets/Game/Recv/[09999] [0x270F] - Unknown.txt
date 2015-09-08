@@ -1,6 +1,1 @@
-// Sends a request to check
-// if this name is available
-// to create
-
 [Header]
-[CharacterName] : String(19)

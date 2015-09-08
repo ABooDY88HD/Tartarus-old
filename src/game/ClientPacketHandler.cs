@@ -313,7 +313,7 @@ namespace game
 		/// [0x01FB] 507 - (GC) Send the value of a property
 		/// <player handle>.L <as int>.B <property name>.16S <value/0>.L <0>.L [str value].?S
 		/// For a properties list check the full doc at "docs/packets/Game/"
-		internal static void send_Property(Player player, string property, object value, bool asString = false)
+		internal static void send_Property(Player player, string property, int value, bool asString = false, string sValue = "")
 		{
 			PacketStream data = new PacketStream((short)0x01FB);
 
@@ -324,17 +324,13 @@ namespace game
 				data.WriteByte(0x01);
 
 			data.WriteString(property, 16);
+			data.WriteInt32(value);
+			data.WriteInt32(0);
+
 			if (asString)
 			{
-				data.WriteInt32(0);
-				data.WriteInt32(0);
-				data.WriteString(value.ToString());
+				data.WriteString(sValue);
 				data.WriteByte(0x00);
-			}
-			else
-			{
-				data.WriteInt32((Int32)value);
-				data.WriteInt32(0);
 			}
 
 			ClientManager.Instance.Send(player, data);
@@ -593,7 +589,7 @@ namespace game
 
 			if (!isTemp)
 			{
-				res.WriteInt16((short)player.Job);
+				res.WriteInt16(player.BaseStats.JobID);
 				res.WriteInt16(player.BaseStats.Strength);
 				res.WriteInt16(player.BaseStats.Vitality);
 				res.WriteInt16(player.BaseStats.Dexterity);
@@ -644,7 +640,7 @@ namespace game
 			}
 			else
 			{
-				res.WriteInt16(10);
+				res.WriteInt16(0);
 				res.WriteInt16(player.SCStats.Strength);
 				res.WriteInt16(player.SCStats.Vitality);
 				res.WriteInt16(player.SCStats.Dexterity);

@@ -68,7 +68,7 @@ namespace game
 			// [0x01FF] 0511 -> Unknown
 			packets_db.Add(0x01FF, new Packet() { func = ClientPacketHandler.parse_Packet511, pos = new short[] { 0 } });
 			
-				// [0x07D1] 2001 -> Character List Request
+			// [0x07D1] 2001 -> Character List Request
 			packets_db.Add(0x07D1, new Packet() { func = ClientPacketHandler.parse_CharListRequest, pos = new short[] { 0 }});
 			// [0x07D2] 2002 -> Create Character
 			packets_db.Add(0x07D2, new Packet() { func = ClientPacketHandler.parse_CreateCharacter, pos = new short[] { 0, 4, 8, 12, 16, 20, 24, 28, 40, 52, 169, 188 } });

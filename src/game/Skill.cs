@@ -17,5 +17,13 @@ namespace game
 	{
 		public Int32 Id { get; set; }
 		public Int16 Level { get; set; }
+
+		public static void LevelUp(GameObject obj, int skillId, short targetLv)
+		{
+			if (obj.Type == GameObjectType.Player)
+			{
+
+			}
+		}
 	}
 }

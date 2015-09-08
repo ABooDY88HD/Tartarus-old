@@ -53,13 +53,13 @@ namespace game
 
 		/// [0x0000] 0000 -> (GC) Sends the result of a packet
 		/// <packet id>.W <result>.L <0>.W
-		internal static void send_PacketResponse(Player player, short packetId, int response = 0)
+		internal static void send_PacketResponse(Player player, short packetId, short response = 0, uint parameter = 0)
 		{
 			PacketStream data = new PacketStream((short)0x0000);
 
 			data.WriteInt16(packetId);
-			data.WriteInt32(response);
-			data.WriteInt16(0);
+			data.WriteInt16(response);
+			data.WriteUInt32(parameter);
 
 			ClientManager.Instance.Send(player, data);
 		}
@@ -313,7 +313,7 @@ namespace game
 		/// [0x01FB] 507 - (GC) Send the value of a property
 		/// <player handle>.L <as int>.B <property name>.16S <value/0>.L <0>.L [str value].?S
 		/// For a properties list check the full doc at "docs/packets/Game/"
-		internal static void send_Property(Player player, string property, int value, bool asString = false, string sValue = "")
+		internal static void send_Property(Player player, string property, long value, bool asString = false, string sValue = "")
 		{
 			PacketStream data = new PacketStream((short)0x01FB);
 
@@ -324,8 +324,7 @@ namespace game
 				data.WriteByte(0x01);
 
 			data.WriteString(property, 16);
-			data.WriteInt32(value);
-			data.WriteInt32(0);
+			data.WriteInt64(value);
 
 			if (asString)
 			{
@@ -1083,9 +1082,9 @@ namespace game
 
 		internal static void parse_JobLevelUp(Player player, ref PacketStream stream, short[] pos)
 		{
-			uint handle = stream.ReadUInt32(pos[0]);
-			
-			// TODO : Action
+			//uint handle = stream.ReadUInt32(pos[0]);
+
+			player.JobLevelUp();
 		}
 
 		internal static void send_MaxHPMPUpdate(Player player, int oldHp, int oldMp)

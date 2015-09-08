@@ -1,7 +1,7 @@
 CREATE TABLE IF NOT EXISTS `skill_db` (
   `skill_id` int(11) NOT NULL,
   `name` varchar(50) NOT NULL DEFAULT '',
-  `max_level` int(11) NOT NULL,
+  `max_level` int(5) NOT NULL,
   PRIMARY KEY (`skill_id`)
 ) ENGINE=MyISAM;
 

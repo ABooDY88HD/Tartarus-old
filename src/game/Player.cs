@@ -26,6 +26,12 @@ namespace game
 			public PacketStream Data;
 		}
 
+		public static long[] ExpTable;
+		public static int[] Jp0Table;
+		public static int[] Jp1Table;
+		public static int[] Jp2Table;
+		public static int[] Jp3Table;
+
 		public string UserId;
 		public int AccountId;
 		public byte Permission;
@@ -359,7 +365,8 @@ namespace game
 					"SELECT `char_id`,`slot`,`sex`,`race`," +
 					"`hair_id`,`face_id`,`body_id`,`hands_id`,`feet_id`," +
 					"`face_detail_id`,`hair_color`,`skin_color`,`x`,`y`,`layer`," +
-					"`save_x`,`save_y`,`level`,`exp`,`job`,`job_level`, `client_info`" +
+					"`save_x`,`save_y`,`level`,`exp`,`job`,`job_level`, `client_info`," +
+					"`jp`" +
 					" FROM `char`" +
 					" WHERE `account_id` = @accId AND `name` = @name AND `delete_date`= 0",
 					new string[] { "accId", "name" },
@@ -407,6 +414,7 @@ namespace game
 			this.Level = (int)reader["level"];
 			this.Job = (short)reader["job"];
 			this.JobLevel = (int)reader["job_level"];
+			this.JP = (long)reader["jp"];
 
 			this.LoadStats();
 			this.LoadSkills();
@@ -710,19 +718,20 @@ namespace game
 		}
 
 		/// <summary>
-		/// Save characters position
+		/// Save character
 		/// </summary>
 		internal void Save()
 		{
 			Database db = new Database(Server.UserDbConString);
 			
 			db.WriteQuery(
-				"UPDATE `char` SET `x` = @x, `y` = @y WHERE `char_id` = @cid",
+				"UPDATE `char` SET `x` = @x, `y` = @y, `jp` = @jp, `job_level` = @jlv, `level` = @lv, `job` = @job WHERE `char_id` = @cid",
 				new string[] { 
-					"cid", "x", "y"
+					"cid", "x", "y", "jp", "jlv", "lv", "job"
 				},
 				new object[] { 
-					this.CharId,  (int) this.Position.X, (int) this.Position.Y
+					this.CharId,  (int) this.Position.X, (int) this.Position.Y,
+					this.JP, this.JobLevel, this.Level, this.Job
 				}
 			);
 		}
@@ -811,6 +820,124 @@ namespace game
 			ClientPacketHandler.send_PacketResponse(this, 0x00C8);
 
 			ClientPacketHandler.send_CharacterView(this);
+		}
+
+		/// <summary>
+		/// Tries to Level UP character Job
+		/// </summary>
+		internal void JobLevelUp()
+		{
+			int reqJp = 0;
+			switch (JobId2Depth(this.Job))
+			{
+				case Db.JobDepth.Basic:
+					reqJp = Jp0Table[this.JobLevel];
+					break;
+				case Db.JobDepth.First:
+					reqJp = Jp1Table[this.JobLevel];
+					break;
+				case Db.JobDepth.Second:
+					reqJp = Jp2Table[this.JobLevel];
+					break;
+				case Db.JobDepth.Master:
+					reqJp = Jp3Table[this.JobLevel];
+					break;
+			}
+
+			if (reqJp <= 0) // Max level reached
+				return;
+			else if (this.JP < reqJp) // Not enough JP
+				return;
+
+			this.JP -= reqJp;
+			this.JobLevel++;
+
+			ClientPacketHandler.send_Property(this, "jp", this.JP);
+			ClientPacketHandler.send_Property(this, "job_level", this.JobLevel);
+			ClientPacketHandler.send_UpdateStats(this, false);
+			ClientPacketHandler.send_UpdateStats(this, true);
+			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
+			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
+			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
+			ClientPacketHandler.send_PacketResponse(this, 0x019A, 0, this.Handle);
+			
+		}
+
+		// TODO : This must be redone, just a workaround
+		private static Db.JobDepth JobId2Depth(short jobId)
+		{
+			if (jobId == 100 || jobId == 200 || jobId == 300)
+				return Db.JobDepth.Basic;
+			else if (jobId == 101 || jobId == 201 || jobId == 301)
+				return Db.JobDepth.First;
+			else if (jobId == 102 || jobId == 103 || jobId == 202 || jobId == 203 ||
+				jobId == 302 || jobId == 303)
+				return Db.JobDepth.Second;
+			else
+				return Db.JobDepth.Master;
+		}
+
+		/// <summary>
+		/// Initializes EXP Table
+		/// </summary>
+		internal static void Start()
+		{
+			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Player EXP Database...\n");
+
+			List<long> expt = new List<long>();
+			List<int> jp0t = new List<int>();
+			List<int> jp1t = new List<int>();
+			List<int> jp2t = new List<int>();
+			List<int> jp3t = new List<int>();
+
+			Database db = new Database(Server.GameDbConString);
+			MySqlDataReader reader =
+				db.ReaderQuery(
+					"SELECT `level`, `exp`, `jp_0`,`jp_1`,`jp_2`,`jp_3` " +
+					"FROM `level_db`", null, null
+				);
+
+			expt.Add(0);
+			jp0t.Add(0);
+			jp1t.Add(0);
+			jp2t.Add(0);
+			jp3t.Add(0);
+
+			while (reader.Read())
+			{
+				int level = (int)reader["level"];
+
+				long exp = (long)reader["exp"];
+				int jp0 = (int)reader["jp_0"];
+				int jp1 = (int)reader["jp_1"];
+				int jp2 = (int)reader["jp_2"];
+				int jp3 = (int)reader["jp_3"];
+
+				if (exp > 0)
+					expt.Add(exp);
+				if (jp0 > 0)
+					jp0t.Add(jp0);
+				if (jp1 > 0)
+					jp1t.Add(jp1);
+				if (jp2 > 0)
+					jp2t.Add(jp2);
+				if (jp3 > 0)
+					jp3t.Add(jp3);
+			}
+
+			expt.Add(0);
+			jp0t.Add(0);
+			jp1t.Add(0);
+			jp2t.Add(0);
+			jp3t.Add(0);
+
+			ExpTable = expt.ToArray();
+			Jp0Table = jp0t.ToArray();
+			Jp1Table = jp1t.ToArray();
+			Jp2Table = jp2t.ToArray();
+			Jp3Table = jp3t.ToArray();
+
+			ConsoleUtils.Write(ConsoleMsgType.Status, "Level Database Loaded.\n");
 		}
 	}
 }

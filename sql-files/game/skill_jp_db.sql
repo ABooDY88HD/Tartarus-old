@@ -1,6 +1,6 @@
 CREATE TABLE IF NOT EXISTS `skill_jp_db` (
   `skill_id` int(11) NOT NULL,
-  `level` bigint(20) NOT NULL,
+  `level` smallint(5) NOT NULL,
   `jp` int(11) NOT NULL
 ) ENGINE=MyISAM;
 

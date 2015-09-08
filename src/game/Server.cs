@@ -90,6 +90,8 @@ namespace game
 			Script.LuaMain.Start();
 			ItemDb.Start();
 			StatsDb.Start();
+			SkillDb.Start();
+			Player.Start();
 			Npc.Init();
 			QuestDb.Start();
 

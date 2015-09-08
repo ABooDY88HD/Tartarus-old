@@ -3,13 +3,7 @@
 UInt32 player_handle;		/* 0 */
 Byte as_int;			/* 4 */ // false(0x00) / true(0x01)
 String(16) property_name;	/* 5 */
-[ // If value is an int (as_int = 0x01)
-	Int32 value;			/* 21 */
-]
-[ // If value is a string (as_int = 0x00)
-	Int32 0;				/* 21 */
-]
-Int32 0;					/* 25 */
+Int64 value;			/* 21 */ // If string, then 0
 [ // If value is a string (as_int = 0x00)
 	String(?S) value;		/* 28 */ 
 ]

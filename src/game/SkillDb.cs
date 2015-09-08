@@ -30,7 +30,7 @@ namespace game
 			MySqlDataReader reader = 
 				db.ReaderQuery(
 					"SELECT `skill_id`, `name`, `max_level` " +
-					"FROM `skills_db`", null, null
+					"FROM `skill_db`", null, null
 				);
 
 			while (reader.Read())
@@ -45,9 +45,9 @@ namespace game
 
 				Database db2 = new Database(Server.GameDbConString);
 				MySqlDataReader reader2 =
-					db.ReaderQuery(
+					db2.ReaderQuery(
 						"SELECT `skill_id`, `level`, `jp` " +
-						"FROM `skills_jp_db` " +
+						"FROM `skill_jp_db` " +
 						"WHERE `skill_id`=@sid",
 						new string[] { "sid" },
 						new object[] { skillId }
@@ -55,8 +55,8 @@ namespace game
 
 				while (reader2.Read())
 				{
-					short lv = (short)reader["level"];
-					int jp = (int)reader["jp"];
+					short lv = (short)reader2["level"];
+					int jp = (int)reader2["jp"];
 
 					if (lv > skill.MaxLevel)
 					{
@@ -69,7 +69,7 @@ namespace game
 						continue;
 					}
 
-					skill.RequiredJp[lv] = jp;
+					skill.RequiredJp[lv-1] = jp;
 				}
 
 				DB.Add(skillId, skill);

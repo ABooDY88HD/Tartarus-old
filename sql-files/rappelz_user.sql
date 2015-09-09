@@ -64,6 +64,6 @@ CREATE TABLE IF NOT EXISTS `quest` (
 CREATE TABLE IF NOT EXISTS `skill` (
   `char_id` int(11) NOT NULL,
   `id` int(11) NOT NULL,
-  `level` smallint(5) NOT NULL
+  `level` tinyint(3) unsigned NOT NULL,
   PRIMARY KEY  (`char_id`,`id`)
 ) ENGINE=MyISAM  DEFAULT CHARSET=latin1;

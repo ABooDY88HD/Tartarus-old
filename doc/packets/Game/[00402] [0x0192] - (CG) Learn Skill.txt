@@ -1,6 +1,7 @@
 UInt32 handle;
 Int32 skill_id;
-Int16 target_level; // ?
+Byte target_level;
+0x00
 
 // Sends 00 as response.
 response:

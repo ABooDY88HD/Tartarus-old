@@ -14,9 +14,9 @@ namespace game
 	{
 		public class SkillEntry
 		{
-			public Int16 MaxLevel { get; set; }
+			public Byte MaxLevel { get; set; }
 			public Int32[] RequiredJp { get; set; }
-			public Int32 CooldownTime { get; set; }
+			public UInt32 CooldownTime { get; set; }
 		}
 
 		public static Dictionary<Int32, SkillEntry> DB { get; private set; }
@@ -39,8 +39,8 @@ namespace game
 
 				int skillId = (int)reader["skill_id"];
 
-				skill.MaxLevel = (short)reader["max_level"];
-				skill.RequiredJp = new int[skill.MaxLevel];
+				skill.MaxLevel = (byte)reader["max_level"];
+				skill.RequiredJp = new int[skill.MaxLevel+1];
 				skill.CooldownTime = 1000;
 
 				Database db2 = new Database(Server.GameDbConString);
@@ -55,7 +55,7 @@ namespace game
 
 				while (reader2.Read())
 				{
-					short lv = (short)reader2["level"];
+					byte lv = (byte)reader2["level"];
 					int jp = (int)reader2["jp"];
 
 					if (lv > skill.MaxLevel)
@@ -69,7 +69,7 @@ namespace game
 						continue;
 					}
 
-					skill.RequiredJp[lv-1] = jp;
+					skill.RequiredJp[lv] = jp;
 				}
 
 				DB.Add(skillId, skill);

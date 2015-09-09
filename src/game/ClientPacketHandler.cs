@@ -1053,20 +1053,19 @@ namespace game
 		{
 			uint handle = stream.ReadUInt32(pos[0]);
 			int skillId = stream.ReadInt32(pos[1]);
-			short targetLevel = stream.ReadInt16(pos[2]);
+			byte targetLevel = stream.ReadByte(pos[2]);
 
-			// TODO : Action
+			Skill.LevelUp(player, skillId, targetLevel);
 		}
 
-		internal static void send_SkillList(Player player)
+		internal static void send_SkillList(Player player, Skill[] skills)
 		{
-			// TODO : Requires a skill array
 			PacketStream stream = new PacketStream(0x0193);
 
 			stream.WriteUInt32(player.Handle);
-			//stream.WriteInt16(skills.Length);
+			stream.WriteInt16((short)skills.Length);
 			stream.WriteByte(0);
-			/*
+			
 			for (int i = 0; i < skills.Length; i++)
 			{
 				stream.WriteInt32(skills[i].Id);
@@ -1075,7 +1074,6 @@ namespace game
 				stream.WriteUInt32(skills[i].Cooldown);
 				stream.WriteUInt32(0);
 			}
-			*/
 
 			ClientManager.Instance.Send(player, stream);
 		}

@@ -484,7 +484,7 @@ namespace game
 			ClientPacketHandler.send_Property(this, "jlv_2", 0);
 
 			if (this.SkillList.Count > 0)
-				ClientPacketHandler.send_SkillList(this);
+				ClientPacketHandler.send_SkillList(this, this.SkillList.Values.ToArray());
 
 			ClientPacketHandler.send_Packet404(this);
 			ClientPacketHandler.send_Packet1005(this);
@@ -650,7 +650,7 @@ namespace game
 				Skill skill = new Skill();
 
 				skill.Id = (int)reader["id"];
-				skill.Level = (short)reader["level"];
+				skill.Level = (byte)reader["level"];
 
 				this.SkillList.Add(skill.Id, skill);
 			}

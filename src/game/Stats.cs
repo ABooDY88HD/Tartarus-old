@@ -58,39 +58,72 @@ namespace game
 		/// Recalculate the stats (this must not be used by SC)
 		/// </summary>
 		/// <param name="level">entity level</param>
-		public void Recalculate(int level)
+		public static bool PCCalculate(Player player)
 		{
 			// Formulas from: http://rappelz.wikia.com/wiki/Stats_%26_Ability
+			Stats stats = player.BaseStats;
+			Player.JobDBEntry jobData = Player.JobDB[player.Job];
+			int level = player.Level;
+
+			// Load Job stats
+			stats.Strength = (short) (StatsDb.DB[player.Job].Str + jobData.StrMult * player.JobLevel);
+			stats.Vitality = (short)(StatsDb.DB[player.Job].Vit + jobData.VitMult * player.JobLevel);
+			stats.Dexterity = (short)(StatsDb.DB[player.Job].Dex + jobData.DexMult * player.JobLevel);
+			stats.Agility = (short)(StatsDb.DB[player.Job].Agi + jobData.AgiMult * player.JobLevel);
+			stats.Intelligence = (short)(StatsDb.DB[player.Job].Int + jobData.IntMult * player.JobLevel);
+			stats.Wisdom = (short)(StatsDb.DB[player.Job].Wis + jobData.WisMult * player.JobLevel);
+			stats.Luck = (short)(StatsDb.DB[player.Job].Luk + jobData.LuckMult * player.JobLevel);
 
 			// Meelee
-			this.PAtkRight = (short)Math.Ceiling((decimal)(14 / 5f * this.Strength + level + 9));
+			stats.PAtkRight = (short)Math.Ceiling((decimal)(14 / 5f * stats.Strength + level + 9));
 			// Ranged
-			//this.PAtkRight = (short)Math.Ceiling((decimal)(6 / 5f * this.Agility + (11/5f)*this.Dexterity + level));
+			//stats.PAtkRight = (short)Math.Ceiling((decimal)(6 / 5f * stats.Agility + (11/5f)*stats.Dexterity + level));
 
-			this.AccuracyLeft = (short)Math.Ceiling((decimal)(1 / 2f) * this.Dexterity + level);
+			stats.AccuracyLeft = (short)Math.Ceiling((decimal)(1 / 2f) * stats.Dexterity + level);
 			//TODO : Accuracy Right
-			this.MAtk = (short)(2 * this.Intelligence + level);
-			this.PDef = (short)Math.Ceiling((decimal)(5 / 3f) * this.Vitality + level);
-			this.Evasion = (short)Math.Ceiling((decimal)(this.Vitality / 2f + level));
-			this.AtkSpd = (short)Math.Ceiling((decimal)(100 + this.Agility / 10f));
+			stats.MAtk = (short)(2 * stats.Intelligence + level);
+			stats.PDef = (short)Math.Ceiling((decimal)(5 / 3f) * stats.Vitality + level);
+			stats.Evasion = (short)Math.Ceiling((decimal)(stats.Vitality / 2f + level));
+			stats.AtkSpd = (short)Math.Ceiling((decimal)(100 + stats.Agility / 10f));
 
-			this.MAccuracy = (short)Math.Ceiling((decimal)((4 / 10f) * this.Wisdom + (1 / 10f) * this.Dexterity + level));
-			this.MDef = (short) (2 * this.Wisdom + level);
-			this.MRes = (short)Math.Ceiling((decimal)((1 / 2f) * this.Wisdom + level));
-			this.MovSpd = 120;
+			stats.MAccuracy = (short)Math.Ceiling((decimal)((4 / 10f) * stats.Wisdom + (1 / 10f) * stats.Dexterity + level));
+			stats.MDef = (short) (2 * stats.Wisdom + level);
+			stats.MRes = (short)Math.Ceiling((decimal)((1 / 2f) * stats.Wisdom + level));
+			stats.MovSpd = 120;
 
-			this.HPRegen = 5;
-			this.MPRegen = 5;
-			this.BlockPer = 0;
-			this.CritRate = (short)Math.Ceiling(this.Luck / 5f + 3);
-			this.CastSpd = 100;
+			stats.HPRegen = 5;
+			stats.MPRegen = 5;
+			stats.BlockPer = 0;
+			stats.CritRate = (short)Math.Ceiling(stats.Luck / 5f + 3);
+			stats.CastSpd = 100;
 
-			this.HPRecov = (short)(2 * level + 48);
-			this.MPRecov = (short)(4.1f * this.Wisdom + 2 * level + 48);
-			this.BlockDef = 0;
-			this.CritPower = 80;
-			this.ReCastSpd = 100;
-			this.MaxWeight = (short)(10 * this.Strength + 10 * level);
+			stats.HPRecov = (short)(2 * level + 48);
+			stats.MPRecov = (short)(4.1f * stats.Wisdom + 2 * level + 48);
+			stats.BlockDef = 0;
+			stats.CritPower = 80;
+			stats.ReCastSpd = 100;
+			stats.MaxWeight = (short)(10 * stats.Strength + 10 * level);
+
+			player.BaseStats = stats;
+			
+			// TODO : Check if any stat has changed
+			// or not
+			return true;
+		}
+
+		/// <summary>
+		/// Recalculate SC stats
+		/// </summary>
+		public static bool PCCalculateSC(Player player)
+		{
+			// Formulas from: http://rappelz.wikia.com/wiki/Stats_%26_Ability
+			Stats stats = player.SCStats;
+
+			player.SCStats = stats;
+
+			// TODO : Check if any stat has changed
+			// or not
+			return true;
 		}
 	}
 }

@@ -13,7 +13,7 @@ using common.Utilities;
 
 namespace game
 {
-	public class Player : GameObject
+	public partial class Player : GameObject
 	{
 		public class Network
 		{
@@ -25,12 +25,6 @@ namespace game
 			public int Offset;
 			public PacketStream Data;
 		}
-
-		public static long[] ExpTable;
-		public static int[] Jp0Table;
-		public static int[] Jp1Table;
-		public static int[] Jp2Table;
-		public static int[] Jp3Table;
 
 		public string UserId;
 		public int AccountId;
@@ -115,7 +109,8 @@ namespace game
 			this.BaseStats.Wisdom = StatsDb.DB[this.Job].Wis;
 			this.BaseStats.Luck = StatsDb.DB[this.Job].Luk;
 
-			this.BaseStats.Recalculate(this.Level);
+			Stats.PCCalculate(this);
+			Stats.PCCalculateSC(this);
 			//this.RecalculateHPMP();
 
 			this.MaxHp = 100;
@@ -788,7 +783,7 @@ namespace game
 			this.Equip[wearType] = 0;
 
 			ClientPacketHandler.send_WearChange(this, handle, -1, this.Inventory[handle].Enhance);
-			this.BaseStats.Recalculate(this.Level);
+			Stats.PCCalculate(this);
 
 			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
 			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);
@@ -811,7 +806,7 @@ namespace game
 
 			ClientPacketHandler.send_WearChange(this, itemHandle, (short)i.WearInfo, this.Inventory[itemHandle].Enhance);
 
-			this.BaseStats.Recalculate(this.Level);
+			Stats.PCCalculate(this);
 
 			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
 			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);
@@ -875,69 +870,6 @@ namespace game
 				return Db.JobDepth.Second;
 			else
 				return Db.JobDepth.Master;
-		}
-
-		/// <summary>
-		/// Initializes EXP Table
-		/// </summary>
-		internal static void Start()
-		{
-			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Player EXP Database...\n");
-
-			List<long> expt = new List<long>();
-			List<int> jp0t = new List<int>();
-			List<int> jp1t = new List<int>();
-			List<int> jp2t = new List<int>();
-			List<int> jp3t = new List<int>();
-
-			Database db = new Database(Server.GameDbConString);
-			MySqlDataReader reader =
-				db.ReaderQuery(
-					"SELECT `level`, `exp`, `jp_0`,`jp_1`,`jp_2`,`jp_3` " +
-					"FROM `level_db`", null, null
-				);
-
-			expt.Add(0);
-			jp0t.Add(0);
-			jp1t.Add(0);
-			jp2t.Add(0);
-			jp3t.Add(0);
-
-			while (reader.Read())
-			{
-				int level = (int)reader["level"];
-
-				long exp = (long)reader["exp"];
-				int jp0 = (int)reader["jp_0"];
-				int jp1 = (int)reader["jp_1"];
-				int jp2 = (int)reader["jp_2"];
-				int jp3 = (int)reader["jp_3"];
-
-				if (exp > 0)
-					expt.Add(exp);
-				if (jp0 > 0)
-					jp0t.Add(jp0);
-				if (jp1 > 0)
-					jp1t.Add(jp1);
-				if (jp2 > 0)
-					jp2t.Add(jp2);
-				if (jp3 > 0)
-					jp3t.Add(jp3);
-			}
-
-			expt.Add(0);
-			jp0t.Add(0);
-			jp1t.Add(0);
-			jp2t.Add(0);
-			jp3t.Add(0);
-
-			ExpTable = expt.ToArray();
-			Jp0Table = jp0t.ToArray();
-			Jp1Table = jp1t.ToArray();
-			Jp2Table = jp2t.ToArray();
-			Jp3Table = jp3t.ToArray();
-
-			ConsoleUtils.Write(ConsoleMsgType.Status, "Level Database Loaded.\n");
 		}
 	}
 }

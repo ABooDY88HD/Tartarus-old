@@ -131,6 +131,9 @@
     <Compile Include="..\..\src\game\Player.cs">
       <Link>game\Player.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\game\Player.Databases.cs">
+      <Link>game\Player.Databases.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\game\Program.cs">
       <Link>game\Program.cs</Link>
     </Compile>

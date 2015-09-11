@@ -105,7 +105,6 @@ namespace game
 		/// </summary>
 		internal static void LoadJobDb()
 		{
-			// TODO : 
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Loading Jobs Database...\n");
 
 			JobDB = new Dictionary<int, JobDBEntry>();

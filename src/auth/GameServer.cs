@@ -48,7 +48,6 @@ namespace auth
 						// Reads the Packet Header
 						byte[] buffer = new byte[Globals.HeaderLength];
 
-						// TODO: If server disconect, this crashes
 						if (this.NetStream.Read(buffer, 0, Globals.HeaderLength) < Globals.HeaderLength)
 						{
 							ConsoleUtils.Write(
@@ -92,9 +91,10 @@ namespace auth
 					}
 				}
 			}
-			catch (SocketException)
+			catch (Exception ex)
 			{
-				ConsoleUtils.Write(ConsoleMsgType.Info, "Connection to {0} closed.\r\n", this.Ip);
+				if (ex is SocketException || ex is System.IO.IOException)
+					ConsoleUtils.Write(ConsoleMsgType.Info, "Connection to Game-Server at {0} closed.\r\n", this.Ip);
 			}
 
 			this.NetStream.Close();

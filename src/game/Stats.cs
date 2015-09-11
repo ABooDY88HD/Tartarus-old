@@ -24,6 +24,10 @@ namespace game
 			MaxWeight = 20,
 			BlockDef = 21,
 			CastSpd = 22,
+			MAcc = 23,
+			MRes = 24,
+			ReCastSpd = 25,
+			MPRecov = 33,
 			Range = 34
 		}
 
@@ -131,13 +135,18 @@ namespace game
 
 					for (int j = 0; j < Item.MaxBaseTypes; j++)
 					{
-						// TODO : Are PAtk/Acc bonus applied to both hands?
 						switch (dbItem.BaseTypes[j])
 						{
 							case BaseType.PAtk:
-								// TODO : FIX : The buff should only be applied to the hand using the weapon
-								stats.PAtkLeft += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
-								stats.PAtkRight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								if (player.IsEquipped(Item.WearType.LeftHand))
+									stats.PAtkLeft += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								else
+									stats.PAtkLeft = 0;
+
+								if (player.IsEquipped(Item.WearType.RightHand))
+									stats.PAtkRight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								else
+									stats.PAtkRight = 0;
 								break;
 							case BaseType.MAtk:
 								stats.MAtk += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
@@ -145,8 +154,6 @@ namespace game
 							case BaseType.Acc:
 								stats.AccuracyLeft += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
 								stats.AccuracyRight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
-								// TODO : Is MAcc affected?
-								stats.MAccuracy += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
 								break;
 							case BaseType.AtkSpd:
 								stats.AtkSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
@@ -174,6 +181,18 @@ namespace game
 								break;
 							case BaseType.CastSpd:
 								stats.CastSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MAcc:
+								stats.MAccuracy += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MRes:
+								stats.MRes += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.ReCastSpd:
+								stats.ReCastSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MPRecov:
+								stats.MPRecov += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
 								break;
 							case BaseType.Range:
 								// TODO : Range stats

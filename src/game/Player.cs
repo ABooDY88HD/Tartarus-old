@@ -411,6 +411,9 @@ namespace game
 			this.JobLevel = (int)reader["job_level"];
 			this.JP = (long)reader["jp"];
 
+			this.LoadInventory();
+			this.LoadSummons();
+
 			this.LoadStats();
 			this.LoadSkills();
 
@@ -422,9 +425,6 @@ namespace game
 			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
 
 			//==== Character item loading
-			this.LoadInventory();
-			this.LoadSummons();
-
 			ClientPacketHandler.send_UpdateStats(this, false);
 			ClientPacketHandler.send_UpdateStats(this, true);
 
@@ -865,6 +865,16 @@ namespace game
 			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
 			ClientPacketHandler.send_PacketResponse(this, 0x019A, 0, this.Handle);
 			
+		}
+
+		/// <summary>
+		/// Checks if there's an item equipped at this position
+		/// </summary>
+		/// <param name="pos"></param>
+		/// <returns></returns>
+		internal bool IsEquipped(Item.WearType pos)
+		{
+			return (this.Equip[(int)pos] > 0);
 		}
 
 		// TODO : This must be redone, just a workaround

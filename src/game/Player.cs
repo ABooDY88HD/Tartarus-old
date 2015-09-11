@@ -424,38 +424,7 @@ namespace game
 			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
 			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
 
-			//==== Character item loading
-			ClientPacketHandler.send_UpdateStats(this, false);
-			ClientPacketHandler.send_UpdateStats(this, true);
-
-			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
-			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
-			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
-
-			//==== ??? loading
-			/*
-			ClientPacketHandler.send_UpdateStats(this, false);
-			ClientPacketHandler.send_UpdateStats(this, true);
-
-			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
-			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
-			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
-			*/
-
 			ClientPacketHandler.send_LoginResult(this);
-
-			//==== ??? loading
-			/*
-			ClientPacketHandler.send_UpdateStats(this, false);
-			ClientPacketHandler.send_UpdateStats(this, true);
-
-			ClientPacketHandler.send_Property(this, "max_havoc", this.MaxHavoc);
-			ClientPacketHandler.send_Property(this, "max_chaos", this.MaxChaos);
-			ClientPacketHandler.send_Property(this, "max_stamina", this.MaxStamina);
-			*/
-			
-			//this.SetLevel((int)reader["level"]);
-
 
 			ClientPacketHandler.send_InventoryList(this);
 			ClientPacketHandler.send_EquipSummon(this);

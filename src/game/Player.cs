@@ -876,19 +876,5 @@ namespace game
 		{
 			return (this.Equip[(int)pos] > 0);
 		}
-
-		// TODO : This must be redone, just a workaround
-		private static Db.JobDepth JobId2Depth(short jobId)
-		{
-			if (jobId == 100 || jobId == 200 || jobId == 300)
-				return Db.JobDepth.Basic;
-			else if (jobId == 101 || jobId == 201 || jobId == 301)
-				return Db.JobDepth.First;
-			else if (jobId == 102 || jobId == 103 || jobId == 202 || jobId == 203 ||
-				jobId == 302 || jobId == 303)
-				return Db.JobDepth.Second;
-			else
-				return Db.JobDepth.Master;
-		}
 	}
 }

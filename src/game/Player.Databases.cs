@@ -144,6 +144,16 @@ namespace game
 			ConsoleUtils.Write(ConsoleMsgType.Status, "Jobs Database Loaded.\n");
 		}
 
+		/// <summary>
+		/// Return JobDepth of a JobID
+		/// </summary>
+		/// <param name="jobId"></param>
+		/// <returns></returns>
+		private static Db.JobDepth JobId2Depth(short jobId)
+		{
+			return JobDB[jobId].JobDepth;
+		}
+
 		public static void Start()
 		{
 			LoadLevelDb();

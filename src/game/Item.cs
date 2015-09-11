@@ -61,6 +61,8 @@ namespace game
 
 		}
 
+		public const int MaxBaseTypes = 4; // 0 ~ 3
+
 		public long UId { get; set; }
 		public int Code { get; set; }
 		public long Count { get; set; }

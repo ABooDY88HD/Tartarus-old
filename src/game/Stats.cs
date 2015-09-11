@@ -10,6 +10,23 @@ namespace game
 {
 	public class Stats
 	{
+		public enum BaseType : byte
+		{
+			PAtk = 11,
+			MAtk = 12,
+			Acc = 13,
+			AtkSpd = 14,
+			PDef = 15,
+			MDef = 16,
+			Evasion = 17,
+			MovSpd = 18,
+			BlockPer = 19,
+			MaxWeight = 20,
+			BlockDef = 21,
+			CastSpd = 22,
+			Range = 34
+		}
+
 		public short JobID;
 		public short Strength;
 		public short Vitality;
@@ -103,6 +120,70 @@ namespace game
 			stats.CritPower = 80;
 			stats.ReCastSpd = 100;
 			stats.MaxWeight = (short)(10 * stats.Strength + 10 * level);
+
+			// Equipment Stats
+			for (int i = 0; i < player.Equip.Length; i++)
+			{
+				if (player.Equip[i] != 0)
+				{
+					Item item = player.Inventory[player.Equip[i]];
+					ItemDb.ItemEntry dbItem = ItemDb.DB[item.Code];
+
+					for (int j = 0; j < Item.MaxBaseTypes; j++)
+					{
+						// TODO : Are PAtk/Acc bonus applied to both hands?
+						switch (dbItem.BaseTypes[j])
+						{
+							case BaseType.PAtk:
+								// TODO : FIX : The buff should only be applied to the hand using the weapon
+								stats.PAtkLeft += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								stats.PAtkRight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MAtk:
+								stats.MAtk += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.Acc:
+								stats.AccuracyLeft += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								stats.AccuracyRight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								// TODO : Is MAcc affected?
+								stats.MAccuracy += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.AtkSpd:
+								stats.AtkSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.PDef:
+								stats.PDef += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MDef:
+								stats.MDef += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.Evasion:
+								stats.Evasion += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MovSpd:
+								stats.MovSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.BlockPer:
+								stats.BlockPer += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.MaxWeight:
+								stats.MaxWeight += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.BlockDef:
+								stats.BlockDef += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.CastSpd:
+								stats.CastSpd += (short)(dbItem.BaseVar1[j] + dbItem.BaseVar2[j] * (item.Level - 1));
+								break;
+							case BaseType.Range:
+								// TODO : Range stats
+								break;
+							default:
+								break;
+						}
+					}
+				}
+			}
 
 			player.BaseStats = stats;
 			

@@ -122,8 +122,7 @@ namespace game
 			{
 				JobDBEntry job = new JobDBEntry();
 				int jobId = (int)reader["id"];
-				byte i = (byte)reader["job_depth"];
-				//job.JobDepth = (Db.JobDepth)
+				job.JobDepth = (Db.JobDepth)(byte)reader["job_depth"];
 				job.StrMult = (float)reader["str_mult"];
 				job.VitMult = (float)reader["vit_mult"];
 				job.DexMult = (float)reader["dex_mult"];

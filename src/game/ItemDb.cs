@@ -26,6 +26,10 @@ namespace game
 			public Db.Classes EquipClasses { get; set; }
 			public Db.JobDepth EquipDepth { get; set; }
 			public Int32 Weight { get; set; }
+
+			public Stats.BaseType[] BaseTypes { get; set; }
+			public float[] BaseVar1 { get; set; }
+			public float[] BaseVar2 { get; set; }
 		}
 
 		public static Dictionary<Int32, ItemEntry> DB { get; private set; }
@@ -41,7 +45,11 @@ namespace game
 					"SELECT `id`, `type`, `class`, `wear_type`, `grade`, `rank`, " +
 							"`level`, `enhance`, `sockets`, " +
 							"`equip_races`, `equip_classes`, `equip_depth`, " +
-							"`weight` " +
+							"`weight`," +
+							"`base_type_0`,`base_var1_0`,`base_var2_0`," +
+							"`base_type_1`,`base_var1_1`,`base_var2_1`," +
+							"`base_type_2`,`base_var1_2`,`base_var2_2`," +
+							"`base_type_3`,`base_var1_3`,`base_var2_3` " +
 					"FROM `item_db`", null, null
 				);
 
@@ -61,6 +69,16 @@ namespace game
 				item.EquipClasses = (Db.Classes)(sbyte)reader["equip_classes"];
 				item.EquipDepth = (Db.JobDepth)(sbyte)reader["equip_depth"];
 				item.Weight = (int)reader["weight"];
+
+				item.BaseTypes = new Stats.BaseType[Item.MaxBaseTypes];
+				item.BaseVar1 = new float[Item.MaxBaseTypes];
+				item.BaseVar2 = new float[Item.MaxBaseTypes];
+				for (int i = 0; i < Item.MaxBaseTypes; i++)
+				{
+					item.BaseTypes[i] = (Stats.BaseType)(byte)reader["base_type_" + i];
+					item.BaseVar1[i] = (float)(decimal)reader["base_var1_" + i];
+					item.BaseVar2[i] = (float)(decimal)reader["base_var2_" + i];
+				}
 
 				DB.Add((int)reader["id"], item);
 			}

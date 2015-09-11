@@ -783,7 +783,12 @@ namespace game
 			this.Equip[wearType] = 0;
 
 			ClientPacketHandler.send_WearChange(this, handle, -1, this.Inventory[handle].Enhance);
-			Stats.PCCalculate(this);
+
+			if (Stats.PCCalculate(this))
+			{
+				ClientPacketHandler.send_UpdateStats(this, false);
+				ClientPacketHandler.send_UpdateStats(this, true);
+			}
 
 			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
 			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);
@@ -806,7 +811,11 @@ namespace game
 
 			ClientPacketHandler.send_WearChange(this, itemHandle, (short)i.WearInfo, this.Inventory[itemHandle].Enhance);
 
-			Stats.PCCalculate(this);
+			if (Stats.PCCalculate(this))
+			{
+				ClientPacketHandler.send_UpdateStats(this, false);
+				ClientPacketHandler.send_UpdateStats(this, true);
+			}
 
 			ClientPacketHandler.send_Property(this, "max_havoc", Globals.MaxHavoc);
 			ClientPacketHandler.send_Property(this, "max_chaos", Globals.MaxChaos);

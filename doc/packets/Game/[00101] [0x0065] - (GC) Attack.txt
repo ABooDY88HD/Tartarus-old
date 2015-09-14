@@ -1,0 +1,31 @@
+[Header]
+uint src_handle;
+uint dst_handle;
+uint16 attack_speed; // ?
+uint16 attack_delay; // ? Same as attack speed
+byte attack_action;
+byte attack_flag // 0
+byte count; // 1
+struct attacks[count]
+{
+	UInt32 hp_damage;
+	UInt32 mp_damage;
+	byte flag; // 00 = OK; 4 = Miss/Evade
+	28B unk; // 00
+	uint new_dst_hp;
+	uint new_dst_mp;
+	8B unk;
+	UInt32 new_src_hp;
+	UInt32 new_src_mp;
+}
+
+// Header Line: 16757
+
+Attack Action : byte
+{
+	End = 1,
+	Attack = 3
+}
+
+// Notes:
+// IF action = 1, count = 0

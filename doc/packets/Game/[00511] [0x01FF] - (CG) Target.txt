@@ -1,0 +1,2 @@
+// Informs the player target
+UInt32 target_handle;

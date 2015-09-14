@@ -1,0 +1,8 @@
+uint src_handle;
+Int16 size;
+String(size) message;
+
+// sends a 0x00 for packet 20:
+Response:
+	0 - OK
+	1 - You may not whisper to this character

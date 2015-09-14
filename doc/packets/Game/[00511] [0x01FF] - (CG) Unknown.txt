@@ -1,2 +1,0 @@
-// Sent whenever player starts a dialog
-00 00 00 00

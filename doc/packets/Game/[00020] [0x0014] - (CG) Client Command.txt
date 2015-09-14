@@ -1,4 +1,0 @@
-// This packet is sent when user uses /commands
-22 unknown bytes (0)
-Int16 size
-String(size) command

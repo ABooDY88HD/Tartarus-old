@@ -9,18 +9,14 @@ Byte layer;
 Byte sub_type;
 [Extra Info]
 
-MainType : int
-
+MainType : byte
 {
 	Player = 0,
-	NPC = 1,
+	Creature = 1,
 	StaticObject = 2,
-
 }
 
-
-
-SubType : int
+SubType : byte
 {
 	Player = 0,
 	NPC = 1,
@@ -30,20 +26,77 @@ SubType : int
 	Summon = 4,
 	SkillProp = 5,
 	FieldProp = 6,
-	Pet = 7,
-
+	Pet = 7
 }
 
 [Extra Info]
-for NPCs:
-	00 01 00 00 // status (00 01 00 00 = Has Startable Quest ?)
-	00 00 00 00 // face direction (?)
-	64 00 00 00 // HP
-	64 00 00 00 // MAX HP
-	00 00 00 00 // MP
-	00 00 00 00 // MAX MP
-	01 00 00 00 // Level
-	00 00 00 00 // unknwon
-	00 00 00 00 // unknown
-	00 00	    // unknown
-	EE 9F AE 16 45 2B 5F 75 // Encrypted Int - Npc ID
+Static - Item:
+	Int64 encrypted_code;
+	Int64 count;
+	PickUpOrder
+	{
+		uint drop_time;
+		uint PlayerID1;
+		uint PlayerID2;
+		uint PlayerID3;
+		int PartyID1;
+		int PartyID2;
+		int PartyID3;
+	}
+
+Static - Skill
+	uint caster;
+	uint start_time;
+	int skill_id;
+	
+Static - FieldProp
+	int prop_id;
+	float fZOffset;
+	float fRotateX;
+	float fRotateY;
+	float fRotateZ;
+	float fScaleX;
+	float fScaleY;
+	float fScaleZ;
+	bool bLockHeight;
+	float fLockHeight;
+	
+Creature - Base:
+	unsigned int status;
+	float face_direction;
+	int hp;
+	int max_hp;
+	int mp;
+	int max_mp;
+	int level;
+	byte race;
+	unsigned int skin_color;
+	bool is_first_enter;
+	int energy;
+	
+Creature - NPC:
+	Byte[8] npc_id // Encrypted INT
+
+Creature - Mob:
+	Byte[8] mob_id // Encrypted INT
+	// ? // byte is_tamed
+	
+Creature - Summon:
+	uint master_handle;
+	byte[8] summon_code; // Encryped INT
+	char[19] name;
+	
+Creature - Player:
+	byte sex;
+	int faceId;
+	int faceTextureId;
+	int hairId;
+	char szName[19];
+	unsigned __int16 job_id;
+	unsigned int ride_handle;
+	int guild_id;
+	
+Creature - Pet:
+	uint master_handle;
+	byte[8] pet_code; // Encryped INT
+	char[19] name;

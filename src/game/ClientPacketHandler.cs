@@ -937,27 +937,107 @@ namespace game
 			data.WriteFloat(objData.Position.X);
 			data.WriteFloat(objData.Position.Y);
 			data.WriteFloat(0); // Z
-			data.WriteByte(1);//objData.Layer);
+			data.WriteByte(objData.Layer);
 			data.WriteByte((byte)objData.SubType);
 
-			switch (objData.SubType)
+			switch (objData.Type)
 			{
-				case GameObjectSubType.NPC:
+				case GameObjectType.Creature:
 					{
-						Npc n = (Npc)objData;
-						data.WriteInt32(256); // Status
-						data.WriteInt32(0); // Face Direction (?)
-						data.WriteInt32(100); // HP
-						data.WriteInt32(100); // MaxHP
-						data.WriteInt32(0); // MP
-						data.WriteInt32(0); // Max MP
-						data.WriteInt32(1); // Level
-						data.WriteInt32(0); // unknown
-						data.WriteInt32(0); // unknown
-						data.WriteInt16(0); // unknown
+						CreatureObject co = (CreatureObject)objData;
+						data.WriteUInt32(co.Status);
+						data.WriteFloat(co.FaceDirection);
+						data.WriteInt32(co.Hp);
+						data.WriteInt32(co.MaxHp);
+						data.WriteInt32(co.Mp);
+						data.WriteInt32(co.MaxMp);
+						data.WriteInt32(co.Level);
+						data.WriteByte((byte)co.Race);
+						data.WriteUInt32(co.SkinColor);
+						data.WriteBool(false);
+						data.WriteInt32(co.Energy);
 
-						EncryptedInt crInt = new EncryptedInt(n.Id);
-						crInt.WriteToPacket(data);
+						switch (co.SubType)
+						{
+							case GameObjectSubType.Player:
+								{
+									Player pl = (Player)co;
+									data.WriteByte((byte)pl.Sex);
+									data.WriteInt32(pl.FaceId);
+									data.WriteInt32(0); // TODO : FaceTextureID
+									data.WriteInt32(pl.HairId);
+									data.WriteString(pl.Name, 19);
+									data.WriteUInt16((ushort)pl.Job);
+									data.WriteUInt32(0); // TODO : Ride Handle
+									data.WriteInt32(pl.GuildId);
+								}
+								break;
+
+							case GameObjectSubType.NPC:
+								{
+									Npc n = (Npc)co;
+									EncryptedInt crInt = new EncryptedInt(n.Id);
+									crInt.WriteToPacket(data);
+								}
+								break;
+
+							case GameObjectSubType.Mob:
+								{
+									//Npc n = (Npc)co;
+									//EncryptedInt crInt = new EncryptedInt(n.Id);
+									//crInt.WriteToPacket(data);
+								}
+								break;
+
+							case GameObjectSubType.Summon:
+								{
+									//Npc n = (Npc)co;
+									//EncryptedInt crInt = new EncryptedInt(n.Id);
+									//crInt.WriteToPacket(data);
+								}
+								break;
+
+							case GameObjectSubType.Pet:
+								{
+									//Npc n = (Npc)co;
+									//EncryptedInt crInt = new EncryptedInt(n.Id);
+									//crInt.WriteToPacket(data);
+								}
+								break;
+
+							default:
+								ConsoleUtils.Write(ConsoleMsgType.Error, "Unhandled Entity SubType\n");
+								break;
+						}
+					}
+					break;
+
+				case GameObjectType.StaticObject:
+					{
+						switch (objData.SubType)
+						{
+							case GameObjectSubType.Item:
+								{
+
+								}
+								break;
+
+							case GameObjectSubType.SkillProp:
+								{
+
+								}
+								break;
+
+							case GameObjectSubType.FieldProp:
+								{
+
+								}
+								break;
+
+							default:
+								ConsoleUtils.Write(ConsoleMsgType.Error, "Unhandled Entity SubType\n");
+								break;
+						}
 					}
 					break;
 

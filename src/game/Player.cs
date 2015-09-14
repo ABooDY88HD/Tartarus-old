@@ -13,7 +13,7 @@ using common.Utilities;
 
 namespace game
 {
-	public partial class Player : GameObject
+	public partial class Player : CreatureObject
 	{
 		public class Network
 		{
@@ -83,7 +83,7 @@ namespace game
 
 		public uint ContactHandle { get; set; }
 		
-		public Player(uint pHandle) : base(pHandle, GameObjectType.Player, GameObjectSubType.Player)
+		public Player(uint pHandle) : base(pHandle, GameObjectSubType.Player)
 		{
 			this.NetData = new Network();
 

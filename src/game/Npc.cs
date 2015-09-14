@@ -10,7 +10,7 @@ using System.Threading.Tasks;
 
 namespace game
 {
-	public class Npc : GameObject
+	public class Npc : CreatureObject
 	{
 		public enum DialogType : int
 		{
@@ -29,7 +29,7 @@ namespace game
 		public sbyte Face { get; set; }
 		public string ContactScript { get; set; }
 
-		public Npc(uint pHandle) : base(pHandle, GameObjectType.NPC, GameObjectSubType.NPC) {
+		public Npc(uint pHandle) : base(pHandle, GameObjectSubType.NPC) {
 			
 		}
 

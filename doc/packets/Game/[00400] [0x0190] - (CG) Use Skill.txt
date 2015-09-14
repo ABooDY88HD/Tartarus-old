@@ -1,0 +1,5 @@
+UInt16 skill_id;
+UInt32 handle;
+UInt32 target;
+13B Unknown
+Byte level;

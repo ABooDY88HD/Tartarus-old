@@ -8,6 +8,6 @@ struct skill_info[count]
 	Int32 skill_id;
 	Byte skill_lv;
 	Byte skill_lv;
-	UInt32 cooldown; // seconds/100
-	4B unknown;
+	UInt32 total_cooldown; // seconds/100
+	UInt32 current_cooldown;
 }

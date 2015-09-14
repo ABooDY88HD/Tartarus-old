@@ -1,0 +1,25 @@
+UInt16 skill_id;
+Byte level;
+UInt32 handle;
+UInt32 target;
+float x;
+float y;
+float z;
+Byte layer;
+Byte type;
+Int32 hp_cost;
+Int32 mp_cost;
+Int32 caster_hp;
+Int32 caster_mp;
+[[Extra]]
+
+for type = 1:
+	bool multiple;
+	float range;
+	byte target_count;
+	byte fire_count;
+	ushort count;
+
+-------
+type:
+1 - FireType

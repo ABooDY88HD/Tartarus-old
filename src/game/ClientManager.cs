@@ -99,7 +99,7 @@ namespace game
 							netData.Data.Write(decode, curOffset, bytesToRead);
 							curOffset += bytesToRead;
 							netData.Offset = bytesToRead;
-							netData.PacketSize = BitConverter.ToInt32(netData.Data.ReadBytes(0, 4, true), 0);
+							netData.PacketSize = BitConverter.ToInt32(netData.Data.ReadBytes(4, 0, true), 0);
 						}
 						else
 						{

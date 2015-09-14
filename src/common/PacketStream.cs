@@ -114,10 +114,12 @@ namespace common
 			return result;
 		}
 
-		public byte[] ReadBytes(int offset, int count, bool countHeader = false)
+		public byte[] ReadBytes(int count, int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -126,10 +128,12 @@ namespace common
 			return buffer;
 		}
 
-		public Int16 ReadInt16(int offset, bool countHeader = false)
+		public Int16 ReadInt16(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -138,10 +142,12 @@ namespace common
 			return BitConverter.ToInt16(buffer, 0);
 		}
 
-		public UInt16 ReadUInt16(int offset, bool countHeader = false)
+		public UInt16 ReadUInt16(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -150,10 +156,12 @@ namespace common
 			return BitConverter.ToUInt16(buffer, 0);
 		}
 
-		public Int32 ReadInt32(int offset, bool countHeader = false)
+		public Int32 ReadInt32(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -162,10 +170,12 @@ namespace common
 			return BitConverter.ToInt32(buffer, 0);
 		}
 
-		public UInt32 ReadUInt32(int offset, bool countHeader = false)
+		public UInt32 ReadUInt32(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -174,10 +184,12 @@ namespace common
 			return BitConverter.ToUInt32(buffer, 0);
 		}
 
-		public Int64 ReadInt64(int offset, bool countHeader = false)
+		public Int64 ReadInt64(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -186,10 +198,12 @@ namespace common
 			return BitConverter.ToInt64(buffer, 0);
 		}
 
-		public UInt64 ReadUInt64(int offset, bool countHeader = false)
+		public UInt64 ReadUInt64(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -198,10 +212,12 @@ namespace common
 			return BitConverter.ToUInt64(buffer, 0);
 		}
 
-		public Single ReadFloat(int offset, bool countHeader = false)
+		public Single ReadFloat(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -210,10 +226,12 @@ namespace common
 			return BitConverter.ToSingle(buffer, 0);
 		}
 
-		public String ReadString(int offset, int size, bool countHeader = false)
+		public String ReadString(int size, int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
@@ -223,20 +241,24 @@ namespace common
 			return ByteUtils.toString(buffer);
 		}
 
-		public bool ReadBool(int offset, bool countHeader = false)
+		public bool ReadBool(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			return (inner.ReadByte() == 0 ? false : true);
 		}
 
-		internal byte ReadByte(short offset, bool countHeader = false)
+		internal byte ReadByte(int offset = -1, bool countHeader = false)
 		{
 			if (countHeader)
 				inner.Seek(offset, SeekOrigin.Begin);
+			else if (offset == -1 && inner.Position < Globals.HeaderLength)
+				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
 			else
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 

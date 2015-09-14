@@ -65,7 +65,7 @@ namespace game
 			string userId = stream.ReadString(pos[0], 60);
 			int accId = stream.ReadInt32(pos[1]);
 			byte permission = stream.ReadByte(pos[2]);
-			byte[] key = stream.ReadBytes(pos[3], 8);
+			byte[] key = stream.ReadBytes(8, pos[3]);
 
 			Server.OnAuthNoticeUser(server, userId, accId, permission, key);
 		}

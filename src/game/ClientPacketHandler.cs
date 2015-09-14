@@ -205,8 +205,8 @@ namespace game
 		/// <user id>.60S <00>.B <auth token>8B
 		internal static void parse_UserJoinServer(Player player, ref PacketStream stream, short[] pos)
 		{
-			string userId = stream.ReadString(pos[0], 60);
-			byte[] key = stream.ReadBytes(pos[1], 8);
+			string userId = stream.ReadString(60, pos[0]);
+			byte[] key = stream.ReadBytes(8, pos[1]);
 
 			Server.OnUserJoin(player, userId, key);
 		}
@@ -215,7 +215,7 @@ namespace game
 		/// <new name>.19S
 		internal static void parse_CharNameCheck(Player player, ref PacketStream stream, short[] pos)
 		{
-			string charName = stream.ReadString(pos[0], 19);
+			string charName = stream.ReadString(19, pos[0]);
 			player.CharNameExists(charName);
 		}
 
@@ -294,7 +294,7 @@ namespace game
 		/// <char name>.19S
 		internal static void parse_JoinGame(Player player, ref PacketStream stream, short[] pos)
 		{
-			string charName = stream.ReadString(pos[0], 19);
+			string charName = stream.ReadString(19, pos[0]);
 			Server.OnUserJoinGame(player, charName);
 		}
 
@@ -872,8 +872,8 @@ namespace game
 		/// <property name>.16B <property value>.?S
 		internal static void parse_SetProperty(Player player, ref PacketStream stream, short[] pos)
 		{
-			string propertyName = stream.ReadString(pos[0], 16);
-			string propertyValue = stream.ReadString(pos[1], (stream.GetSize() - 23));
+			string propertyName = stream.ReadString(16, pos[0]);
+			string propertyValue = stream.ReadString((stream.GetSize() - 23), pos[1]);
 
 			player.SetProperty(propertyName, propertyValue);
 		}
@@ -1081,7 +1081,8 @@ namespace game
 
 		internal static void parse_DialogOption(Player player, ref PacketStream stream, short[] pos)
 		{
-			string function = stream.ReadString(pos[1], stream.ReadInt16(pos[0]));
+			short len = stream.ReadInt16(pos[0]);
+			string function = stream.ReadString(len, pos[1]);
 
 			Script.LuaMain.DoFunction(player, function);
 		}
@@ -1125,7 +1126,7 @@ namespace game
 		internal static void parse_Chat(Player player, ref PacketStream stream, short[] pos)
 		{
 			byte len = stream.ReadByte(pos[0]);
-			string cmd = stream.ReadString(pos[1], len);
+			string cmd = stream.ReadString(len, pos[1]);
 			// TODO : Action
 		}
 

@@ -1122,10 +1122,10 @@ namespace game
 		}
 
 
-		internal static void parse_ClientCommand(Player player, ref PacketStream stream, short[] pos)
+		internal static void parse_Chat(Player player, ref PacketStream stream, short[] pos)
 		{
-			short size = stream.ReadInt16(pos[0]);
-			string cmd = stream.ReadString(pos[1], size);
+			byte len = stream.ReadByte(pos[0]);
+			string cmd = stream.ReadString(pos[1], len);
 			// TODO : Action
 		}
 

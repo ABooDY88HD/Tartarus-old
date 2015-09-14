@@ -39,8 +39,8 @@ namespace game
 			// [0x0007] 0007 -> PC Move Update
 			packets_db.Add(0x0007, new Packet() { func = ClientPacketHandler.parse_PCMoveUpdate, pos = new short[] { 0, 4, 8, 12, 16 }});
 
-			// [0x0014] 0020 -> Client Command
-			packets_db.Add(0x0014, new Packet() { func = ClientPacketHandler.parse_ClientCommand, pos = new short[] { 22, 24 } });
+			// [0x0014] 0020 -> Chat
+			packets_db.Add(0x0014, new Packet() { func = ClientPacketHandler.parse_Chat, pos = new short[] { 22, 24 } });
 
 			// [0x0017] 0023 -> Logout to Char
 			packets_db.Add(0x0017, new Packet() { func = ClientPacketHandler.parse_PCLogoutToCharScreen, pos = new short[0] });

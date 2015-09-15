@@ -12,12 +12,43 @@ namespace game
 {
 	public class Server
 	{
-		public static string GameDbConString;
-		public static string UserDbConString;
-		public static string UrlList;
+		#region Enums
 
-		public static Dictionary<string, UserJoinData> UserJoinPool;
-		public static Dictionary<string, int> UserIds;
+		public enum ChatType
+		{
+			Normal = 0x0,
+			Yell = 0x1,
+			Adv = 0x2,
+			Whisper = 0x3,
+			Global = 0x4,
+			Emotion = 0x5,
+			GM = 0x6,
+			GMWhisper = 0x7,
+			Party = 0xA,
+			Guild = 0xB,
+			AttackTeam = 0xC,
+			Friend = 0xD,
+			Notice = 0x14,
+			EXP = 0x1e,
+			Damage = 0x1F,
+			Item = 0x20,
+			Battle = 0x21,
+			Summon = 0x22,
+			ETC = 0x23,
+			NPC = 0x28,
+			Debug = 0x32,
+			PartySystem = 0x64,
+			GuildSystem = 0x6E,
+			QuestSystem = 0x78,
+			RaidSystem = 0x82,
+			FriendSystem = 0x8C,
+			AllianceSystem = 0x96,
+			HuntaholicSystem = 0xA0,
+		}
+
+		#endregion
+
+		#region SubClasses
 
 		public class UserJoinData
 		{
@@ -26,8 +57,21 @@ namespace game
 			public byte Permission { get; set; }
 		}
 
+		#endregion
+
+		#region Variables
+
+		public static string GameDbConString;
+		public static string UserDbConString;
+		public static string UrlList;
+
+		public static Dictionary<string, UserJoinData> UserJoinPool;
+		public static Dictionary<string, int> UserIds;
+
 		private static Server Instance;
 		private NetworkManager Network;
+
+		#endregion
 
 		public Server()
 		{
@@ -167,6 +211,41 @@ namespace game
 			if (!player.LoadCharacter(charName))
 			{
 				return;
+			}
+		}
+
+		internal static void OnPlayerChat(Player player, byte requestId, byte type, string target, string message)
+		{
+			if (message.StartsWith("//"))
+			{
+				// Message is a command
+
+				// TODO : This should be better parsed and
+				// requires permission checks
+				message = message.TrimStart('/');
+				// pars[0] = Command
+				// pars[1..n] = parameters
+				string[] pars = message.Split(' ');
+
+				switch (pars[0])
+				{
+					case "item":
+
+						break;
+
+					case "monster":
+
+						break;
+
+					case "set":
+
+						break;
+				}
+			}
+			else
+			{
+				// It's a common message
+				ClientPacketHandler.send_Chat(player, type, message, target);
 			}
 		}
 	}

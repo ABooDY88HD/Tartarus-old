@@ -62,7 +62,7 @@ namespace game
 
 		internal static void parse_UserJoinNotice(AuthServer server, ref PacketStream stream, short[] pos)
 		{
-			string userId = stream.ReadString(pos[0], 60);
+			string userId = stream.ReadString(60, pos[0]);
 			int accId = stream.ReadInt32(pos[1]);
 			byte permission = stream.ReadByte(pos[2]);
 			byte[] key = stream.ReadBytes(8, pos[3]);

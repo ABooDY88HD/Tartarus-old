@@ -1,9 +1,9 @@
 // This packet is sent when user writes in the chat
 String(21) target
 byte request_id;
-byte len;
+byte len+1;
 byte type;
-String(size) message;
+String(len) message+0x00;
 
 Types:
 enum CHAT_TYPE

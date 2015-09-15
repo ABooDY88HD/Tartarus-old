@@ -120,7 +120,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[count];
@@ -134,7 +134,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[2];
@@ -148,7 +148,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[2];
@@ -162,7 +162,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[4];
@@ -176,7 +176,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[4];
@@ -190,7 +190,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[8];
@@ -204,7 +204,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[8];
@@ -218,7 +218,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[4];
@@ -232,7 +232,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			byte[] buffer = new byte[size];
@@ -247,7 +247,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			return (inner.ReadByte() == 0 ? false : true);
@@ -259,7 +259,7 @@ namespace common
 				inner.Seek(offset, SeekOrigin.Begin);
 			else if (offset == -1 && inner.Position < Globals.HeaderLength)
 				inner.Seek(Globals.HeaderLength, SeekOrigin.Begin);
-			else
+			else if (offset >= 0)
 				inner.Seek(offset + Globals.HeaderLength, SeekOrigin.Begin);
 
 			return (byte)inner.ReadByte();

@@ -1125,9 +1125,13 @@ namespace game
 
 		internal static void parse_Chat(Player player, ref PacketStream stream, short[] pos)
 		{
-			byte len = stream.ReadByte(pos[0]);
-			string cmd = stream.ReadString(len, pos[1]);
-			// TODO : Action
+			string target = stream.ReadString(21);
+			byte requestId = stream.ReadByte();
+			byte len = stream.ReadByte();
+			byte type = stream.ReadByte();
+			string message = stream.ReadString(len);
+
+			Server.OnPlayerChat(player, requestId, type, target, message);
 		}
 
 		internal static void parse_LearnSkill(Player player, ref PacketStream stream, short[] pos)
@@ -1191,6 +1195,20 @@ namespace game
 			stream.WriteInt32(mpRec);
 			stream.WriteInt32(player.Hp);
 			stream.WriteInt32(player.Mp);
+		}
+
+		internal static void send_Chat(Player player, byte type, string message, string target)
+		{
+			PacketStream stream = new PacketStream(0x0015);
+
+			stream.WriteUInt32(player.Handle);
+			short len = (short)(message.Length + 1);
+			stream.WriteInt16(len);
+			stream.WriteString(message, len);
+			
+			// TODO : This should be correctly targeted
+			ClientManager.Instance.Send(player, stream);
+			send_PacketResponse(player, 0x0014, 0);
 		}
 	}
 

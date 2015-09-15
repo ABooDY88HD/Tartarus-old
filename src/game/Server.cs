@@ -135,6 +135,7 @@ namespace game
 			ItemDb.Start();
 			StatsDb.Start();
 			SkillDb.Start();
+			MonsterDb.Start();
 			Player.Start();
 			Npc.Init();
 			QuestDb.Start();
@@ -234,7 +235,8 @@ namespace game
 						break;
 
 					case "monster":
-
+						int mobId = Int32.Parse(pars[1]);
+						Monster.SpawnMonster(mobId, player.Position);
 						break;
 
 					case "set":

@@ -31,10 +31,12 @@ namespace game
 	public class Region
 	{
 		public List<uint> Npcs { get; set; }
+		public List<uint> Monsters { get; set; }
 
 		public Region()
 		{
 			this.Npcs = new List<uint>();
+			this.Monsters = new List<uint>();
 		}
 	}
 
@@ -237,7 +239,7 @@ namespace game
 			{
 				for (int i = 0; i < r.Npcs.Count; i++)
 				{
-					ClientPacketHandler.send_EntityAck(player, GObjectManager.Npcs[r.Npcs[i]]);
+					ClientPacketHandler.send_EntityAck(GObjectManager.Npcs[r.Npcs[i]]);
 					ClientPacketHandler.send_EntityState(player, GObjectManager.Npcs[r.Npcs[i]].Handle, 0x0);
 					ClientPacketHandler.send_Packet516(player, GObjectManager.Npcs[r.Npcs[i]].Handle);
 				}
@@ -247,6 +249,13 @@ namespace game
 			player.RegionY = newRY;
 
 			ClientPacketHandler.send_RegionAck(player, newRX, newRY);
+		}
+
+		internal static void AddMobToRegion(Monster mob)
+		{
+			GetRegion(mob.Position.X, mob.Position.Y).Monsters.Add(mob.Handle);
+
+			ClientPacketHandler.send_EntityAck(mob);
 		}
 	}
 }

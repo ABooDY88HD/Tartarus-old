@@ -119,6 +119,12 @@
     <Compile Include="..\..\src\game\ItemDb.cs">
       <Link>game\ItemDb.cs</Link>
     </Compile>
+    <Compile Include="..\..\src\game\Monster.cs">
+      <Link>game\Monster.cs</Link>
+    </Compile>
+    <Compile Include="..\..\src\game\MonsterDb.cs">
+      <Link>game\MonsterDb.cs</Link>
+    </Compile>
     <Compile Include="..\..\src\game\NetworkManager.cs">
       <Link>game\NetworkManager.cs</Link>
     </Compile>

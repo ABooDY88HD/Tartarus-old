@@ -356,8 +356,8 @@ namespace game
 			data.WriteInt32(Globals.MaxHavoc);
 
 			data.WriteInt32(player.Sex);
-			data.WriteInt32(player.Race);
-			data.WriteInt32(player.SkinColor);
+			data.WriteInt32((int)player.Race);
+			data.WriteUInt32(player.SkinColor);
 			data.WriteInt32(player.FaceId);
 			data.WriteInt32(player.HairId);
 			data.WriteString(player.Name, 19);
@@ -928,7 +928,7 @@ namespace game
 		///	<main type>.B <object handle>.L <x>.L <y>.L <z>.L <layer>.B
 		///	<sub type>.B <extra data>.?B
 		///	Read the full documentation for extra data values
-		internal static void send_EntityAck(Player player, GameObject objData)
+		internal static void send_EntityAck(GameObject objData)
 		{
 			PacketStream data = new PacketStream(0x0003);
 
@@ -983,9 +983,9 @@ namespace game
 
 							case GameObjectSubType.Mob:
 								{
-									//Npc n = (Npc)co;
-									//EncryptedInt crInt = new EncryptedInt(n.Id);
-									//crInt.WriteToPacket(data);
+									Monster m = (Monster)co;
+									EncryptedInt crInt = new EncryptedInt(m.Id);
+									crInt.WriteToPacket(data);
 								}
 								break;
 
@@ -1046,7 +1046,7 @@ namespace game
 					break;
 			}
 
-			ClientManager.Instance.Send(player, data);
+			ClientManager.Instance.Send(objData, data, ClientManager.SendTarget.Area);
 		}
 
 		///

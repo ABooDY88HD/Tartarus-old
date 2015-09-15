@@ -33,7 +33,6 @@ namespace game
 
 		public int CharId { get; set; }
 		public int Sex { get; set; }
-		public int Race { get; set; }
 		public int HairId { get; set; } // model_00
 		public int FaceId { get; set; } // model_01
 		public int BodyId { get; set; } // model_02
@@ -44,19 +43,13 @@ namespace game
 		public Stats BaseStats { get; set; }
 		public Stats SCStats { get; set; }
 
-		public int Hp { get; set; }
-		public int Mp { get; set; }
-		public int MaxHp { get; set; }
-		public int MaxMp { get; set; }
 		public int Havoc { get; set; }
 
 		public int GuildId { get; set; }
 
 		public short Job { get; set; }
-		public int Level { get; set; }
 		public int JobLevel { get; set; }
 		public string Name { get; set; }
-		public int SkinColor { get; set; }
 
 		public long Gold { get; set; }
 		public int Chaos { get; set; }
@@ -390,9 +383,10 @@ namespace game
 			this.FeetId = (int)reader["feet_id"];
 
 			this.Name = charName;
-			this.Race = (int)reader["race"];
+			this.Race = (Races)(int)reader["race"];
 			this.Sex = (int)reader["sex"];
-			this.SkinColor = (int)reader["skin_color"];
+			// TODO : FIX
+			this.SkinColor = (uint)(int)reader["skin_color"];
 			this.CharId = (int)reader["char_id"];
 
 			this.Position = new Point((int)reader["x"], (int)reader["y"]);

@@ -17,8 +17,15 @@ namespace game
 {
 	public class ClientManager
 	{
-		public static ManualResetEvent allDone = new ManualResetEvent(false);
-		public static ClientManager Instance { get; private set; }
+		public enum SendTarget
+		{
+			Self,
+			Area,
+			Server
+		}
+
+		public static readonly ClientManager Instance = new ClientManager();
+		private ManualResetEvent allDone = new ManualResetEvent(false);
 		
 		public ClientManager() { }
 
@@ -37,7 +44,6 @@ namespace game
 
 				ConsoleUtils.Write(ConsoleMsgType.Status, "Listening at port {0}\r\n", localEndPoint.Port);
 
-				Instance = this;
 				while (true)
 				{
 					allDone.Reset();
@@ -51,6 +57,52 @@ namespace game
 			{
 				Console.WriteLine(e.ToString());
 			}
+		}
+
+		// TODO : Target must not be optional
+		public void Send(GameObject srcObject, PacketStream data, SendTarget target = SendTarget.Self)
+		{
+			byte[] byteData = data.GetPacket().ToArray();
+			if (target == SendTarget.Self && srcObject.SubType != GameObjectSubType.Player)
+			{
+				ConsoleUtils.Write(ConsoleMsgType.Error, "Non-Player object trying to send packet to Self");
+				return;
+			}
+			else if (target == SendTarget.Self)
+			{
+				SendPacket((Player)srcObject, byteData);
+			}
+
+			uint rx = RegionMngr.GetRegionX(srcObject.Position.X);
+			uint ry = RegionMngr.GetRegionY(srcObject.Position.Y);
+
+			foreach (Player p in GObjectManager.Players.Values)
+			{
+				if (target == SendTarget.Area)
+				{
+					// If it's out of range
+					if (p.RegionX < rx - 3 || p.RegionX > rx + 3 ||
+						p.RegionY < ry - 3 || p.RegionY > ry + 3
+					)
+						continue;
+				}
+				
+				SendPacket(p, byteData);
+			}
+		}
+
+		private void SendPacket(Player player, byte[] byteData)
+		{
+			ConsoleUtils.HexDump(byteData, "Sending Packet");
+
+			// Begin sending the data to the remote device.
+			player.NetData.ClSocket.BeginSend(
+					player.NetData.Encoder.DoCipher(ref byteData),
+					0,
+					byteData.Length,
+					0,
+					new AsyncCallback(SendCallback), player.NetData.ClSocket
+				);
 		}
 
 		private void AcceptCallback(IAsyncResult ar)
@@ -153,21 +205,6 @@ namespace game
 		private void PacketReceived(Player p, PacketStream data)
 		{
 			ClientPacketHandler.PacketReceived(p, data);
-		}
-
-		public void Send(Player player, PacketStream data)
-		{
-			byte[] byteData = data.GetPacket().ToArray();
-			ConsoleUtils.HexDump(byteData, "Sending Packet");
-
-			// Begin sending the data to the remote device.
-			player.NetData.ClSocket.BeginSend(
-				player.NetData.Encoder.DoCipher(ref byteData),
-				0,
-				byteData.Length,
-				0,
-				new AsyncCallback(SendCallback), player.NetData.ClSocket
-			);
 		}
 
 		private void SendCallback(IAsyncResult ar)

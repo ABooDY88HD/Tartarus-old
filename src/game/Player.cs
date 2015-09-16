@@ -31,6 +31,14 @@ namespace game
 		public byte Permission;
 		public Network NetData;
 
+		/* *************************************
+		 * http://stackoverflow.com/questions/33469/caching-patterns-in-asp-net
+		 * I believe this way of adding dirty could improve saving performance
+		 * if we split dirty in, let's say, 3 dirty types:
+		 * appearance changes ; equip changes ; level/stats changes
+		 * so we can reduce the size of the update query and speed it up.
+		 * ************************************* */
+
 		public int CharId { get; set; }
 		public int Sex { get; set; }
 		public int HairId { get; set; } // model_00
@@ -411,6 +419,7 @@ namespace game
 			this.LoadStats();
 			this.LoadSkills();
 
+			// TODO  Most of these packets probably can be placed in their own methods
 			ClientPacketHandler.send_UpdateStats(this, false);
 			ClientPacketHandler.send_UpdateStats(this, true);
 

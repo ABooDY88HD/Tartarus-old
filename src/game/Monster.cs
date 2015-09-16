@@ -40,6 +40,7 @@ namespace game
 		{
 			lock (this)
 			{
+				// Note : This method is not really good
 				int movSpd = 10;
 				int deltaTime = (Environment.TickCount);
 				deltaTime -= this.LastUpdate;

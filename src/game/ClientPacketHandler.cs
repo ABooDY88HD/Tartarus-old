@@ -24,6 +24,16 @@ namespace game
 			packet_db = Packets.LoadClientPackets();
 		}
 
+		/* ******************************
+		 * Will we continue to use offsets to read these packets?
+		 * At one of the last commits I've added functions to
+		 * read continuously instead of by offset, is it better?
+		 *
+		 * Currently most of these packets doesn't have targets
+		 * At one of the last commits I added target support,
+		 * everything must have targets in the future.
+		 * ******************************/
+
 		internal static void PacketReceived(Player player, PacketStream stream)
 		{
 			// Header
@@ -250,6 +260,7 @@ namespace game
 		/// <point count>.W { <to x>.L <to y>.L }*count
 		internal static void send_PCMoveTo(GameObject obj, params Point[] movePoints)
 		{
+			// Note : This packet is also used to move any other entity, not only players
 			PacketStream stream = new PacketStream((short)0x0008);
 
 			stream.WriteUInt32((uint)(Environment.TickCount / 10));

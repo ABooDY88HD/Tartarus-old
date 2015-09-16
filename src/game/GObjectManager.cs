@@ -17,6 +17,13 @@ namespace game
 		public static Dictionary<uint, Npc> Npcs;
 		public static Dictionary<uint, Monster> Monsters;
 
+		/* ********************************
+		 * Rappelz seems to use intervals of handles for
+		 * each type of GameObject, Tartarus currently just
+		 * goes from 1 for everything.
+		 * Does this cause problems on client side?
+		 * *********************************/
+
 		private static List<uint> HandlePool;
 		private static uint NextHandle;
 

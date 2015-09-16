@@ -79,12 +79,13 @@ Creature - NPC:
 
 Creature - Mob:
 	Byte[8] mob_id // Encrypted INT
-	// ? // byte is_tamed
+	byte is_tamed
 	
 Creature - Summon:
 	uint master_handle;
 	byte[8] summon_code; // Encryped INT
 	char[19] name;
+	uint skinNum;
 	
 Creature - Player:
 	byte sex;

@@ -1,4 +1,4 @@
-// Sends data to make character move
+// Sends data to make entity move
 
 UInt32 time;		/* 0 */
 UInt32 handle;		/* 4 */

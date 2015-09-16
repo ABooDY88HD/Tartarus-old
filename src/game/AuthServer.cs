@@ -27,7 +27,9 @@ namespace game
         {
 			this.Socket = socket;
             this.NetStream = new NetworkStream(this.Socket);
-            this.bwReceiver = new BackgroundWorker();
+
+			// TODO : Can we avoid this threading?
+			this.bwReceiver = new BackgroundWorker();
             this.bwReceiver.DoWork += new DoWorkEventHandler(StartReceive);
             this.bwReceiver.RunWorkerAsync();
 		}

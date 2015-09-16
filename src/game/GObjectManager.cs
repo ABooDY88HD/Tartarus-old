@@ -85,5 +85,18 @@ namespace game
 			Monsters.Add(handle, p);
 			return p;
 		}
+
+		internal static void Update()
+		{
+			// TODO walking
+			// TODO npc walking
+			// TODO drop deletion
+			// TODO change weather
+			// Updates Monster
+			foreach (Monster m in Monsters.Values)
+			{
+				m.Update();
+			}
+		}
 	}
 }

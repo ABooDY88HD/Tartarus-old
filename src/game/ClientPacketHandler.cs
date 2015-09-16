@@ -248,31 +248,24 @@ namespace game
 		/// [0x0008] 8 - (GC) Sends data to make character move
 		/// <time>.L <player handle>.L <layer>.B <move speed>.B 
 		/// <point count>.W { <to x>.L <to y>.L }*count
-		internal static void send_PCMoveTo(Player player, Point[] movePoints)
+		internal static void send_PCMoveTo(GameObject obj, params Point[] movePoints)
 		{
-			PacketStream res = new PacketStream((short)0x0008);
+			PacketStream stream = new PacketStream((short)0x0008);
 
-			byte[] b = new byte[]
-			{
-				0x5E, 0x1F, 0x00, 0x00, 
-			};
-			res.Write(b, 0, b.Length);
+			stream.WriteUInt32((uint)(Environment.TickCount / 10));
+			stream.WriteUInt32(obj.Handle);
 
-			res.WriteUInt32(player.Handle);
+			stream.WriteByte(obj.Layer);
+			stream.WriteByte(10); // Mov Speed
 
-			b = new byte[] {
-				0x01, 0x11
-			};
-			res.Write(b, 0, b.Length);
-
-			res.WriteInt16((short)movePoints.Length);
+			stream.WriteInt16((short)movePoints.Length);
 			for (int i = 0; i < movePoints.Length; i++)
 			{
-				res.WriteFloat(movePoints[i].X);
-				res.WriteFloat(movePoints[i].Y);
+				stream.WriteFloat(movePoints[i].X);
+				stream.WriteFloat(movePoints[i].Y);
 			}
 
-			ClientManager.Instance.Send(player, res);
+			ClientManager.Instance.Send(obj, stream, ClientManager.SendTarget.Area);
 		}
 
 		/// [0x0007] 7 - (CG) Tells where the player currently is while moving

@@ -35,5 +35,22 @@ namespace game
 
 			RegionMngr.AddMobToRegion(mob);
 		}
+
+		internal void Update()
+		{
+			lock (this)
+			{
+				int movSpd = 10;
+				int deltaTime = (Environment.TickCount);
+				deltaTime -= this.LastUpdate;
+
+				float toX = this.Position.X + (new Random().Next(-movSpd * deltaTime, movSpd * deltaTime) / 1000);
+				float toY = this.Position.Y + (new Random().Next(-movSpd * deltaTime, movSpd * deltaTime) / 1000);
+
+				this.LastUpdate = Environment.TickCount;
+
+				ClientPacketHandler.send_PCMoveTo(this, new Point(toX, toY));
+			}
+		}
 	}
 }

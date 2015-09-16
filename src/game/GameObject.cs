@@ -48,6 +48,8 @@ namespace game
 		public Point Position { get; set; }
 		public byte Layer = 0;
 
+		public int LastUpdate = Environment.TickCount/10;
+
 		public GameObject(uint pHandle, GameObjectType pType, GameObjectSubType subType)
 		{
 			this.Handle = pHandle;

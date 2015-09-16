@@ -7,6 +7,7 @@ using System.Text;
 using System.Threading.Tasks;
 using MySql;
 using common;
+using System.Timers;
 
 namespace game
 {
@@ -71,6 +72,7 @@ namespace game
 		private static Server Instance;
 		private NetworkManager Network;
 
+		private Timer GameTimer;
 		#endregion
 
 		public Server()
@@ -140,6 +142,17 @@ namespace game
 			Npc.Init();
 			QuestDb.Start();
 
+			/* ************************* *
+			 * Server Internal Timer
+			 * ************************* */
+			// Server Timer
+			this.GameTimer = new Timer();
+			this.GameTimer.Interval = 5000; //ms
+			this.GameTimer.Elapsed += (o, x) =>
+			{
+				GObjectManager.Update();
+			};
+			this.GameTimer.Start();
 
 			/* ************************* *
 			 * Start Network Manager
